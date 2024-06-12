@@ -1,0 +1,20 @@
+﻿<Project>
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <VersionPrefix>0.0.0</VersionPrefix>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>Linkoid.$(AssemblyName)</PackageId>
+    <Authors>linkoid</Authors>
+    <Version>$(VersionPrefix)-alpha</Version>
+  </PropertyGroup>
+
+  <Target Name="PublishLocal" AfterTargets="Pack">
+    <PropertyGroup>
+      <PackagePath>$(OutputPath)../$(PackageId).$(PackageVersion).nupkg</PackagePath>
+      <PackageSource>%USERPROFILE%/.nuget/packages</PackageSource>
+    </PropertyGroup>
+    <Exec Command="NuGet delete $(PackageId) $(PackageVersion) -Source $(PackageSource) -NonInteractive" ContinueOnError="true" />
+    <Exec Command="NuGet add $(PackagePath) -Source $(PackageSource) -Expand -NonInteractive" />
+  </Target>
+</Project>
