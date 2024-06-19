@@ -1,4 +1,4 @@
-﻿using SmiteLib.Edge;
+﻿using SmiteLib.Framework;
 using SmiteLib.Logging;
 using System;
 using System.Collections.Generic;

@@ -1,4 +1,16 @@
-﻿
-var runner = new SmiteLib.Edge.SmiteRunner();
-runner.RunAllStaticTests();
-Thread.Sleep(1000);
+﻿namespace SmiteLib.Tests.TestProgram;
+
+public static class Program
+{
+	internal static event EventHandler PostTestsEvent;
+
+	public static void Main()
+	{
+		var runner = new Framework.SmiteRunner();
+		runner.RunAllStaticTests();
+
+		PostTestsEvent?.Invoke(null, EventArgs.Empty);
+
+		Thread.Sleep(1000);
+	}
+}

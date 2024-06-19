@@ -5,7 +5,7 @@ using SmiteLib.Logging;
 using SmiteLib.Internal;
 using SmiteLib.Serialization;
 
-namespace SmiteLib.Edge;
+namespace SmiteLib.Framework;
 
 public sealed class SmiteRunner : IUsesLogger
 {
@@ -55,20 +55,19 @@ public sealed class SmiteRunner : IUsesLogger
 		this.ForceChildrenUseOwnLogger(Deserializers);
 
 		var testFilter = new SmiteIdentifier(_assemblyName, "", "");
-		var testMethods =
+		var tests =
 			from deserializer in Deserializers
 			from identifier in deserializer.GetTestIds(testFilter)
 			where identifier is SmiteIdentifier
 			let testMethod = GetTestMethod((SmiteIdentifier)identifier)
 			where testMethod != null && ((SmiteMethod)testMethod).Info.IsStatic
-			select (SmiteMethod)testMethod;
+			select new SmiteTest((SmiteMethod)testMethod);
 
 		bool ranTests = false;
-		foreach (var testMethod in testMethods)
+		foreach (var test in tests)
 		{
-			testMethod.Invoke();
+			test.Run();
 			ranTests = true;
-
 		}
 		return ranTests;
 	}
@@ -76,6 +75,7 @@ public sealed class SmiteRunner : IUsesLogger
 	public void RunTest(ISmiteId identifier)
 	{
 		var testMethod = SmiteMethod.Find(SmiteIdentifier.Parse(identifier), _assembly);
-		testMethod.Invoke();
+		var test = new SmiteTest(testMethod);
+		test.Run();
 	}
 }

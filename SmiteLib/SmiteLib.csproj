@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="../SmiteLib.Core/Common.targets" />
+  <Import Project="../Common.targets" />
   
   <PropertyGroup>
   </PropertyGroup>

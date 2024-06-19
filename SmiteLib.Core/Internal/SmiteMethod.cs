@@ -1,4 +1,4 @@
-﻿using SmiteLib.Edge;
+﻿using SmiteLib.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -19,8 +19,7 @@ internal readonly struct SmiteMethod
 	{
 		assembly ??= Assembly.Load(identifier.Assembly);
 
-		Type type = assembly.GetType(identifier.Type, false, false)
-			?? assembly.GetType(identifier.Type, false, true)
+		Type type = assembly.FindType(identifier.Type)
 			?? throw new TypeLoadException($"Could not find type '{identifier.Type}' in assembly '{assembly}'");
 
 		var bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance;
