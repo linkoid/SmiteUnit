@@ -1,10 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Collections.Generic;
 using SmiteLib.Internal;
-using System;
-using System.CommandLine;
-using System.Reflection;
-using System.IO;
 
 namespace SmiteLib
 {
