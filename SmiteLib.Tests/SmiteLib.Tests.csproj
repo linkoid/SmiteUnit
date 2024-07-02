@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="../SmiteLib/SmiteLib.csproj" />
     <ProjectReference Include="../SmiteLib.Tests.TestProgram/SmiteLib.Tests.TestProgram.csproj" />
+    <ProjectReference Include="../SmiteLib.VisualStudio.TestAdapter/SmiteLib.VisualStudio.TestAdapter.csproj" />
   </ItemGroup>
 
 </Project>

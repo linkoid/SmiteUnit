@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="../Common.targets" />
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.TestPlatform.AdapterUtilities" />
+    <PackageReference Include="Microsoft.TestPlatform.ObjectModel" />
+  </ItemGroup>
+</Project>

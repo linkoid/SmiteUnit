@@ -26,6 +26,7 @@ public class AttributeTests
 	[Test]
 	public void SetUpRunsFirst()
 	{
+		Console.WriteLine(TestContext.CurrentContext.Test.FullName);
 		process.RunTest(SmiteId.Method(AttributeTestsEdge.Test));
 		Assert.That(process.Output.ReadToEnd().StartsWith("SetUp"));
 
