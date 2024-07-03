@@ -19,34 +19,35 @@ public sealed class SmiteTestDiscoverer : ITestDiscoverer
 
 	public void DiscoverTests(IEnumerable<string> sources, IDiscoveryContext discoveryContext, IMessageLogger logger, ITestCaseDiscoverySink discoverySink)
 	{
+		InternalLogger.Handle = logger;
 		Logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-		logger.SendMessage(TestMessageLevel.Informational, "discovering tests");
+		InternalLogger.LogInfo("discovering tests");
 
 		try
 		{
-			DiscoverTestsInternal(sources, discoveryContext, logger, discoverySink);
+			DiscoverTestsInternal(sources, discoveryContext, discoverySink);
 		}
 		catch (Exception ex)
 		{
-			logger.SendMessage(TestMessageLevel.Error, ex.ToString());
+			InternalLogger.LogError(ex.ToString());
 		}
 
-		logger.SendMessage(TestMessageLevel.Informational, "finished discovering tests");
+		InternalLogger.LogInfo("finished discovering tests");
 	}
 
-	private void DiscoverTestsInternal(IEnumerable<string> sources, IDiscoveryContext discoveryContext, IMessageLogger logger, ITestCaseDiscoverySink discoverySink)
+	private void DiscoverTestsInternal(IEnumerable<string> sources, IDiscoveryContext discoveryContext, ITestCaseDiscoverySink discoverySink)
 	{
-		//logger.SendMessage(TestMessageLevel.Informational, $"run settings:\n{discoveryContext.RunSettings.SettingsXml}");
+		//InternalLogger.LogDebug($"run settings:\n{discoveryContext.RunSettings.SettingsXml}");
 
 		foreach (var source in sources)
 		{
-			logger.SendMessage(TestMessageLevel.Informational, $"Processing {source}");
+			InternalLogger.LogDebug($"Processing {source}");
 
 			using var loadContext = TestReflection.LoadWithContext(source, out var sourceAssembly);
 			foreach (var testMethod in sourceAssembly.TestMethods)
 			{
-				logger.SendMessage(TestMessageLevel.Informational, $"Found TestMethod {testMethod}");
+				InternalLogger.LogDebug($"Found TestMethod {testMethod}");
 				var testCase = new TestCase(testMethod.FullName, SmiteTestExecutor.ExecutorUri, source);
 				discoverySink.SendTestCase(testCase);
 			}

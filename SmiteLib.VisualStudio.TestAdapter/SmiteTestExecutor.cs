@@ -24,7 +24,7 @@ public sealed class SmiteTestExecutor : ITestExecutor
 		{
 			frameworkHandle.SendMessage(TestMessageLevel.Informational, $"Test Case: {testCase.FullyQualifiedName} Source: {testCase.Source}");
 			using var loadContext = TestReflection.LoadWithContext(testCase.Source, out var testAssembly);
-			SmiteTestEnumerator.Logger = frameworkHandle;
+			InternalLogger.Handle = frameworkHandle;
 
 			var testMethod = testAssembly.TestMethods.FirstOrDefault(x => { frameworkHandle.SendMessage(TestMessageLevel.Informational, $"{x} == {testCase.FullyQualifiedName} is {x == testCase.FullyQualifiedName}"); return x == testCase.FullyQualifiedName; } );
 			RunTest(testMethod, testCase, runContext, frameworkHandle);
@@ -47,9 +47,10 @@ public sealed class SmiteTestExecutor : ITestExecutor
 			});
 			return;
 		}
-		
 
-		var processPath = testCase.Source;
+
+		var processPath = testMethod.ProcessAttribute.FilePath ?? testCase.Source;
+		frameworkHandle.SendMessage(TestMessageLevel.Informational, $"Process Path: {processPath}");
 		var process = new SmiteProcess(processPath);
 
 		TestResult? result = null;
@@ -73,7 +74,7 @@ public sealed class SmiteTestExecutor : ITestExecutor
 
 		result ??= new TestResult(testCase)
 		{
-			Outcome = TestOutcome.Passed,
+			Outcome = process.Process.ExitCode == testMethod.ExpectedExitCode ? TestOutcome.Passed : TestOutcome.Failed,
 		};
 
 		result.Messages.Add(new(TestResultMessage.StandardOutCategory  , process.Output.ReadToEnd()));

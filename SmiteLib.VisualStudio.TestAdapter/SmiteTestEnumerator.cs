@@ -12,11 +12,9 @@ internal class SmiteTestEnumerator
 {
 	public static readonly Type SmiteTestAttributeType = typeof(Framework.SmiteTestAttribute);
 
-	public static IMessageLogger? Logger;
-
 	public static IEnumerable<TestMethod> Iterate(Assembly assembly)
 	{
-		//Logger?.SendMessage(TestMessageLevel.Informational, $"Iterate({assembly})");
+		//StaticLogger.LogDebug($"Iterate({assembly})");
 		foreach (var type in assembly.GetExportedTypes())
 		{
 			foreach (var method in Iterate(type))
@@ -26,10 +24,10 @@ internal class SmiteTestEnumerator
 
 	public static IEnumerable<TestMethod> Iterate(Type type)
 	{
-		//Logger?.SendMessage(TestMessageLevel.Informational, $"Iterate({type})");
+		//StaticLogger.LogDebug($"Iterate({type})");
 		foreach (var method in type.GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance))
 		{
-			//Logger?.SendMessage(TestMessageLevel.Informational, $"{method}.GetCustomAttribute<SmiteTestAttribute>()");
+			//StaticLogger.LogDebug($"{method}.GetCustomAttribute<SmiteTestAttribute>()");
 			var customAttributeData = method.GetCustomAttributesData();
 			var smiteTestAttributeData = customAttributeData.FirstOrDefault(
 				attributeData =>
@@ -40,7 +38,7 @@ internal class SmiteTestEnumerator
 					}
 					catch (Exception ex)
 					{
-						Logger?.SendMessage(TestMessageLevel.Informational, $"AttributeType error at {type.FullName}.{method.Name}\n\t{ex.Message}");
+						//StaticLogger.LogDebug($"AttributeType error at {type.FullName}.{method.Name}\n\t{ex.Message}");
 						return false;
 					}
 				}

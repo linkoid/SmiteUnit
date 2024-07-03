@@ -17,6 +17,7 @@ public class SmiteRunnerTests
 	[SetUp]
 	public void SetUp()
 	{
+		TestContext.WriteLine("SetUp");
 		process = new SmiteProcess("SmiteLib.Tests.TestProgram.exe")
 		{
 			UseSubprocess = true
@@ -40,7 +41,9 @@ public class SmiteRunnerTests
 	[Test]
 	public void LoggerOk()
 	{
-		process.RunTest(SmiteId.Method(SmiteRunnerTestsEdge.LoggerOk));
+		process.RunTest(
+			SmiteId.Method(SmiteRunnerTestsEdge.LoggerOk)
+		);
 		Assert.IsNotEmpty(process.Output.ReadToEnd());
 	}
 }

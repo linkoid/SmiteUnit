@@ -12,10 +12,10 @@ public static class Program
 		var internalRunner = new Framework.SmiteRunner();
 		internalRunner.RunAllStaticTests();
 
-		PostTestsEvent?.Invoke(null, EventArgs.Empty);
-
 		var externalRunner = new Framework.SmiteRunner(Assembly.LoadFrom("SmiteLib.Tests.dll"));
 		externalRunner.RunAllStaticTests();
+
+		PostTestsEvent?.Invoke(null, EventArgs.Empty);
 
 		Thread.Sleep(1000);
 	}

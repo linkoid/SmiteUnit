@@ -9,12 +9,13 @@ public class SmiteProcessAttribute : SmiteAttribute
 	public string? Arguments { get; init; }
 	public string? WorkingDirectory { get; init; }
 
-	public SmiteProcessAttribute()
-	{ }
-
 	public SmiteProcessAttribute(string filePath, string? arguments = null)
 	{
 		FilePath = filePath;
 		Arguments = arguments;
 	}
+
+	public SmiteProcessAttribute()
+	{ }
+
 }

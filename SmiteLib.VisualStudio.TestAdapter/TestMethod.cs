@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmiteLib.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -19,6 +20,8 @@ internal readonly struct TestMethod : IEquatable<TestMethod>, IEquatable<string>
 	}
 
 	public string FullName => $"{Type.FullName}.{Info.Name}";
+	public SmiteProcessAttribute ProcessAttribute => GetProcessAttribute();
+	public int ExpectedExitCode => Info.GetCustomAttributeFromData<ExpectExitCodeAttribute>()?.ExitCode ?? 0;
 
 	public override string ToString()
 	{
@@ -28,6 +31,26 @@ internal readonly struct TestMethod : IEquatable<TestMethod>, IEquatable<string>
 	public ISmiteId GetSmiteId()
 	{
 		return SmiteId.Method(Type, Info.Name);
+	}
+
+	private SmiteProcessAttribute GetProcessAttribute()
+	{
+		var attributes = Info.GetCustomAttributesData()
+			.Concat(Type.GetCustomAttributesData())
+			.Concat(Type.Assembly.GetCustomAttributesData());
+
+		var processAttributes = from attribute in attributes
+								where attribute.AttributeType.FullName == typeof(SmiteProcessAttribute).FullName
+								select attribute;
+
+		InternalLogger.LogValue(processAttributes.Count());
+
+		return new SmiteProcessAttribute()
+		{
+			FilePath = processAttributes.FirstArgumentOrDefault<string>(nameof(SmiteProcessAttribute.FilePath), 0),
+			Arguments = processAttributes.FirstArgumentOrDefault<string>(nameof(SmiteProcessAttribute.Arguments), 1),
+			WorkingDirectory = processAttributes.FirstArgumentOrDefault<string>(nameof(SmiteProcessAttribute.WorkingDirectory)),
+		};
 	}
 
 	public bool Equals(TestMethod other)
