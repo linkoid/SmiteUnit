@@ -1,10 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  <Import Project="../Build/Package.props" />
+  
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
-
     <IsPackable>false</IsPackable>
+    <EnableSmiteLibFramework>true</EnableSmiteLibFramework>
+    <EnableSmiteLibEngine>true</EnableSmiteLibEngine>
+    <EnableSmiteLibTestAdapter>true</EnableSmiteLibTestAdapter>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,13 +16,18 @@
     <PackageReference Include="NUnit" Version="3.13.2" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.0.0" />
     <PackageReference Include="coverlet.collector" Version="3.1.0" />
+    <PackageReference Include="$(PackageIdPrefix)SmiteLib" Version="$(Version)" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="../SmiteLib.Tests.TestProgram/SmiteLib.Tests.TestProgram.csproj" />
+  </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../SmiteLib/SmiteLib.csproj" />
-    <ProjectReference Include="../SmiteLib.Tests.TestProgram/SmiteLib.Tests.TestProgram.csproj" />
-    <ProjectReference Include="../SmiteLib.VisualStudio.TestAdapter/SmiteLib.VisualStudio.TestAdapter.csproj" />
+    <ProjectReference Include="../SmiteLib/SmiteLib.csproj">
+      <Targets>Pack;PublishLocal</Targets>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
   </ItemGroup>
 
 </Project>

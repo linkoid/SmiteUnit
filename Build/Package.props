@@ -1,0 +1,25 @@
+<Project>
+  <Import Project="Common.props"/>
+  <PropertyGroup>
+    <PackageIdPrefix>Linkoid.</PackageIdPrefix>
+    <PackageId>$(PackageIdPrefix)$(MSBuildProjectName)</PackageId>
+    <Title>$(MSBuildProjectName)</Title>
+    <Product>$(MSBuildProjectName)</Product>
+    <Version>$(VersionPrefix)-alpha</Version>
+    <IncludeBuildOutput>true</IncludeBuildOutput>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemDefinitionGroup>
+    <Build>
+      <Pack>true</Pack>
+      <PackagePath>build/%(Filename)%(Extension)</PackagePath>
+    </Build>
+  </ItemDefinitionGroup>
+
+  <ItemGroup>
+    <Build Include="Build/**">
+      <PackagePath>build/%(RecursiveDirectory)</PackagePath>
+    </Build>
+  </ItemGroup>
+</Project>

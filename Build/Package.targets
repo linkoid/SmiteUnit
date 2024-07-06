@@ -1,0 +1,32 @@
+<Project>
+  <ItemGroup>
+    <None Include="@(Build)">
+      <Link>%(PackagePath)</Link>
+    </None>
+    <None Update="Build/$(MSBuildProjectName).*">
+      <Link></Link>
+      <PackagePath>build/$(PackageIdPrefix)%(Filename)%(Extension)</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
+  </PropertyGroup>
+  <Target Name="CopyProjectReferencesToPackage" DependsOnTargets="BuildOnlySettings;ResolveReferences">
+    <ItemGroup>
+      <_ReferenceCopyLocalPaths Include="@(ReferenceCopyLocalPaths->WithMetadataValue('ReferenceSourceTarget', 'ProjectReference'))"/>
+    </ItemGroup>
+    <ItemGroup>
+      <BuildOutputInPackage Include="@(_ReferenceCopyLocalPaths)" TargetPath="%(_ReferenceCopyLocalPaths.DestinationSubDirectory)"/>
+    </ItemGroup>
+  </Target>
+
+  <Target Name="PublishLocal" DependsOnTargets="Pack" AfterTargets="Pack">
+    <PropertyGroup>
+      <PackagePath>$(OutputPath)../$(PackageId).$(PackageVersion).nupkg</PackagePath>
+      <PackageSource>%USERPROFILE%/.nuget/packages</PackageSource>
+    </PropertyGroup>
+    <Exec Command="NuGet delete $(PackageId) $(PackageVersion) -Source $(PackageSource) -NonInteractive" ContinueOnError="true" />
+    <Exec Command="NuGet add $(PackagePath) -Source $(PackageSource) -Expand -NonInteractive" />
+  </Target>
+</Project>

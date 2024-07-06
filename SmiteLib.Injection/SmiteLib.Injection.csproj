@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="../Build/Package.props" />
+
+  <PropertyGroup>
+    <RootNamespace>SmiteLib.Injection</RootNamespace>
+  </PropertyGroup>
+
+  <Import Project="../Build/Common.targets" />
+  <Import Project="../Build/Package.targets" />
+
+  <ItemGroup>
+    <ProjectReference Include="../SmiteLib.Framework.Core/SmiteLib.Framework.Core.csproj" Private="true" />
+  </ItemGroup>
+
+</Project>

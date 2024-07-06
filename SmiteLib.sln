@@ -14,11 +14,26 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E3A98DDB-364C-447D-8AAF-74D8BB3906B4}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
-		Common.targets = Common.targets
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmiteLib.VisualStudio.TestAdapter", "SmiteLib.VisualStudio.TestAdapter\SmiteLib.VisualStudio.TestAdapter.csproj", "{126DC849-6C87-4260-B3A4-61A1B98B2F5A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmiteLib.VisualStudio.TestAdapter", "SmiteLib.VisualStudio.TestAdapter\SmiteLib.VisualStudio.TestAdapter.csproj", "{126DC849-6C87-4260-B3A4-61A1B98B2F5A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmiteLib.Framework", "SmiteLib.Framework\SmiteLib.Framework.csproj", "{CC926AD8-B7C2-4C55-B665-4AAFD2997E9F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmiteLib.Injection", "SmiteLib.Injection\SmiteLib.Injection.csproj", "{0EF8BD96-72FC-4122-92A6-200FE2621FBE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmiteLib.Engine", "SmiteLib.Engine\SmiteLib.Engine.csproj", "{50FB6838-9F39-489B-877A-A1E054F3798F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{45F82C19-0D6F-441C-804F-DF4FA84B2920}"
+	ProjectSection(SolutionItems) = preProject
+		Build\Common.props = Build\Common.props
+		Build\Common.targets = Build\Common.targets
+		Build\Package.props = Build\Package.props
+		Build\Package.targets = Build\Package.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmiteLib.Framework.Core", "SmiteLib.Framework.Core\SmiteLib.Framework.Core.csproj", "{3806B278-614D-4D9E-B203-307A4657B90D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,9 +61,28 @@ Global
 		{126DC849-6C87-4260-B3A4-61A1B98B2F5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{126DC849-6C87-4260-B3A4-61A1B98B2F5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{126DC849-6C87-4260-B3A4-61A1B98B2F5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC926AD8-B7C2-4C55-B665-4AAFD2997E9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC926AD8-B7C2-4C55-B665-4AAFD2997E9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC926AD8-B7C2-4C55-B665-4AAFD2997E9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC926AD8-B7C2-4C55-B665-4AAFD2997E9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EF8BD96-72FC-4122-92A6-200FE2621FBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EF8BD96-72FC-4122-92A6-200FE2621FBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EF8BD96-72FC-4122-92A6-200FE2621FBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EF8BD96-72FC-4122-92A6-200FE2621FBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50FB6838-9F39-489B-877A-A1E054F3798F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50FB6838-9F39-489B-877A-A1E054F3798F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50FB6838-9F39-489B-877A-A1E054F3798F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50FB6838-9F39-489B-877A-A1E054F3798F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3806B278-614D-4D9E-B203-307A4657B90D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3806B278-614D-4D9E-B203-307A4657B90D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3806B278-614D-4D9E-B203-307A4657B90D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3806B278-614D-4D9E-B203-307A4657B90D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{45F82C19-0D6F-441C-804F-DF4FA84B2920} = {E3A98DDB-364C-447D-8AAF-74D8BB3906B4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DF05EC99-5F1A-4C5F-BFCC-AF1F4BF233B4}

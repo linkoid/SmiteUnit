@@ -1,0 +1,5 @@
+﻿<Project>
+  <ItemGroup>
+    <PackageReference Include="IDisposableAnalyzers" Version="4.0.7" PrivateAssets="all" />
+  </ItemGroup>
+</Project>

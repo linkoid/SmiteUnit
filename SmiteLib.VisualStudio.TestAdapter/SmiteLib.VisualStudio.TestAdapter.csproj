@@ -1,16 +1,17 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  
+  <Import Project="../Build/Common.props" />
+  <Import Project="../Build/Common.targets" />
 
-  <Import Project="../Common.targets" />
-
+  <PropertyGroup>
+    <EnableSmiteLibTestAdapter Condition=" '$(EnableSmiteLibTestAdapter)' == '' ">true</EnableSmiteLibTestAdapter>
+  </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.TestPlatform.ObjectModel" />
-    <PackageReference Include="System.Reflection.MetadataLoadContext" Version="8.0.0" />
+    <ProjectReference Include="../SmiteLib.Framework/SmiteLib.Framework.csproj" />
+    <ProjectReference Include="../SmiteLib.Engine/SmiteLib.Engine.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="../SmiteLib/SmiteLib.csproj" />
-    <ProjectReference Include="../SmiteLib.Core/SmiteLib.Core.csproj" />
-  </ItemGroup>
+  <Import Project="VisualStudio.TestAdapter.Packages.targets"/>
   
 </Project>

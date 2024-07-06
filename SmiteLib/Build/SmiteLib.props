@@ -1,0 +1,16 @@
+﻿<Project>
+
+  <PropertyGroup>
+    <EnableSmiteLibFramework Condition="'$(EnableSmiteLibFramework)' == ''">true</EnableSmiteLibFramework>
+    <EnableSmiteLibEngine Condition="'$(EnableSmiteLibEngine)' == ''">true</EnableSmiteLibEngine>
+    <EnableSmiteLibTestAdapter Condition="'$(EnableSmiteLibTestAdapter)' == ''">true</EnableSmiteLibTestAdapter>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <ImportPackageIncludeAssets Condition="'$(ImportPackageIncludeAssets)' == ''">runtime</ImportPackageIncludeAssets>
+  </PropertyGroup>
+  <ImportGroup Condition="'$(EnableSmiteLibTestAdapter)' == 'true'">
+    <Import Project="VisualStudio.TestAdapter.Packages.targets"/>
+  </ImportGroup>
+
+</Project>
