@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace SmiteLib.Framework;
 
@@ -8,6 +9,8 @@ public class SmiteProcessAttribute : SmiteAttribute
 	public string? FilePath { get; init; }
 	public string? Arguments { get; init; }
 	public string? WorkingDirectory { get; init; }
+	public string? OutputEncoding { get; init; }
+	public string? ErrorEncoding { get; init; }
 
 	public SmiteProcessAttribute(string filePath, string? arguments = null)
 	{

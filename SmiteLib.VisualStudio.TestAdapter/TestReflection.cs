@@ -9,6 +9,9 @@ namespace SmiteLib.VisualStudio.TestAdapter;
 
 internal static class TestReflection
 {
+	public static readonly Type SmiteAttribute = typeof(SmiteAttribute);
+	public static readonly Type SmiteTestAttribute = typeof(Framework.SmiteTestAttribute);
+
 	public static IEnumerable<string> GetLoadedAssemblyPaths()
 	{
 		return from assembly in AppDomain.CurrentDomain.GetAssemblies()
@@ -21,7 +24,12 @@ internal static class TestReflection
 	public static MetadataLoadContext LoadContext(string assemblyPath)
 	{
 		assemblyPath = System.IO.Path.GetFullPath(assemblyPath);
-		var paths = GetLoadedAssemblyPaths().Concat(new[] { assemblyPath, SmiteTestEnumerator.SmiteTestAttributeType.Assembly.Location });
+		var paths = GetLoadedAssemblyPaths().Concat(new[] 
+		{ 
+			assemblyPath,
+			SmiteAttribute.Assembly.Location,
+			SmiteTestAttribute.Assembly.Location,
+		});
 		var resolver = new PathAssemblyResolver(paths);
 		return new MetadataLoadContext(resolver);
 	}

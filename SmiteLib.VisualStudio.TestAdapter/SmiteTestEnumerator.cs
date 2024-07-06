@@ -10,8 +10,6 @@ namespace SmiteLib.VisualStudio.TestAdapter;
 
 internal class SmiteTestEnumerator
 {
-	public static readonly Type SmiteTestAttributeType = typeof(Framework.SmiteTestAttribute);
-
 	public static IEnumerable<TestMethod> Iterate(Assembly assembly)
 	{
 		//StaticLogger.LogDebug($"Iterate({assembly})");
@@ -34,7 +32,7 @@ internal class SmiteTestEnumerator
 				{
 					try
 					{
-						return attributeData.AttributeType.FullName == SmiteTestAttributeType.FullName;
+						return attributeData.AttributeType.FullName == TestReflection.SmiteTestAttribute.FullName;
 					}
 					catch (Exception ex)
 					{

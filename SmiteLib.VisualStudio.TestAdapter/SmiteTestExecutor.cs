@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace SmiteLib.VisualStudio.TestAdapter;
 
@@ -48,18 +50,41 @@ public sealed class SmiteTestExecutor : ITestExecutor
 			return;
 		}
 
-
-		var processPath = testMethod.ProcessAttribute.FilePath ?? testCase.Source;
-		frameworkHandle.SendMessage(TestMessageLevel.Informational, $"Process Path: {processPath}");
-		var process = new SmiteProcess(processPath);
-
 		TestResult? result = null;
-		var stopwatch = Stopwatch.StartNew();
-		DateTime startTime = DateTime.Now;
-		DateTime endTime;
+		Stopwatch? stopwatch = null;
+		DateTime startTime = default;
+		DateTime endTime = default;
 		try
 		{
-			process.RunTest(testMethod.GetSmiteId());
+			var processAttribute = testMethod.ProcessAttribute;
+			var processPath = processAttribute.FilePath ?? testCase.Source;
+			frameworkHandle.SendMessage(TestMessageLevel.Informational, $"Process Path: {processPath}");
+			var process = new SmiteProcess(processPath)
+			{
+				WorkingDirectory = processAttribute.WorkingDirectory ?? string.Empty,
+			};
+			TrySetEncoding(process.Output, processAttribute.OutputEncoding, nameof(processAttribute.OutputEncoding));
+			TrySetEncoding(process.Error , processAttribute.ErrorEncoding , nameof(processAttribute.ErrorEncoding ));
+
+			stopwatch = Stopwatch.StartNew();
+			try
+			{
+				startTime = DateTime.Now;
+				process.RunTest(testMethod.GetSmiteId());
+			}
+			finally
+			{
+				stopwatch?.Stop();
+				endTime = DateTime.Now;
+			}
+
+			result ??= new TestResult(testCase)
+			{
+				Outcome = process.Process.ExitCode == testMethod.ExpectedExitCode ? TestOutcome.Passed : TestOutcome.Failed,
+			};
+
+			result.Messages.Add(new(TestResultMessage.StandardOutCategory, process.Output.ReadToEnd()));
+			result.Messages.Add(new(TestResultMessage.StandardErrorCategory, process.Error.ReadToEnd()));
 		}
 		catch (Exception ex)
 		{
@@ -69,25 +94,37 @@ public sealed class SmiteTestExecutor : ITestExecutor
 				ErrorMessage = ex.Message,
 			};
 		}
-		stopwatch.Stop();
-		endTime = DateTime.Now;
-
-		result ??= new TestResult(testCase)
-		{
-			Outcome = process.Process.ExitCode == testMethod.ExpectedExitCode ? TestOutcome.Passed : TestOutcome.Failed,
-		};
-
-		result.Messages.Add(new(TestResultMessage.StandardOutCategory  , process.Output.ReadToEnd()));
-		result.Messages.Add(new(TestResultMessage.StandardErrorCategory, process.Error .ReadToEnd()));
 
 		result.StartTime = startTime;
 		result.EndTime = endTime;
-		result.Duration = stopwatch.Elapsed;
+		result.Duration = stopwatch?.Elapsed ?? default;
 		frameworkHandle.RecordResult(result);
 	}
 
 	public void Cancel() 
 	{
 		//throw new NotImplementedException();
+	}
+
+	private static void TrySetEncoding(Internal.RedirectionStreamReader redirectionStreamReader, string? encodingName,
+		[CallerArgumentExpression(nameof(encodingName))] string argumentName = "Encoding")
+	{
+		if (string.IsNullOrEmpty(encodingName))
+			return;
+
+		Encoding encoding = encodingName switch
+		{
+			nameof(Encoding.ASCII           ) => Encoding.ASCII           ,
+			nameof(Encoding.BigEndianUnicode) => Encoding.BigEndianUnicode,
+			nameof(Encoding.Default         ) => Encoding.Default         ,
+			nameof(Encoding.Latin1          ) => Encoding.Latin1          ,
+			nameof(Encoding.Unicode         ) => Encoding.Unicode         ,
+			nameof(Encoding.UTF32           ) => Encoding.UTF32           ,
+			nameof(Encoding.UTF7            ) => Encoding.UTF7            ,
+			nameof(Encoding.UTF8            ) => Encoding.UTF8            ,
+			_ => throw new ArgumentException($"Invalid encoding '{encodingName}'", argumentName),
+		};
+
+		redirectionStreamReader.Encoding = encoding;
 	}
 }

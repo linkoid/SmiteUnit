@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,28 +16,33 @@ internal static class InternalLogger
 
 	public static void LogInfo(string message)
 	{
-		Handle?.SendMessage(TestMessageLevel.Informational, message);
+		SendMessage(TestMessageLevel.Informational, message);
 	}
 
 	public static void LogError(string message)
 	{
-		Handle?.SendMessage(TestMessageLevel.Warning, message);
+		SendMessage(TestMessageLevel.Warning, message);
 	}
 
 	public static void LogWarning(string message)
 	{
-		Handle?.SendMessage(TestMessageLevel.Error, message);
+		SendMessage(TestMessageLevel.Error, message);
 	}
 
 	[Conditional("DEBUG")]
 	public static void LogDebug(string message)
 	{
-		Handle?.SendMessage(TestMessageLevel.Informational, message);
+		SendMessage(TestMessageLevel.Informational, message);
 	}
 
 	[Conditional("DEBUG")]
 	public static void LogValue<T>(T value, [CallerArgumentExpression(nameof(value))] string valueExpression = "value")
 	{
-		Handle?.SendMessage(TestMessageLevel.Informational, $"{valueExpression} = {value}");
+		SendMessage(TestMessageLevel.Informational, $"{valueExpression} = {value}");
+	}
+
+	private static void SendMessage(TestMessageLevel testMessageLevel, string message)
+	{
+		Handle?.SendMessage(testMessageLevel, $"SmiteLib Adapter: {message}");
 	}
 }

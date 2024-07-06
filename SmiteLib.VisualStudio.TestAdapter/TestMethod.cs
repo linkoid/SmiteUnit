@@ -47,9 +47,11 @@ internal readonly struct TestMethod : IEquatable<TestMethod>, IEquatable<string>
 
 		return new SmiteProcessAttribute()
 		{
-			FilePath = processAttributes.FirstArgumentOrDefault<string>(nameof(SmiteProcessAttribute.FilePath), 0),
-			Arguments = processAttributes.FirstArgumentOrDefault<string>(nameof(SmiteProcessAttribute.Arguments), 1),
-			WorkingDirectory = processAttributes.FirstArgumentOrDefault<string>(nameof(SmiteProcessAttribute.WorkingDirectory)),
+			FilePath         = processAttributes.FirstArgumentOrDefault<string>(nameof(SmiteProcessAttribute.FilePath        ), 0),
+			Arguments        = processAttributes.FirstArgumentOrDefault<string>(nameof(SmiteProcessAttribute.Arguments       ), 1),
+			WorkingDirectory = processAttributes.FirstArgumentOrDefault<string>(nameof(SmiteProcessAttribute.WorkingDirectory)   ),
+			OutputEncoding   = processAttributes.FirstArgumentOrDefault<string>(nameof(SmiteProcessAttribute.OutputEncoding  )   ),
+			ErrorEncoding    = processAttributes.FirstArgumentOrDefault<string>(nameof(SmiteProcessAttribute.ErrorEncoding   )   ),
 		};
 	}
 

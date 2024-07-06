@@ -1,5 +1,6 @@
 ﻿using SmiteLib.Framework;
 using System;
+using System.Text;
 
 namespace SmiteLib.Tests;
 
@@ -21,6 +22,14 @@ public class SmiteAttributeTests
 	[SmiteTest]
 	[ExpectExitCode(1)]
 	public static void ExpectExitCode1()
+	{
+		Environment.Exit(1);
+	}
+
+	[SmiteTest]
+	[ExpectExitCode(1)]
+	[SmiteProcess(OutputEncoding = nameof(Encoding.Unicode))]
+	public static void ExplicitEncoding()
 	{
 		Environment.Exit(1);
 	}
