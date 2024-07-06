@@ -35,6 +35,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{45F82C19
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmiteLib.Framework.Core", "SmiteLib.Framework.Core\SmiteLib.Framework.Core.csproj", "{3806B278-614D-4D9E-B203-307A4657B90D}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmiteLib.Tests.PackageTests", "SmiteLib.Tests\SmiteLib.Tests.PackageTests.csproj", "{33847F9A-1E1F-4013-8CC6-0A347638D6A3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmiteLib.Tests.PackageTests.TestProgram", "SmiteLib.Tests.TestProgram\SmiteLib.Tests.PackageTests.TestProgram.csproj", "{55B1CDD9-7262-414D-A3DF-C881BF32FEAB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +81,14 @@ Global
 		{3806B278-614D-4D9E-B203-307A4657B90D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3806B278-614D-4D9E-B203-307A4657B90D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3806B278-614D-4D9E-B203-307A4657B90D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33847F9A-1E1F-4013-8CC6-0A347638D6A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33847F9A-1E1F-4013-8CC6-0A347638D6A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33847F9A-1E1F-4013-8CC6-0A347638D6A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33847F9A-1E1F-4013-8CC6-0A347638D6A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55B1CDD9-7262-414D-A3DF-C881BF32FEAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55B1CDD9-7262-414D-A3DF-C881BF32FEAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55B1CDD9-7262-414D-A3DF-C881BF32FEAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55B1CDD9-7262-414D-A3DF-C881BF32FEAB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
