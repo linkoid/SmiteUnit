@@ -6,4 +6,8 @@
     <VersionPrefix>0.0.2</VersionPrefix>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
+  <PropertyGroup>
+    <PackageIdPrefix>Linkoid.</PackageIdPrefix>
+    <Version>$(VersionPrefix)-alpha</Version>
+  </PropertyGroup>
 </Project>

@@ -12,12 +12,15 @@
   <PropertyGroup>
     <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
   </PropertyGroup>
-  <Target Name="CopyProjectReferencesToPackage" DependsOnTargets="BuildOnlySettings;ResolveReferences">
+  <Target Name="CopyProjectReferencesToPackage" DependsOnTargets="BuildOnlySettings;ResolveReferences" >
     <ItemGroup>
-      <_ReferenceCopyLocalPaths Include="@(ReferenceCopyLocalPaths->WithMetadataValue('ReferenceSourceTarget', 'ProjectReference'))"/>
+      <_ProjectReferenceCopyLocalPaths Include="@(ReferenceCopyLocalPaths->WithMetadataValue('ReferenceSourceTarget', 'ProjectReference'))"/>
     </ItemGroup>
     <ItemGroup>
-      <BuildOutputInPackage Include="@(_ReferenceCopyLocalPaths)" TargetPath="%(_ReferenceCopyLocalPaths.DestinationSubDirectory)"/>
+      <BuildOutputInPackage Include="@(_ProjectReferenceCopyLocalPaths->WithMetadataValue('Extension', '.dll'))" TargetPath="%(_ProjectReferenceCopyLocalPaths.DestinationSubDirectory)" />
+      <BuildOutputInPackage Include="@(_ProjectReferenceCopyLocalPaths->WithMetadataValue('Extension', '.exe'))" TargetPath="%(_ProjectReferenceCopyLocalPaths.DestinationSubDirectory)" />
+      <_TargetPathsToSymbolsWithTfm Include="@(_ProjectReferenceCopyLocalPaths->WithMetadataValue('Extension', '.pdb'))" TargetPath="%(_ProjectReferenceCopyLocalPaths.DestinationSubDirectory)" TargetFramework="$(TargetFramework)" />
+      <_TargetPathsToSymbolsWithTfm Include="@(_ProjectReferenceCopyLocalPaths->WithMetadataValue('Extension', '.mdb'))" TargetPath="%(_ProjectReferenceCopyLocalPaths.DestinationSubDirectory)" TargetFramework="$(TargetFramework)" />
     </ItemGroup>
   </Target>
 

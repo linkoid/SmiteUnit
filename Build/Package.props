@@ -1,11 +1,9 @@
 <Project>
   <Import Project="Common.props"/>
   <PropertyGroup>
-    <PackageIdPrefix>Linkoid.</PackageIdPrefix>
     <PackageId>$(PackageIdPrefix)$(MSBuildProjectName)</PackageId>
     <Title>$(MSBuildProjectName)</Title>
     <Product>$(MSBuildProjectName)</Product>
-    <Version>$(VersionPrefix)-alpha</Version>
     <IncludeBuildOutput>true</IncludeBuildOutput>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IsPackable>true</IsPackable>

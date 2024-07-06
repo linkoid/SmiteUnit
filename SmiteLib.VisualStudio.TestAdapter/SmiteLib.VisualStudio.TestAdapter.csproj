@@ -5,6 +5,7 @@
 
   <PropertyGroup>
     <EnableSmiteLibTestAdapter Condition=" '$(EnableSmiteLibTestAdapter)' == '' ">true</EnableSmiteLibTestAdapter>
+    <DevelopmentDependency>true</DevelopmentDependency>
   </PropertyGroup>
 
   <ItemGroup>

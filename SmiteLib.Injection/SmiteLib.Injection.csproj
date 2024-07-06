@@ -10,7 +10,8 @@
   <Import Project="../Build/Package.targets" />
 
   <ItemGroup>
-    <ProjectReference Include="../SmiteLib.Framework.Core/SmiteLib.Framework.Core.csproj" PrivateAssets="all"/>
+    <ProjectReference Include="../SmiteLib.Framework.Core/SmiteLib.Framework.Core.csproj" Private="true" PrivateAssets="all">
+      <TreatAsPackageReference>false</TreatAsPackageReference>
+    </ProjectReference>
   </ItemGroup>
-
 </Project>
