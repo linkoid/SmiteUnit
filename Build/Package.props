@@ -8,6 +8,7 @@
     <Version>$(VersionPrefix)-alpha</Version>
     <IncludeBuildOutput>true</IncludeBuildOutput>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IsPackable>true</IsPackable>
   </PropertyGroup>
 
   <ItemDefinitionGroup>

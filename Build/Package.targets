@@ -5,7 +5,7 @@
     </None>
     <None Update="Build/$(MSBuildProjectName).*">
       <Link></Link>
-      <PackagePath>build/$(PackageIdPrefix)%(Filename)%(Extension)</PackagePath>
+      <PackagePath>build/$(PackageId)%(Extension)</PackagePath>
     </None>
   </ItemGroup>
 

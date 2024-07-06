@@ -4,5 +4,6 @@
     <Nullable>enable</Nullable>
     <Authors>linkoid</Authors>
     <VersionPrefix>0.0.2</VersionPrefix>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 </Project>

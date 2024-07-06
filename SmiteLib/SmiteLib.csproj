@@ -11,7 +11,7 @@
     <ProjectReference Include="..\SmiteLib.Engine\SmiteLib.Engine.csproj" PrivateAssets="all" />
     <ProjectReference Include="..\SmiteLib.Framework\SmiteLib.Framework.csproj" PrivateAssets="all" />
     <ProjectReference Include="..\SmiteLib.VisualStudio.TestAdapter\SmiteLib.VisualStudio.TestAdapter.csproj" PrivateAssets="all">
-      <OutputItemType>None</OutputItemType>
+      <!--<OutputItemType>None</OutputItemType>-->
     </ProjectReference>
     <Build Include="..\SmiteLib.VisualStudio.TestAdapter\VisualStudio.TestAdapter.Packages.targets" />
   </ItemGroup>
