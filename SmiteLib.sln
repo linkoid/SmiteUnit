@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmiteLib", "SmiteLib\SmiteL
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmiteLib.Tests", "SmiteLib.Tests\SmiteLib.Tests.csproj", "{73C52401-5FC2-43FC-A985-BBF7CEE69FD0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmiteLib.Core", "SmiteLib.Core\SmiteLib.Core.csproj", "{1414D8CE-DC2B-45B2-A556-0B222A8F3679}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmiteLib.Tests.TestProgram", "SmiteLib.Tests.TestProgram\SmiteLib.Tests.TestProgram.csproj", "{29B245C0-1E55-4935-B13F-7677FB4E32CF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E3A98DDB-364C-447D-8AAF-74D8BB3906B4}"
@@ -29,15 +27,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{45F82C19
 	ProjectSection(SolutionItems) = preProject
 		Build\Common.props = Build\Common.props
 		Build\Common.targets = Build\Common.targets
+		Build\Debug.targets = Build\Debug.targets
+		Build\ILRepack.props = Build\ILRepack.props
+		Build\ILRepack.targets = Build\ILRepack.targets
 		Build\Package.props = Build\Package.props
 		Build\Package.targets = Build\Package.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmiteLib.Framework.Core", "SmiteLib.Framework.Core\SmiteLib.Framework.Core.csproj", "{3806B278-614D-4D9E-B203-307A4657B90D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmiteLib.Core", "SmiteLib.Core\SmiteLib.Core.csproj", "{E101DFC6-3E75-47BD-8144-11F00306BC66}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmiteLib.Tests.PackageTests", "SmiteLib.Tests\SmiteLib.Tests.PackageTests.csproj", "{33847F9A-1E1F-4013-8CC6-0A347638D6A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmiteLib-Package", "SmiteLib-Package\SmiteLib-Package.csproj", "{00FDFEEA-2C9F-4463-8052-FA70396BDBC3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmiteLib.Tests.PackageTests.TestProgram", "SmiteLib.Tests.TestProgram\SmiteLib.Tests.PackageTests.TestProgram.csproj", "{55B1CDD9-7262-414D-A3DF-C881BF32FEAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmiteLib.Tests.TestProgram.PackageTests", "SmiteLib.Tests.TestProgram\PackageTests\SmiteLib.Tests.TestProgram.PackageTests.csproj", "{3E043F2E-308A-4D7C-A13E-907BBCB702C3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmiteLib.Tests.PackageTests", "SmiteLib.Tests\PackageTests\SmiteLib.Tests.PackageTests.csproj", "{CA36C545-3304-45F8-8418-0DC9F7A04827}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,10 +56,6 @@ Global
 		{73C52401-5FC2-43FC-A985-BBF7CEE69FD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73C52401-5FC2-43FC-A985-BBF7CEE69FD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73C52401-5FC2-43FC-A985-BBF7CEE69FD0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1414D8CE-DC2B-45B2-A556-0B222A8F3679}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1414D8CE-DC2B-45B2-A556-0B222A8F3679}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1414D8CE-DC2B-45B2-A556-0B222A8F3679}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1414D8CE-DC2B-45B2-A556-0B222A8F3679}.Release|Any CPU.Build.0 = Release|Any CPU
 		{29B245C0-1E55-4935-B13F-7677FB4E32CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{29B245C0-1E55-4935-B13F-7677FB4E32CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29B245C0-1E55-4935-B13F-7677FB4E32CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -77,18 +76,22 @@ Global
 		{50FB6838-9F39-489B-877A-A1E054F3798F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50FB6838-9F39-489B-877A-A1E054F3798F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50FB6838-9F39-489B-877A-A1E054F3798F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3806B278-614D-4D9E-B203-307A4657B90D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3806B278-614D-4D9E-B203-307A4657B90D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3806B278-614D-4D9E-B203-307A4657B90D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3806B278-614D-4D9E-B203-307A4657B90D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{33847F9A-1E1F-4013-8CC6-0A347638D6A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{33847F9A-1E1F-4013-8CC6-0A347638D6A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{33847F9A-1E1F-4013-8CC6-0A347638D6A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{33847F9A-1E1F-4013-8CC6-0A347638D6A3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{55B1CDD9-7262-414D-A3DF-C881BF32FEAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{55B1CDD9-7262-414D-A3DF-C881BF32FEAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{55B1CDD9-7262-414D-A3DF-C881BF32FEAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{55B1CDD9-7262-414D-A3DF-C881BF32FEAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E101DFC6-3E75-47BD-8144-11F00306BC66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E101DFC6-3E75-47BD-8144-11F00306BC66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E101DFC6-3E75-47BD-8144-11F00306BC66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E101DFC6-3E75-47BD-8144-11F00306BC66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00FDFEEA-2C9F-4463-8052-FA70396BDBC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00FDFEEA-2C9F-4463-8052-FA70396BDBC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00FDFEEA-2C9F-4463-8052-FA70396BDBC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00FDFEEA-2C9F-4463-8052-FA70396BDBC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E043F2E-308A-4D7C-A13E-907BBCB702C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E043F2E-308A-4D7C-A13E-907BBCB702C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E043F2E-308A-4D7C-A13E-907BBCB702C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E043F2E-308A-4D7C-A13E-907BBCB702C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA36C545-3304-45F8-8418-0DC9F7A04827}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA36C545-3304-45F8-8418-0DC9F7A04827}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA36C545-3304-45F8-8418-0DC9F7A04827}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA36C545-3304-45F8-8418-0DC9F7A04827}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

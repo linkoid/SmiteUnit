@@ -1,35 +1,82 @@
 <Project>
   <ItemGroup>
-    <None Include="@(Build)">
-      <Link>%(PackagePath)</Link>
-    </None>
-    <None Update="Build/$(MSBuildProjectName).*">
-      <Link></Link>
-      <PackagePath>build/$(PackageId)%(Extension)</PackagePath>
-    </None>
+    <Content Include="@(Build)"/>
   </ItemGroup>
 
-  <PropertyGroup>
-    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
-  </PropertyGroup>
-  <Target Name="CopyProjectReferencesToPackage" DependsOnTargets="BuildOnlySettings;ResolveReferences" >
+  <Target Name="_GetPackageBuildFiles" AfterTargets="_GetPackageFiles">
     <ItemGroup>
-      <_ProjectReferenceCopyLocalPaths Include="@(ReferenceCopyLocalPaths->WithMetadataValue('ReferenceSourceTarget', 'ProjectReference'))"/>
-    </ItemGroup>
-    <ItemGroup>
-      <BuildOutputInPackage Include="@(_ProjectReferenceCopyLocalPaths->WithMetadataValue('Extension', '.dll'))" TargetPath="%(_ProjectReferenceCopyLocalPaths.DestinationSubDirectory)" />
-      <BuildOutputInPackage Include="@(_ProjectReferenceCopyLocalPaths->WithMetadataValue('Extension', '.exe'))" TargetPath="%(_ProjectReferenceCopyLocalPaths.DestinationSubDirectory)" />
-      <_TargetPathsToSymbolsWithTfm Include="@(_ProjectReferenceCopyLocalPaths->WithMetadataValue('Extension', '.pdb'))" TargetPath="%(_ProjectReferenceCopyLocalPaths.DestinationSubDirectory)" TargetFramework="$(TargetFramework)" />
-      <_TargetPathsToSymbolsWithTfm Include="@(_ProjectReferenceCopyLocalPaths->WithMetadataValue('Extension', '.mdb'))" TargetPath="%(_ProjectReferenceCopyLocalPaths.DestinationSubDirectory)" TargetFramework="$(TargetFramework)" />
+      <_PackageFiles Include="@(Build)" Condition="'%(Build.Pack)' == 'true'">
+        <BuildAction Condition="'%(Build.BuildAction)' == ''">Build</BuildAction>
+      </_PackageFiles>
     </ItemGroup>
   </Target>
 
-  <Target Name="PublishLocal" DependsOnTargets="Pack" AfterTargets="Pack">
+  <Import Project="$(MSBuildThisFileDirectory)Debug.targets"/>
+  
+  <PropertyGroup>
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
+  </PropertyGroup>
+  <Target Name="CopyProjectReferencesToPackage" DependsOnTargets="BuildOnlySettings;ResolveReferences;_GetProjectReferenceVersions" >
+    <ItemGroup>
+      <_ProjectReferenceCopyLocalPaths Include="@(ReferenceCopyLocalPaths->WithMetadataValue('ReferenceSourceTarget', 'ProjectReference')->WithMetadataValue('PrivateAssets', 'All'))" />
+    </ItemGroup>
+    
+    <!-- Mark Included Assets -->
+    <ItemGroup> 
+      <_ProjectReferenceCopyLocalPaths Update="@(_ProjectReferenceCopyLocalPaths)">
+        <_IncludeRuntimeAssets>false</_IncludeRuntimeAssets>
+        <_IncludeRuntimeAssets
+          Condition="'%(_ProjectReferenceCopyLocalPaths.IncludeAssets)' == ''
+                     or '%(_ProjectReferenceCopyLocalPaths.IncludeAssets)' == 'All'
+                     or $([System.String]::Copy('%(_ProjectReferenceCopyLocalPaths.IncludeAssets)').ToLower().Contains('runtime')) == 'true'"
+          >true</_IncludeRuntimeAssets>
+        <_IncludeRuntimeAssets
+          Condition="'%(_ProjectReferenceCopyLocalPaths.ExcludeAssets)' == 'All'
+                     or $([System.String]::Copy('%(_ProjectReferenceCopyLocalPaths.ExcludeAssets)').ToLower().Contains('runtime')) == 'true'"
+          >false</_IncludeRuntimeAssets>
+
+        <_IncludeCompileAssets>false</_IncludeCompileAssets>
+        <_IncludeCompileAssets
+          Condition="'%(_ProjectReferenceCopyLocalPaths.IncludeAssets)' == ''
+                     or '%(_ProjectReferenceCopyLocalPaths.IncludeAssets)' == 'All'
+                     or $([System.String]::Copy('%(_ProjectReferenceCopyLocalPaths.IncludeAssets)').ToLower().Contains('compile')) == 'true'"
+          >true</_IncludeCompileAssets>
+        <_IncludeCompileAssets
+          Condition="'%(_ProjectReferenceCopyLocalPaths.ExcludeAssets)' == 'All'
+                     or $([System.String]::Copy('%(_ProjectReferenceCopyLocalPaths.ExcludeAssets)').ToLower().Contains('compile')) == 'true'"
+          >false</_IncludeCompileAssets>
+      </_ProjectReferenceCopyLocalPaths>
+    </ItemGroup>
+    
+    <!--<GetAllMetadata Items="@(_ProjectReferenceCopyLocalPaths->WithMetadataValue('Filename', 'SmiteLib.VisualStudio.TestAdapter')->WithMetadataValue('Extension', '.dll'))">
+      <Output TaskParameter="MetadataString" PropertyName="_MetadataString" />
+    </GetAllMetadata>
+    <Message Text="$(_MetadataString)" Importance="High" />-->
+
+    <Message Text="@(_ProjectReferenceCopyLocalPaths->'%(Filename) _IncludeRuntimeAssets: %(_IncludeRuntimeAssets) _IncludeCompileAssets: %(_IncludeCompileAssets)', '&#xA;')"
+             Importance="High" />
+    
+    <ItemGroup>
+      <BuildOutputInPackage Include="@(_ProjectReferenceCopyLocalPaths)">
+        <TargetPath>%(_ProjectReferenceCopyLocalPaths.DestinationSubDirectory)</TargetPath>
+        <!--<TargetPath Condition="'%(_IncludeRuntimeAssets)' == 'true'
+                               and '%(_IncludeCompileAssets)' == 'false'
+                              ">../../runtimes/%(BuildOutputInPackage.TargetPath)</TargetPath>-->
+      </BuildOutputInPackage>
+                            
+    </ItemGroup>
+  </Target>
+
+  <Target Name="PublishLocal" DependsOnTargets="Pack" AfterTargets="Pack"
+          Returns="@(_TargetPackage)">
     <PropertyGroup>
       <PackagePath>$(OutputPath)../$(PackageId).$(PackageVersion).nupkg</PackagePath>
       <PackageSource>%USERPROFILE%/.nuget/packages</PackageSource>
     </PropertyGroup>
     <Exec Command="NuGet delete $(PackageId) $(PackageVersion) -Source $(PackageSource) -NonInteractive" ContinueOnError="true" />
     <Exec Command="NuGet add $(PackagePath) -Source $(PackageSource) -Expand -NonInteractive" />
+    <ItemGroup>
+      <_TargetPackage Include="$(PackageId)" Version="$(PackageVersion)" />
+    </ItemGroup>
   </Target>
 </Project>

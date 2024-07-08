@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   
-  <Import Project="../Build/Common.props" />
-  <Import Project="../Build/Common.targets" />
+  <Import Project="../Build/Package.props" />
 
   <PropertyGroup>
     <EnableSmiteLibTestAdapter Condition=" '$(EnableSmiteLibTestAdapter)' == '' ">true</EnableSmiteLibTestAdapter>
@@ -10,9 +9,11 @@
 
   <ItemGroup>
     <ProjectReference Include="../SmiteLib.Framework/SmiteLib.Framework.csproj" />
-    <ProjectReference Include="../SmiteLib.Engine/SmiteLib.Engine.csproj" />
   </ItemGroup>
 
   <Import Project="VisualStudio.TestAdapter.Packages.targets"/>
+  
+  <Import Project="../Build/Common.targets" />
+  <Import Project="../Build/Package.targets" />
   
 </Project>

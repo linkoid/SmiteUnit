@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.Build.NoTargets/3.7.56">
+
+  <PropertyGroup>
+    <ProjectName>SmiteLib</ProjectName>
+  </PropertyGroup>
+  
+  <Import Project="../Build/Package.props" />
+
+  <PropertyGroup>
+    <NoTargetsDoNotReferenceOutputAssemblies>false</NoTargetsDoNotReferenceOutputAssemblies>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../SmiteLib.Framework/SmiteLib.Framework.csproj" />
+    <ProjectReference Include="../SmiteLib.VisualStudio.TestAdapter/SmiteLib.VisualStudio.TestAdapter.csproj">
+      <IncludeAssets>Runtime</IncludeAssets>
+    </ProjectReference>
+  </ItemGroup>
+
+  <!--<ItemGroup>
+    <ProjectReference Include="../SmiteLib.VisualStudio.TestAdapter/SmiteLib.VisualStudio.TestAdapter.csproj">
+      <PrivateAssets>All</PrivateAssets>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <OutputItemType>Build</OutputItemType>
+    </ProjectReference>
+    <Build Include="../SmiteLib.VisualStudio.TestAdapter/VisualStudio.TestAdapter.Packages.targets" />
+  </ItemGroup>-->
+
+  <Import Project="../Build/Package.targets" />
+
+</Project>

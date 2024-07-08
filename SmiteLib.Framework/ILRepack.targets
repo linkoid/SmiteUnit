@@ -1,0 +1,31 @@
+﻿<Project>
+  
+  <PropertyGroup>
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);_ILRepack</TargetsForTfmSpecificBuildOutput>
+  </PropertyGroup>
+  
+  <Target Name="_ILRepack" AfterTargets="CoreCompile" >
+    <PropertyGroup>
+      <_ILRepackOutputFile>$(IntermediateOutputPath)ILRepack/$(TargetName)$(TargetExt)</_ILRepackOutputFile>
+    </PropertyGroup>
+    <ItemGroup>
+      <MergedAssembly Include="@(IntermediateAssembly)" />
+      <MergedAssembly Include="@(ReferencePath->WithMetadataValue('Filename', 'SmiteLib.Engine')->WithMetadataValue('Extension', '.dll'))" />
+    </ItemGroup>
+
+    <Message Text="Merging Assemblies: @(MergedAssembly->'%(Filename)%(Extension)', '; ')" Importance="high" />
+    
+    <ILRepack OutputFile="$(_ILRepackOutputFile)"
+              InputAssemblies="@(MergedAssembly)"
+              Parallel="true"
+              DebugInfo="true"
+              AllowDuplicateResources="false"
+              TargetKind="SameAsPrimaryAssembly"
+              KeyFile="$(KeyFile)" />
+
+    <ItemGroup>
+      <IntermediateAssembly Remove="@(IntermediateAssembly)" />
+      <IntermediateAssembly Include="$(_ILRepackOutputFile)" />
+    </ItemGroup>
+  </Target>
+</Project>

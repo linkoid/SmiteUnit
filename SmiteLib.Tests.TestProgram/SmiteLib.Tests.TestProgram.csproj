@@ -14,12 +14,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="SmiteLib.Tests.PackageTests.TestProgram.csproj" />
+    <None Remove="packageTests/**" />
+    <Compile Remove="packageTests/**" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SmiteLib.Framework.Core\SmiteLib.Framework.Core.csproj" />
-    <ProjectReference Include="..\SmiteLib.Injection\SmiteLib.Injection.csproj" />
+    <ProjectReference Include="../SmiteLib/SmiteLib.csproj" />
+    <ProjectReference Include="../SmiteLib.Injection/SmiteLib.Injection.csproj" />
   </ItemGroup>
 
 </Project>

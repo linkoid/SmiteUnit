@@ -13,11 +13,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../SmiteLib.Framework.Core/SmiteLib.Framework.Core.csproj" Private="true" />
+    <ProjectReference Include="../SmiteLib/SmiteLib.csproj">
+      <ReferenceOutputAssembly Condition="'$(DesignTimeBuild)' == 'true'">false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="../SmiteLib.Core/SmiteLib.Core.csproj">
+      <ReferenceOutputAssembly Condition="'$(DesignTimeBuild)' != 'true'">false</ReferenceOutputAssembly>
+    </ProjectReference>
   </ItemGroup>
 
   <ItemGroup>
     <InternalsVisibleTo Include="SmiteLib.Tests" />
   </ItemGroup>
-
+  
 </Project>

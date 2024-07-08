@@ -12,7 +12,8 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <None Include="SmiteLib.Tests.PackageTests.csproj" />
+    <None Remove="packageTests/**" />
+    <Compile Remove="packageTests/**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,11 +23,19 @@
     <PackageReference Include="coverlet.collector" Version="3.1.0" />
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(DesignTimeBuild)' == 'true'">
+    <ProjectReference Include="../SmiteLib/SmiteLib.csproj" />
     <ProjectReference Include="../SmiteLib.Engine/SmiteLib.Engine.csproj" />
     <ProjectReference Include="../SmiteLib.Framework/SmiteLib.Framework.csproj" />
     <ProjectReference Include="../SmiteLib.Tests.TestProgram/SmiteLib.Tests.TestProgram.csproj" />
-    <ProjectReference Include="../SmiteLib.VisualStudio.TestAdapter/SmiteLib.VisualStudio.TestAdapter.csproj" IncludeAssets="Runtime"/>
+    <ProjectReference Include="../SmiteLib.VisualStudio.TestAdapter/SmiteLib.VisualStudio.TestAdapter.csproj" IncludeAssets="Runtime" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(DesignTimeBuild)' != 'true'">
+    <ProjectReference Include="../SmiteLib/SmiteLib.csproj" />
+    <ProjectReference Include="../SmiteLib.Framework/SmiteLib.Framework.csproj" />
+    <ProjectReference Include="../SmiteLib.Tests.TestProgram/SmiteLib.Tests.TestProgram.csproj" />
+    <ProjectReference Include="../SmiteLib.VisualStudio.TestAdapter/SmiteLib.VisualStudio.TestAdapter.csproj" IncludeAssets="Runtime" />
   </ItemGroup>
 
 </Project>

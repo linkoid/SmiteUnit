@@ -1,0 +1,38 @@
+﻿<Project>
+  <Target Name="_SmiteLibFilterPackageAssets" AfterTargets="ResolvePackageAssets">
+    <PropertyGroup>
+      <_SmiteLibPackageDirectory>$([System.IO.Directory]::GetParent( $(MSBuildThisFileFullPath)   ))</_SmiteLibPackageDirectory>
+      <_SmiteLibPackageDirectory>$([System.IO.Directory]::GetParent( $(_SmiteLibPackageDirectory) ))</_SmiteLibPackageDirectory>
+    </PropertyGroup>
+
+    <Message Text="_SmiteLibPackageDirectory: $(_SmiteLibPackageDirectory)" Importance="high" />
+
+    <ItemGroup>
+      <_SmiteLibCompileTimeReference Include="@(ResolvedCompileFileDefinitions)"
+                                     Condition="$([System.String]::Copy(%(FullPath)).StartsWith(
+                                       $(_SmiteLibPackageDirectory)
+                                     ))"/>
+    </ItemGroup>
+    
+    <!--<Message Text="_SmiteLibCompileTimeReference:&#xA;&#009;@(_SmiteLibCompileTimeReference->'%(FullPath)', '&#xA;&#009;')" Importance="high" />-->
+    
+    <ItemGroup>
+      <_SmiteLibRemoveReference Include="@(_SmiteLibCompileTimeReference->WithMetadataValue('Filename', 'SmiteLib.Framework'))"
+                                  Condition="'$(EnableSmiteLibFramework)' != 'true'" />
+
+      <_SmiteLibRemoveReference Include="@(_SmiteLibCompileTimeReference->WithMetadataValue('Filename', 'SmiteLib.Engine'))"
+                                  Condition="'$(EnableSmiteLibEngine)' != 'true'" />
+    </ItemGroup>
+
+    <Message Text="_SmiteLibRemoveReference:&#xA;&#009;@(_SmiteLibRemoveReference, '&#xA;&#009;')" Importance="high" />
+
+    <ItemGroup>
+      <ResolvedCompileFileDefinitions Remove="@(_SmiteLibRemoveReference)" />
+      <ReferenceCopyLocalPaths  Include="@(CopyLocalPaths)"></ReferenceCopyLocalPaths >
+    </ItemGroup>
+  </Target> 
+  
+  <Target Name="DebugLogStuff" BeforeTargets="Build">
+    <Message Text="TestAdapterContent: @(TestAdapterContent)" Importance="high" />
+  </Target>
+</Project>

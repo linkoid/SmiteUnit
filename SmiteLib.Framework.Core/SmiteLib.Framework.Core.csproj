@@ -4,6 +4,7 @@
 
   <PropertyGroup>
     <RootNamespace>SmiteLib.Framework</RootNamespace>
+    <TargetName>SmiteLib.Core</TargetName>
   </PropertyGroup>
 
   <Import Project="../Build/Common.targets" />
@@ -14,7 +15,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../SmiteLib.Core/SmiteLib.Core.csproj" Private="true" />
+    <ProjectReference Include="../SmiteLib.Core/SmiteLib.Core.csproj" Private="false" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="ILRepack.Lib.MSBuild.Task" Version="2.0.34">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  
 </Project>

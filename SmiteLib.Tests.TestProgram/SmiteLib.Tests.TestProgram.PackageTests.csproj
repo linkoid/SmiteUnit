@@ -1,13 +1,22 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <Import Project="../Build/Common.props" />
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <AssemblyName>SmiteLib.Tests.TestProgram</AssemblyName>
+    
+    <BaseOutputPath>packageTests/bin/</BaseOutputPath>
+    <BaseIntermediateOutputPath>packageTests/obj/</BaseIntermediateOutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="bin/**;obj/**" />
+    <None Remove="bin/**;obj/**" />
+  </ItemGroup>
 
   <ItemGroup>
     <InternalsVisibleTo Include="SmiteLib.Tests" />
@@ -18,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SmiteLib.Injection\SmiteLib.Injection.csproj" Private="true" PrivateAssets="all">
+    <ProjectReference Include="../SmiteLib.Injection/SmiteLib.Injection.csproj" Private="true" PrivateAssets="all">
       <Targets>Pack;PublishLocal</Targets>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>

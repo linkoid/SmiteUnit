@@ -1,0 +1,91 @@
+<Project>
+  <ItemGroup>
+    <ProjectReference Update="@(ProjectReference->WithMetadataValue('ILRepack', 'true'))">
+      <PrivateAssets>%(ProjectReference.PrivateAssets);compile;runtime</PrivateAssets>
+    </ProjectReference>
+  </ItemGroup>
+
+  <Target Name="_ILRepackResolveAssemblies">
+    <ItemGroup>
+      <ILRepackPrimaryAssembly Include="@(IntermediateAssembly)"
+                               Condition="'@(ILRepackPrimaryAssembly)' == ''">
+        <ReferenceAssembly>@(IntermediateRefAssembly)</ReferenceAssembly>
+      </ILRepackPrimaryAssembly>
+    </ItemGroup>
+
+    <ItemGroup>
+
+      <ILRepackOutputAssembly Include="@(IntermediateAssembly->'%(RelativeDir)/ilrepack/%(Filename)%(Extension)')"
+                              Condition="'@(ILRepackOutputAssembly)' == ''"/>
+      <ILRepackOutputRefAssembly Include="@(IntermediateRefAssembly->'%(RelativeDir)/ilrepack/%(Filename)%(Extension)')"
+                                 Condition="'@(ILRepackOutputRefAssembly)' == ''"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Remove="@(ILRepackReference)" />
+    </ItemGroup>
+  </Target>
+
+  <!--Repack Implementation Assembly-->
+  <Target Name="ILRepackAssembly"
+          Inputs="@(ILRepackPrimaryAssembly);@(ILRepackReference)"
+          Outputs="@(ILRepackOutputAssembly)"
+          AfterTargets="CoreCompile"
+          DependsOnTargets="_ILRepackResolveAssemblies"
+          Condition="'@(ILRepackReference)' != ''">
+
+    <ItemGroup>
+      <ILRepackReference Update="@(ILRepackReference)" Condition="'%(ReferenceAssembly)' == ''">
+        <ReferenceAssembly>%(FullPath)</ReferenceAssembly>
+      </ILRepackReference>
+    </ItemGroup>
+
+    <Message Text="ILMerge Implementation Assembly:" Importance="high" />
+    <ILRepack OutputFile="@(ILRepackOutputAssembly)"
+              InputAssemblies="@(ILRepackPrimaryAssembly);@(ILRepackReference)"
+              Parallel="true"
+              DebugInfo="true"
+              AllowDuplicateResources="false"
+              TargetKind="SameAsPrimaryAssembly"
+              KeyFile="$(KeyFile)"
+              />
+    <ItemGroup>
+      <FileWrites Include="@(ILRepackOutputAssembly)" />
+      <IntermediateAssembly Remove="@(IntermediateAssembly)" />
+      <IntermediateAssembly Include="@(ILRepackOutputAssembly)" />
+    </ItemGroup>
+
+  </Target>
+
+
+  <!--Repack Reference Assembly-->
+  <Target Name="ILRepackRefAssembly"
+          Inputs="@(ILRepackPrimaryAssembly);@(ILRepackReference)"
+          Outputs="@(ILRepackOutputRefAssembly)"
+          AfterTargets="CoreCompile"
+          DependsOnTargets="_ILRepackResolveAssemblies"
+          Condition="'@(ILRepackReference)' != ''">
+
+    <ItemGroup>
+      <ILRepackReference Update="@(ILRepackReference)" Condition="'%(ReferenceAssembly)' == ''">
+        <ReferenceAssembly>%(FullPath)</ReferenceAssembly>
+      </ILRepackReference>
+    </ItemGroup>
+
+    <Message Text="ILMerge Reference Assembly:" Importance="high" />
+    <ILRepack OutputFile="@(ILRepackOutputRefAssembly)"
+              InputAssemblies="@(ILRepackPrimaryAssembly->'%(ReferenceAssembly)');@(ILRepackReference->'%(ReferenceAssembly)')"
+              Parallel="true"
+              DebugInfo="true"
+              AllowDuplicateResources="false"
+              TargetKind="SameAsPrimaryAssembly"
+              KeyFile="$(KeyFile)"
+              />
+    <ItemGroup>
+      <FileWrites Include="@(ILRepackOutputRefAssembly)" />
+      <IntermediateRefAssembly Remove="@(IntermediateRefAssembly)" />
+      <IntermediateRefAssembly Include="@(ILRepackOutputRefAssembly)" />
+    </ItemGroup>
+
+  </Target>
+</Project>

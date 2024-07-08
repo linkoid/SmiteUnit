@@ -1,19 +1,33 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="../Build/Common.props" />
+  <Import Project="../Build/Package.props" />
+  <Import Project="../Build/ILRepack.props" />
 
   <PropertyGroup>
     <RootNamespace>SmiteLib.Framework</RootNamespace>
   </PropertyGroup>
+  
+  <ItemGroup Condition="'$(DesignTimeBuild)' == 'true'">
+    <ProjectReference Include="../SmiteLib/SmiteLib.csproj" PrivateAssets="All" />
+    <ProjectReference Include="../SmiteLib.Core/SmiteLib.Core.csproj" PrivateAssets="All" />
+  </ItemGroup>
 
-  <Import Project="../Build/Common.targets" />
+  <ItemGroup Condition="'$(DesignTimeBuild)' != 'true'">
+    <ProjectReference Include="../SmiteLib/SmiteLib.csproj" Private="true" PrivateAssets="All" />
+    <ProjectReference Include="../SmiteLib.Engine/SmiteLib.Engine.csproj" Private="false">
+      <ExcludeAssets>Runtime</ExcludeAssets>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <OutputItemType>ILRepackReference</OutputItemType>
+    </ProjectReference>
+  </ItemGroup>
 
   <ItemGroup>
     <InternalsVisibleTo Include="SmiteLib.Injection" />
+    <InternalsVisibleTo Include="SmiteLib.Tests" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="../SmiteLib.Framework.Core/SmiteLib.Framework.Core.csproj" Private="true" />
-  </ItemGroup>
+  <Import Project="../Build/Common.targets" />
+  <Import Project="../Build/Package.targets" />
+  <Import Project="../Build/ILRepack.targets" />
 
 </Project>

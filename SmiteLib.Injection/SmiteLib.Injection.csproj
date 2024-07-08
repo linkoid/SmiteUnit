@@ -6,12 +6,16 @@
     <RootNamespace>SmiteLib.Injection</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup Condition="'$(DesignTimeBuild)' == 'true'">
+    <ProjectReference Include="../SmiteLib/SmiteLib.csproj" Private="true" PrivateAssets="All" />
+    <ProjectReference Include="../SmiteLib.Core/SmiteLib.Core.csproj" Private="true" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(DesignTimeBuild)' != 'true'">
+    <ProjectReference Include="../SmiteLib/SmiteLib.csproj" Private="true" PrivateAssets="All" />
+  </ItemGroup>
+
   <Import Project="../Build/Common.targets" />
   <Import Project="../Build/Package.targets" />
-
-  <ItemGroup>
-    <ProjectReference Include="../SmiteLib.Framework.Core/SmiteLib.Framework.Core.csproj" Private="true" PrivateAssets="all">
-      <TreatAsPackageReference>false</TreatAsPackageReference>
-    </ProjectReference>
-  </ItemGroup>
+  
 </Project>

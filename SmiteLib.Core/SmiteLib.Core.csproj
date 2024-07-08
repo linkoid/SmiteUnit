@@ -1,16 +1,15 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <Import Project="../Build/Common.props" />
-  
+
   <PropertyGroup>
     <RootNamespace>SmiteLib</RootNamespace>
-    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <Import Project="../Build/Common.targets" />
 
   <ItemGroup>
-    <InternalsVisibleTo Include="SmiteLib.Framework.Core" />
+    <InternalsVisibleTo Include="SmiteLib" />
   </ItemGroup>
 
 </Project>

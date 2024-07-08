@@ -1,0 +1,21 @@
+<Project>
+  <PropertyGroup>
+    <ILRepackTargetsFile>$(MSBuildThisFileDirectory)ILRepack.targets</ILRepackTargetsFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="ILRepack.Lib.MSBuild.Task" Version="2.0.34">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemDefinitionGroup>
+    <ILRepackReference>
+      <ReferenceAssembly />
+    </ILRepackReference>
+    <ILRepackPrimaryAssembly>
+      <ReferenceAssembly />
+    </ILRepackPrimaryAssembly>
+    <ILRepackOutputAssembly />
+    <ILRepackOutputRefAssembly />
+  </ItemDefinitionGroup>
+</Project>

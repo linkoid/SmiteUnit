@@ -1,25 +1,33 @@
-﻿<Project Sdk="Microsoft.Build.NoTargets/3.7.56">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="../Build/Package.props" />
+  <Import Project="../Build/Common.props" />
+  <Import Project="../Build/ILRepack.props" />
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <NoTargetsDoNotReferenceOutputAssemblies>false</NoTargetsDoNotReferenceOutputAssemblies>
+    <RootNamespace>SmiteLib</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\SmiteLib.Engine\SmiteLib.Engine.csproj" PrivateAssets="all" />
-    <ProjectReference Include="..\SmiteLib.Framework\SmiteLib.Framework.csproj" PrivateAssets="all" />
-    <ProjectReference Include="..\SmiteLib.VisualStudio.TestAdapter\SmiteLib.VisualStudio.TestAdapter.csproj" PrivateAssets="all">
-      <!--<OutputItemType>None</OutputItemType>-->
+  <ItemGroup Condition="'$(DesignTimeBuild)' == 'true'">
+    <ProjectReference Include="../SmiteLib.Core/SmiteLib.Core.csproj" Private="true">
+      <PrivateAssets>All</PrivateAssets>
+      <ExcludeAssets>Runtime</ExcludeAssets>
     </ProjectReference>
-    <Build Include="..\SmiteLib.VisualStudio.TestAdapter\VisualStudio.TestAdapter.Packages.targets" />
   </ItemGroup>
 
-  <Import Project="../Build/Package.targets" />
-
-  <ItemGroup>
-    <PackageReference Include="IDisposableAnalyzers" Version="4.0.7" PrivateAssets="all" />
+  <ItemGroup Condition="'$(DesignTimeBuild)' != 'true'">
+    <ProjectReference Include="../SmiteLib.Core/SmiteLib.Core.csproj" Private="false">
+      <ExcludeAssets>Runtime</ExcludeAssets>
+      <OutputItemType>ILRepackReference</OutputItemType>
+    </ProjectReference>
   </ItemGroup>
   
+  <ItemGroup>
+    <InternalsVisibleTo Include="SmiteLib.Framework" />
+    <InternalsVisibleTo Include="SmiteLib.Injection" />
+  </ItemGroup>
+
+  <Import Project="../Build/Common.targets" />
+  <Import Project="../Build/ILRepack.targets" />
+
 </Project>
+ 

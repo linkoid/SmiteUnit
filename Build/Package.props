@@ -1,9 +1,12 @@
 <Project>
+  
   <Import Project="Common.props"/>
+  
   <PropertyGroup>
-    <PackageId>$(PackageIdPrefix)$(MSBuildProjectName)</PackageId>
-    <Title>$(MSBuildProjectName)</Title>
-    <Product>$(MSBuildProjectName)</Product>
+    <ProjectName Condition="'$(ProjectName)' == ''">$(MSBuildProjectName)</ProjectName>
+    <PackageId>$(PackageIdPrefix)$(ProjectName)</PackageId>
+    <Title>$(ProjectName)</Title>
+    <Product>$(ProjectName)</Product>
     <IncludeBuildOutput>true</IncludeBuildOutput>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IsPackable>true</IsPackable>
@@ -13,12 +16,19 @@
     <Build>
       <Pack>true</Pack>
       <PackagePath>build/%(Filename)%(Extension)</PackagePath>
+      <Link>%(PackagePath)</Link>
     </Build>
   </ItemDefinitionGroup>
 
   <ItemGroup>
     <Build Include="Build/**">
       <PackagePath>build/%(RecursiveDirectory)</PackagePath>
+      <Link>%(PackagePath)</Link>
+    </Build>
+    <Build Update="Build/$(ProjectName).*">
+      <Link></Link>
+      <PackagePath>build/$(PackageId)%(Extension)</PackagePath>
     </Build>
   </ItemGroup>
+  
 </Project>

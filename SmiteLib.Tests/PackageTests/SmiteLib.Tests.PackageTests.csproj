@@ -1,23 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="../Build/Common.props" />
+  <Import Project="../../Build/Common.props" />
 
   <PropertyGroup>
+    <AssemblyName>SmiteLib.Tests</AssemblyName>
     <EnableSmiteLibFramework>true</EnableSmiteLibFramework>
     <EnableSmiteLibEngine>true</EnableSmiteLibEngine>
     <EnableSmiteLibTestAdapter>true</EnableSmiteLibTestAdapter>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <AssemblyName>SmiteLib.Tests</AssemblyName>
-    
-    <BaseOutputPath>packageTests/bin/</BaseOutputPath>
-    <BaseIntermediateOutputPath>packageTests/obj/</BaseIntermediateOutputPath>
-  </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="bin/**;obj/**" />
-    <None Remove="bin/**;obj/**" />
-    <Compile Remove="CommandLineParserTests.cs" />
+    <Compile Include="../**/*.cs" />
+    <Compile Remove="../bin/**;../**/obj/**" />
+    <Compile Remove="../CommandLineParserTests.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,12 +24,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../SmiteLib.Tests.TestProgram/SmiteLib.Tests.TestProgram.PackageTests.csproj" />
+    <ProjectReference Include="../../SmiteLib.Tests.TestProgram/PackageTests/SmiteLib.Tests.TestProgram.PackageTests.csproj" />
   </ItemGroup>
 
   <!--<ItemGroup>
-    <ProjectReference Include="../SmiteLib-Package/SmiteLib-Package.csproj">
+    <ProjectReference Include="../../SmiteLib-Package/SmiteLib-Package.csproj">
       <Targets>Pack;PublishLocal</Targets>
+      <Target></Target>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>-->
