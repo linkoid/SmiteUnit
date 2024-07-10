@@ -37,6 +37,10 @@ internal class SmiteTest : ITestInfo
 			SetUp?.Invoke();
 			Method.Invoke();
 		}
+		catch (TargetInvocationException ex)
+		{
+			TestContext.Fail(ex.InnerException ?? ex);
+		}
 		catch (Exception ex)
 		{
 			TestContext.Fail(ex);

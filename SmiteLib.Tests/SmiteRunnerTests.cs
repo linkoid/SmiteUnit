@@ -46,4 +46,15 @@ public class SmiteRunnerTests
 		);
 		Assert.IsNotEmpty(process.Output.ReadToEnd());
 	}
+
+
+	[Test]
+	public void ExitCodeOnException()
+	{
+		process.RunTest(
+			SmiteId.Method(SmiteRunnerTestsEdge.ThrowException)
+		);
+		Assert.IsNotEmpty(process.Error.ReadToEnd());
+		Assert.That(process.ExitCode, Is.Not.EqualTo(0));
+	}
 }

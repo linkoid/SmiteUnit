@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using SmiteLib.Injection;
+using System.Reflection;
 using System.Runtime.Loader;
 
 namespace SmiteLib.Tests.TestProgram;
@@ -9,14 +10,20 @@ public static class Program
 
 	public static void Main()
 	{
-		var internalRunner = new Framework.SmiteRunner();
-		internalRunner.RunAllStaticTests();
+		var internalRunner = new SmiteRunner();
+		internalRunner.EntryPoint();
 
-		var externalRunner = new Framework.SmiteRunner(Assembly.LoadFrom("SmiteLib.Tests.dll"));
-		externalRunner.RunAllStaticTests();
+		var externalRunner = new SmiteRunner(Assembly.LoadFrom("SmiteLib.Tests.dll"));
+		externalRunner.EntryPoint();
 
 		PostTestsEvent?.Invoke(null, EventArgs.Empty);
 
+		internalRunner.ExitPoint();
+		externalRunner.ExitPoint();
+
 		Thread.Sleep(1000);
+
+		internalRunner.FinalExitPoint();
+		externalRunner.FinalExitPoint();
 	}
 }

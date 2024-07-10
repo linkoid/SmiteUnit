@@ -24,6 +24,8 @@ namespace SmiteLib
 			}
 		}
 
+		public int ExitCode => Process.ExitCode;
+
 		public string WorkingDirectory { get => Process.StartInfo.WorkingDirectory; set => Process.StartInfo.WorkingDirectory = value; }
 
 		public int RunTimeout = -1;

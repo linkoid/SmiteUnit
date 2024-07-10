@@ -21,4 +21,10 @@ internal static class SmiteRunnerTestsEdge
 	{
 		SmiteLogger.Current.LogInfo("Ok");
 	}
+
+	[SmiteMethod]
+	public static void ThrowException()
+	{
+		throw new Exception("This test always throws an exception");
+	}
 }

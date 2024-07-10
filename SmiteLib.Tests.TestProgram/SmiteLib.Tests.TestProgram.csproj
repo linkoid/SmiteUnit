@@ -23,4 +23,15 @@
     <ProjectReference Include="../SmiteLib.Injection/SmiteLib.Injection.csproj" />
   </ItemGroup>
 
+  <ItemGroup Condition="'$(DesignTimeBuild)' == 'true'">
+    <ProjectReference Include="../SmiteLib/SmiteLib.csproj" />
+    <ProjectReference Include="../SmiteLib.Core/SmiteLib.Core.csproj" />
+    <ProjectReference Include="../SmiteLib.Injection/SmiteLib.Injection.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(DesignTimeBuild)' != 'true'">
+    <ProjectReference Include="../SmiteLib/SmiteLib.csproj" />
+    <ProjectReference Include="../SmiteLib.Injection/SmiteLib.Injection.csproj" />
+  </ItemGroup>
+
 </Project>
