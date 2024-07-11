@@ -58,11 +58,11 @@ public sealed class SmiteTestExecutor : ITestExecutor
 		{
 			var processAttribute = testMethod.ProcessAttribute;
 			var processPath = processAttribute.FilePath ?? testCase.Source;
+			processPath = Environment.ExpandEnvironmentVariables(processPath);
 			frameworkHandle.SendMessage(TestMessageLevel.Informational, $"Process Path: {processPath}");
-			var process = new SmiteProcess(processPath)
-			{
-				WorkingDirectory = processAttribute.WorkingDirectory ?? string.Empty,
-			};
+			var process = new SmiteProcess(processPath);
+			if (processAttribute.WorkingDirectory is not null)
+				process.WorkingDirectory = processAttribute.WorkingDirectory;
 			TrySetEncoding(process.Output, processAttribute.OutputEncoding, nameof(processAttribute.OutputEncoding));
 			TrySetEncoding(process.Error , processAttribute.ErrorEncoding , nameof(processAttribute.ErrorEncoding ));
 
@@ -117,7 +117,9 @@ public sealed class SmiteTestExecutor : ITestExecutor
 			nameof(Encoding.ASCII           ) => Encoding.ASCII           ,
 			nameof(Encoding.BigEndianUnicode) => Encoding.BigEndianUnicode,
 			nameof(Encoding.Default         ) => Encoding.Default         ,
+#if !NETSTANDARD
 			nameof(Encoding.Latin1          ) => Encoding.Latin1          ,
+#endif
 			nameof(Encoding.Unicode         ) => Encoding.Unicode         ,
 			nameof(Encoding.UTF32           ) => Encoding.UTF32           ,
 			nameof(Encoding.UTF7            ) => Encoding.UTF7            ,

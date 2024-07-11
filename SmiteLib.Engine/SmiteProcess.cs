@@ -36,11 +36,12 @@ namespace SmiteLib
 		public readonly RedirectionStreamReader Output;
 		public readonly RedirectionStreamReader Error;
 
-		public SmiteProcess(string fileName, string arguments = "")
+		public SmiteProcess(string filePath, string arguments = "")
 		{
 			_baseArguments = arguments;
-			Process.StartInfo = new ProcessStartInfo(fileName);
+			Process.StartInfo = new ProcessStartInfo(filePath);
 
+			WorkingDirectory = System.IO.Path.GetDirectoryName(filePath) ?? "";
 			UseSubprocess = true;
 
 			Output = new(Process, StandardStream.Output);

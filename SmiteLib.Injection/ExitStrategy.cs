@@ -26,6 +26,7 @@ public static class ExitStrategies
 		throw new InvalidOperationException();
 	}
 
+#if !NETSTANDARD
 	[DoesNotReturn]
 	public static void ProcessKillEntireProcessTree(int exitCode)
 	{
@@ -33,6 +34,7 @@ public static class ExitStrategies
 		Process.GetCurrentProcess().Kill(true);
 		throw new InvalidOperationException();
 	}
+#endif
 
 	[DoesNotReturn]
 	public static void EnvironmentFailFast(int exitCode)

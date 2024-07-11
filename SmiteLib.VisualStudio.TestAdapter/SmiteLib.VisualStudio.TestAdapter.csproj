@@ -24,6 +24,13 @@
   </ItemGroup>
 
   <Import Project="VisualStudio.TestAdapter.Packages.targets"/>
+
+  <ItemGroup>
+    <PackageReference Include="RandomSkunk.RuntimePolyfill" Version="1.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
   
   <Import Project="../Build/Common.targets" />
   <Import Project="../Build/Package.targets" />

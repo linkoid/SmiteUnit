@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <Import Project="../Build/Common.props" />
 
@@ -10,6 +10,13 @@
 
   <ItemGroup>
     <InternalsVisibleTo Include="SmiteLib" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="RandomSkunk.RuntimePolyfill" Version="1.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
 </Project>

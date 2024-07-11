@@ -1,6 +1,5 @@
 ﻿using SmiteLib.Injection;
 using System.Reflection;
-using System.Runtime.Loader;
 
 namespace SmiteLib.Tests.TestProgram;
 

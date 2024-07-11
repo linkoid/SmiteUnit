@@ -37,7 +37,7 @@ internal readonly struct SmiteIdentifier : ISmiteId, ISmiteIdFilter
 		if (s == null)
 			throw new ArgumentNullException(nameof(s));
 
-		var parts = s.Split(":");
+		var parts = s.Split(':');
 		if (parts.Length != 3)
 			throw new FormatException($"String for {nameof(SmiteIdentifier)} must have format 'Assembly:Type:Method'");
 

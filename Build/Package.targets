@@ -68,9 +68,11 @@
   </Target>
 
   <Target Name="PublishLocal" DependsOnTargets="Pack" AfterTargets="Pack"
+          Inputs="@(NuGetPackOutput)"
+          Outputs="%USERPROFILE%/.nuget/packages/$(PackageId)/**/*"
           Returns="@(_TargetPackage)">
     <PropertyGroup>
-      <PackagePath>$(OutputPath)../$(PackageId).$(PackageVersion).nupkg</PackagePath>
+      <PackagePath>@(NuGetPackOutput->WithMetadataValue('Extension', '.nupkg'))</PackagePath>
       <PackageSource>%USERPROFILE%/.nuget/packages</PackageSource>
     </PropertyGroup>
     <Exec Command="NuGet delete $(PackageId) $(PackageVersion) -Source $(PackageSource) -NonInteractive" ContinueOnError="true" />
