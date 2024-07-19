@@ -23,4 +23,17 @@ internal class TestContextTestsEdge
 			Console.WriteLine("Wrapped delegate ran");
 		});
 	}
+
+	[SmiteMethod]
+	public static void SetUnfinished()
+	{
+		Program.PostLoopEvent += TestContext.WrapEventHandler((_, _) =>
+		{
+			Console.WriteLine("Set Finished");
+			TestContext.Finished();
+		});
+
+		Console.WriteLine("Set Unfinished");
+		TestContext.Unfinished();
+	}
 }

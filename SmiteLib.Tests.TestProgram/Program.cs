@@ -6,6 +6,7 @@ namespace SmiteLib.Tests.TestProgram;
 public static class Program
 {
 	internal static event EventHandler PostTestsEvent;
+	internal static event EventHandler PostLoopEvent;
 
 	private static SmiteRunner _internalRunner;
 	private static SmiteRunner _externalRunner;
@@ -29,6 +30,8 @@ public static class Program
 			Thread.Sleep(1000);
 		}
 		while (args.Length >= 2 && args[1] == "loop");
+
+		PostLoopEvent?.Invoke(null, EventArgs.Empty);
 
 		_internalRunner.FinalExitPoint();
 		_externalRunner.FinalExitPoint();

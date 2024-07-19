@@ -57,7 +57,7 @@ internal class SmiteTest : ITestInfo
 		{
 			TestContext.Fail(ex);
 		}
-		_context.IsFinished |= !_context.IsNotFinished;
+		_context.IsFinished |= !_context.IsUnfinished;
 	}
 
 	private void HookSetUpMethods(object target)

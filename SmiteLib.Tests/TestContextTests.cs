@@ -34,4 +34,11 @@ public class TestContextTests
 		process.RunTest(SmiteId.Method(TestContextTestsEdge.WrapEventHandler));
 		Assert.That(process.Output.ReadToEnd().Contains("Wrapped delegate ran"));
 	}
+
+	[Test]
+	public void SetUnfinished()
+	{
+		process.RunTest(SmiteId.Method(TestContextTestsEdge.SetUnfinished));
+		Assert.That(process.Output.ReadToEnd().Contains("Set Finished"));
+	}
 }

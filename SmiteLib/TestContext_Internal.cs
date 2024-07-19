@@ -17,7 +17,7 @@ public partial class TestContext
 	internal SmiteTest SmiteTest { get; }
 	internal ILogger Logger { get; }
 	internal bool IsFinished { get; set; }
-	internal bool IsNotFinished { get; set; }
+	internal bool IsUnfinished { get; set; }
 
 
 	internal TestContext(SmiteTest test, ILogger logger)

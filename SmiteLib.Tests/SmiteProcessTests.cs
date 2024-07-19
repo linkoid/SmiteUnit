@@ -36,6 +36,18 @@ public class SmiteProcessTests
 	}
 
 	[Test]
+	public void ExitOnCompletion()
+	{
+		var process = new SmiteProcess("SmiteLib.Tests.TestProgram.exe", "loop")
+		{
+			RunTimeout = 10000,
+			UseSubprocess = true,
+		};
+		process.RunTest(SmiteId.Method(SmiteProcessTestsEdge.PrintManyLines));
+		Assert.IsTrue(process.HasExited);
+	}
+
+	[Test]
 	public void DisposeEndsChildProcess()
 	{
 		var process = new SmiteProcess("SmiteLib.Tests.TestProgram.exe", "loop")

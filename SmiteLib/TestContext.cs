@@ -23,6 +23,19 @@ public partial class TestContext
 			throw new InvalidOperationException($"{nameof(TestContext)} methods can only be used inside a valid test context.");
 	}
 
+	public static void Finished()
+	{
+		EnsureValidContext();
+		CurrentContext.IsFinished = true;
+	}
+
+	public static void Unfinished()
+	{
+		EnsureValidContext();
+		CurrentContext.IsFinished = false;
+		CurrentContext.IsUnfinished = true;
+	}
+
 	public static void Fail(string? message = null)
 	{
 		EnsureValidContext();
