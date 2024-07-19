@@ -20,19 +20,16 @@ public static class Program
 
 		PostTestsEvent?.Invoke(null, EventArgs.Empty);
 
-		AppDomain.CurrentDomain.ProcessExit += OnExit;
-
-		while (true)
+		var args = Environment.GetCommandLineArgs();
+		do
 		{
 			_internalRunner.ExitPoint();
 			_externalRunner.ExitPoint();
 
 			Thread.Sleep(1000);
 		}
-	}
+		while (args.Length >= 2 && args[1] == "loop");
 
-	private static void OnExit(object sender, EventArgs e)
-	{
 		_internalRunner.FinalExitPoint();
 		_externalRunner.FinalExitPoint();
 	}

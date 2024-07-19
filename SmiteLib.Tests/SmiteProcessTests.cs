@@ -38,7 +38,7 @@ public class SmiteProcessTests
 	[Test]
 	public void DisposeEndsChildProcess()
 	{
-		var process = new SmiteProcess("SmiteLib.Tests.TestProgram.exe")
+		var process = new SmiteProcess("SmiteLib.Tests.TestProgram.exe", "loop")
 		{
 			RunTimeout = 1,
 			UseSubprocess = true,

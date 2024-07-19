@@ -53,6 +53,7 @@ public sealed class SmiteRunner : IUsesLogger
 		catch (Exception ex)
 		{
 			Logger.LogException(ex);
+			_tests.Add(SmiteTest.NotFound(identifier, _assembly));
 			return null;
 		}
 	}
@@ -93,7 +94,7 @@ public sealed class SmiteRunner : IUsesLogger
 		if (_tests.Count == 0)
 			return;
 
-		if (_tests.All(t => t.Ended) && _tests.Any(t => t.Failed))
+		if (_tests.All(t => t.Ended))
 		{
 			ExitNow();
 		}

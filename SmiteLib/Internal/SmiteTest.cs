@@ -17,15 +17,27 @@ internal class SmiteTest : ITestInfo
 
 	public bool Running => _started && !Ended;
 	private bool _started = false;
-	public bool Ended => _context.IsFinished;
+	public bool Ended => _context.IsFinished || Failed;
 
 	private readonly TestContext _context;
 
+	public static SmiteTest NotFound(SmiteIdentifier identifier, Assembly? assembly = null)
+	{
+		SmiteTest notFoundTest = new SmiteTest();
+		notFoundTest.Failed = true;
+		return notFoundTest;
+	}
+
+	private SmiteTest()
+	{
+		_context = new TestContext(this, Logging.SmiteLogger.Current);
+	}
+
 	public SmiteTest(SmiteMethod method)
+		: this()
 	{
 		Method = method;
 		HookSetUpMethods(null);
-		_context = new TestContext(this, Logging.SmiteLogger.Current);
 	}
 
 	public void Run()
