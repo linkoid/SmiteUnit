@@ -59,12 +59,8 @@ internal abstract class StreamWrapper : Stream
 		get => WrapperCanTimeout ? WrappedStream.WriteTimeout : throw new NotSupportedException();
 		set => WrappedStream.WriteTimeout = WrapperCanTimeout ? value : throw new NotSupportedException();
 	}
-	public override void CopyTo(Stream destination, int bufferSize)
-		=> WrappedStream.CopyTo(destination, WrapperCanRead ? bufferSize : throw new NotSupportedException());
 	public override Task CopyToAsync(Stream destination, int bufferSize, CancellationToken cancellationToken)
 		=> WrapperCanRead ? WrappedStream.CopyToAsync(destination, bufferSize, cancellationToken) : throw new NotSupportedException();
-	public override int Read(Span<byte> buffer)
-		=> WrapperCanRead ? WrappedStream.Read(buffer) : throw new NotSupportedException();
 	public override int ReadByte()
 		=> WrapperCanRead ? WrappedStream.ReadByte() : throw new NotSupportedException();
 	public override IAsyncResult BeginRead(byte[] buffer, int offset, int count, AsyncCallback? callback, object? state)
@@ -73,10 +69,6 @@ internal abstract class StreamWrapper : Stream
 		=> WrapperCanRead ? WrappedStream.EndRead(asyncResult) : throw new NotSupportedException();
 	public override Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
 		=> WrapperCanRead ? WrappedStream.ReadAsync(buffer, offset, count, cancellationToken) : throw new NotSupportedException();
-	public override ValueTask<int> ReadAsync(Memory<byte> buffer, CancellationToken cancellationToken = default)
-		=> WrapperCanRead ? WrappedStream.ReadAsync(buffer, cancellationToken) : throw new NotSupportedException();
-	public override void Write(ReadOnlySpan<byte> buffer)
-		=> WrappedStream.Write(CanWrite ? buffer : throw new NotSupportedException());
 	public override void WriteByte(byte value)
 		=> WrappedStream.WriteByte(CanWrite ? value : throw new NotSupportedException());
 	public override IAsyncResult BeginWrite(byte[] buffer, int offset, int count, AsyncCallback? callback, object? state)
@@ -85,10 +77,22 @@ internal abstract class StreamWrapper : Stream
 		=> WrappedStream.EndWrite(CanWrite ? asyncResult : throw new NotSupportedException());
 	public override Task WriteAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
 		=> WrapperCanWrite ? WrappedStream.WriteAsync(buffer, offset, count, cancellationToken) : throw new NotSupportedException();
-	public override ValueTask WriteAsync(ReadOnlyMemory<byte> buffer, CancellationToken cancellationToken = default)
-		=> WrapperCanWrite ? WrappedStream.WriteAsync(buffer, cancellationToken) : throw new NotSupportedException();
 	public override Task FlushAsync(CancellationToken cancellationToken)
 		=> WrapperCanWrite ? WrappedStream.FlushAsync(cancellationToken) : throw new NotSupportedException();
+
+#if NETSTANDARD2_1_OR_GREATER || NET
+	public override void CopyTo(Stream destination, int bufferSize)
+		=> WrappedStream.CopyTo(destination, WrapperCanRead ? bufferSize : throw new NotSupportedException());
+	public override int Read(Span<byte> buffer)
+		=> WrapperCanRead ? WrappedStream.Read(buffer) : throw new NotSupportedException();
+	public override ValueTask<int> ReadAsync(Memory<byte> buffer, CancellationToken cancellationToken = default)
+		=> WrapperCanRead ? WrappedStream.ReadAsync(buffer, cancellationToken) : throw new NotSupportedException();
+	public override void Write(ReadOnlySpan<byte> buffer)
+		=> WrappedStream.Write(CanWrite ? buffer : throw new NotSupportedException());
+	public override ValueTask WriteAsync(ReadOnlyMemory<byte> buffer, CancellationToken cancellationToken = default)
+		=> WrapperCanWrite ? WrappedStream.WriteAsync(buffer, cancellationToken) : throw new NotSupportedException();
+#endif
+
 	#endregion
 
 	public abstract override void Close();
