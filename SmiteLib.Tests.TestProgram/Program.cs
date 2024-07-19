@@ -7,22 +7,33 @@ public static class Program
 {
 	internal static event EventHandler PostTestsEvent;
 
+	private static SmiteRunner _internalRunner;
+	private static SmiteRunner _externalRunner;
+
 	public static void Main()
 	{
-		var internalRunner = new SmiteRunner();
-		internalRunner.EntryPoint();
+		_internalRunner = new SmiteRunner();
+		_internalRunner.EntryPoint();
 
-		var externalRunner = new SmiteRunner(Assembly.LoadFrom("SmiteLib.Tests.dll"));
-		externalRunner.EntryPoint();
+		_externalRunner = new SmiteRunner(Assembly.LoadFrom("SmiteLib.Tests.dll"));
+		_externalRunner.EntryPoint();
 
 		PostTestsEvent?.Invoke(null, EventArgs.Empty);
 
-		internalRunner.ExitPoint();
-		externalRunner.ExitPoint();
+		AppDomain.CurrentDomain.ProcessExit += OnExit;
 
-		Thread.Sleep(1000);
+		while (true)
+		{
+			_internalRunner.ExitPoint();
+			_externalRunner.ExitPoint();
 
-		internalRunner.FinalExitPoint();
-		externalRunner.FinalExitPoint();
+			Thread.Sleep(1000);
+		}
+	}
+
+	private static void OnExit(object sender, EventArgs e)
+	{
+		_internalRunner.FinalExitPoint();
+		_externalRunner.FinalExitPoint();
 	}
 }

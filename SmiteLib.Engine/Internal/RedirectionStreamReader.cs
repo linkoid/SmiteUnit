@@ -24,8 +24,10 @@ public class RedirectionStreamReader : StreamReaderWrapper
 
 	private readonly MemoryStream _recordingStream;
 	private readonly ReadOnlyMemoryStream _recordingStreamReadOnly;
-	private StreamReader _recordingReader;
 	private StreamWriter _recordingWriter;
+	private StreamReader _recordingReader;
+
+
 
 	private bool _isListening = false;
 
@@ -137,6 +139,8 @@ public class RedirectionStreamReader : StreamReaderWrapper
 		}
 	}
 
+	[System.Diagnostics.CodeAnalysis.SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP003", 
+		Justification = "Disposing a reader / writer disposes underlying stream which is undesired in this case.")]
 	private void SetEncoding(Encoding encoding)
 	{
 		if (_isListening)
@@ -156,6 +160,21 @@ public class RedirectionStreamReader : StreamReaderWrapper
 
 	protected override void Dispose(bool disposing)
 	{
-		throw new NotImplementedException();
+		if (disposing)
+		{
+			// Dispose managed state (managed objects)
+			_recordingWriter.Dispose();
+			if (_recordingWriter.BaseStream != _recordingStream)
+			{
+				_recordingStream.Dispose();
+			}
+
+			// _recordingStreamReadOnly can't be disposed
+			if (_recordingReader.BaseStream != null
+				&& _recordingReader.BaseStream != _recordingStreamReadOnly)
+			{
+				_recordingReader.Dispose();
+			}
+		}
 	}
 }

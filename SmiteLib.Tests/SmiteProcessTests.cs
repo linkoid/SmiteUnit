@@ -34,4 +34,21 @@ public class SmiteProcessTests
 		var error = process.Error.ReadToEnd();
 		Assert.AreEqual(expected, error);
 	}
+
+	[Test]
+	public void DisposeEndsChildProcess()
+	{
+		var process = new SmiteProcess("SmiteLib.Tests.TestProgram.exe")
+		{
+			RunTimeout = 1,
+			UseSubprocess = true,
+		};
+		process.Run();
+
+		var childProcess = System.Diagnostics.Process.GetProcessById(process.Process.Id);
+
+		process.Dispose();
+
+		Assert.IsTrue(childProcess.HasExited);
+	}
 }

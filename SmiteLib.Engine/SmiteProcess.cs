@@ -4,7 +4,7 @@ using SmiteLib.Internal;
 
 namespace SmiteLib
 {
-	public class SmiteProcess
+	public class SmiteProcess : System.IDisposable
 	{
 		public IEnumerable<string> Arguments
 		{
@@ -29,7 +29,6 @@ namespace SmiteLib
 		public string WorkingDirectory { get => Process.StartInfo.WorkingDirectory; set => Process.StartInfo.WorkingDirectory = value; }
 
 		public int RunTimeout = -1;
-
 		public readonly Process Process = new();
 		private readonly string _baseArguments;
 
@@ -68,6 +67,39 @@ namespace SmiteLib
 		{
 			Process.StartInfo.Arguments = $"{_baseArguments} --smitelib.test:{testId}";
 			return Run();
+		}
+
+		private bool _isDisposed;
+		protected virtual void Dispose(bool disposing)
+		{
+			if (_isDisposed) return;
+
+			if (!Process.HasExited)
+			{
+				Process.Kill(true);
+			}
+
+			if (disposing)
+			{
+				// Dispose managed state (managed objects)
+				Output.Dispose();
+				Error.Dispose();
+				Process.Close();
+				Process.Dispose();
+			}
+
+			_isDisposed = true;
+		}
+
+		public void Dispose()
+		{
+			Dispose(disposing: true);
+			System.GC.SuppressFinalize(this);
+		}
+
+		~SmiteProcess()
+		{
+			Dispose(disposing: false);
 		}
 	}
 }
