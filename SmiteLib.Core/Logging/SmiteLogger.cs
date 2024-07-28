@@ -15,18 +15,20 @@ public abstract class SmiteLogger : ILogger
 
 	internal SmiteLogger() { }
 
-	public void Log(LogLevel logLevel, string message)
+	public void Log(LogLevel logLevel, object? data)
 	{
 		if (logLevel >= LogLevel.None)
 			return;
 
+		string stringData = data?.ToString() ?? "null";
+
 		if (logLevel >= LogLevel.Error)
 		{
-			WriteError(message);
+			WriteError(stringData);
 		}
 		else
 		{
-			WriteOutput(message);
+			WriteOutput(stringData);
 		}
 	}
 
