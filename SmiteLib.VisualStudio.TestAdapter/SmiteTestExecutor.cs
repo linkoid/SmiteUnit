@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
+using SmiteLib.Engine;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -80,7 +81,7 @@ public sealed class SmiteTestExecutor : ITestExecutor
 
 			result ??= new TestResult(testCase)
 			{
-				Outcome = process.Process.ExitCode == testMethod.ExpectedExitCode ? TestOutcome.Passed : TestOutcome.Failed,
+				Outcome = process.ExitCode == testMethod.ExpectedExitCode ? TestOutcome.Passed : TestOutcome.Failed,
 			};
 
 			result.Messages.Add(new(TestResultMessage.StandardOutCategory, process.Output.ReadToEnd()));

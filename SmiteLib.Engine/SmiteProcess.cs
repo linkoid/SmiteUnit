@@ -2,35 +2,40 @@
 using System.Collections.Generic;
 using SmiteLib.Internal;
 
-namespace SmiteLib
+namespace SmiteLib.Engine
 {
 	public class SmiteProcess : System.IDisposable
 	{
 		public IEnumerable<string> Arguments
 		{
-			get => CommandLineParser.Split(Process.StartInfo.Arguments);
-			set => Process.StartInfo.Arguments = CommandLineParser.Join(value);
+			get => CommandLineParser.Split(_process.StartInfo.Arguments);
+			set => _process.StartInfo.Arguments = CommandLineParser.Join(value);
 		}
 
 		public bool UseSubprocess 
 		{ 
-			get => !Process.StartInfo.UseShellExecute;
+			get => !_process.StartInfo.UseShellExecute;
 			set
 			{
-				Process.StartInfo.UseShellExecute = !value;
-				Process.StartInfo.RedirectStandardInput = value;
-				Process.StartInfo.RedirectStandardOutput = value;
-				Process.StartInfo.RedirectStandardError = value;
+				_process.StartInfo.UseShellExecute = !value;
+				_process.StartInfo.RedirectStandardInput = value;
+				_process.StartInfo.RedirectStandardOutput = value;
+				_process.StartInfo.RedirectStandardError = value;
 			}
 		}
 
-		public bool HasExited => Process.HasExited;
-		public int ExitCode => Process.ExitCode;
+		public bool HasExited => _process.HasExited;
+		public int ExitCode => _process.ExitCode;
 
-		public string WorkingDirectory { get => Process.StartInfo.WorkingDirectory; set => Process.StartInfo.WorkingDirectory = value; }
+		public string WorkingDirectory { get => _process.StartInfo.WorkingDirectory; set => _process.StartInfo.WorkingDirectory = value; }
 
 		public int RunTimeout = -1;
-		public readonly Process Process = new();
+
+		[System.Obsolete]
+		public Process InternalProcess => _process;
+
+
+		internal readonly Process _process = new();
 		private readonly string _baseArguments;
 
 		public readonly RedirectionStreamReader Output;
@@ -39,24 +44,24 @@ namespace SmiteLib
 		public SmiteProcess(string filePath, string arguments = "")
 		{
 			_baseArguments = arguments;
-			Process.StartInfo = new ProcessStartInfo(filePath);
+			_process.StartInfo = new ProcessStartInfo(filePath);
 
 			WorkingDirectory = System.IO.Path.GetDirectoryName(filePath) ?? "";
 			UseSubprocess = true;
 
-			Output = new(Process, StandardStream.Output);
-			Error = new(Process, StandardStream.Error);
+			Output = new(_process, StandardStream.Output);
+			Error = new(_process, StandardStream.Error);
 		}
 
 		public bool Run()
 		{
-			if (!Process.Start())
+			if (!_process.Start())
 				return false;
 
 			Output.StartListening();
 			Error.StartListening();
 
-			bool exited = Process.WaitForExit(RunTimeout);
+			bool exited = _process.WaitForExit(RunTimeout);
 
 			Output.StopListening();
 			Error.StopListening();
@@ -66,7 +71,7 @@ namespace SmiteLib
 
 		public bool RunTest(ISmiteId testId)
 		{
-			Process.StartInfo.Arguments = $"{_baseArguments} --smitelib.test:{testId}";
+			_process.StartInfo.Arguments = $"{_baseArguments} --smitelib.test:{testId}";
 			return Run();
 		}
 
@@ -75,12 +80,12 @@ namespace SmiteLib
 		{
 			if (_isDisposed) return;
 
-			if (!Process.HasExited)
+			if (!_process.HasExited)
 			{
 #if NET5_0_OR_GREATER || NETCOREAPP3_0_OR_GREATER
-				Process.Kill(true);
+				_process.Kill(true);
 #else
-				Process.Kill();
+				_process.Kill();
 #endif
 			}
 
@@ -89,8 +94,8 @@ namespace SmiteLib
 				// Dispose managed state (managed objects)
 				Output.Dispose();
 				Error.Dispose();
-				Process.Close();
-				Process.Dispose();
+				_process.Close();
+				_process.Dispose();
 			}
 
 			_isDisposed = true;
