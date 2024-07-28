@@ -15,7 +15,12 @@ namespace SmiteLib.Internal
 
 		public static string Join(IEnumerable<string> parts)
 		{
-			return string.Join(' ', parts.Select(FormatPart));
+#if IMPLEMENTS_NETSTANDARD2_1_OR_GREATER
+			const char seperator = ' ';
+#else
+			const string seperator = " ";
+#endif
+			return string.Join(seperator, parts.Select(FormatPart));
 		}
 
 		public static string FormatPart(string part)

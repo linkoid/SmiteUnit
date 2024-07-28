@@ -32,6 +32,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{45F82C19
 		Build\ILRepack.targets = Build\ILRepack.targets
 		Build\Package.props = Build\Package.props
 		Build\Package.targets = Build\Package.targets
+		Build\TargetRuntimes.props = Build\TargetRuntimes.props
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmiteLib.Core", "SmiteLib.Core\SmiteLib.Core.csproj", "{E101DFC6-3E75-47BD-8144-11F00306BC66}"

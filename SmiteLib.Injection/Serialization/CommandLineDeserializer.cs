@@ -49,4 +49,7 @@ public class CommandLineDeserializer : ISmiteDeserializer<SmiteIdentifier>, IUse
 
 	IEnumerable<SmiteIdentifier> ISmiteDeserializer<SmiteIdentifier>.GetTestIds(ISmiteIdFilter? filter)
 		=> GetTestIds(filter);
+
+	IEnumerable<ISmiteId> ISmiteDeserializer.GetTestIds(ISmiteIdFilter? filter)
+		=> GetTestIds(filter).Cast<ISmiteId>();
 }

@@ -153,8 +153,7 @@ public class RedirectionStreamReader : StreamReaderWrapper
 
 	private static string ReinterpretWithEncoding(string data, Encoding fromEncoding, Encoding toEncoding)
 	{
-		byte[] bytes = new byte[fromEncoding.GetByteCount(data)];
-		fromEncoding.GetBytes(data, bytes);
+		byte[] bytes = fromEncoding.GetBytes(data);
 		return toEncoding.GetString(bytes);
 	}
 

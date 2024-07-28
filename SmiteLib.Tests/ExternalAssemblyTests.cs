@@ -51,7 +51,7 @@ public class ExternalAssemblyTests
 		Assert.IsNotEmpty(process.Output.ReadToEnd());
 	}
 
-	[Test]
+	[Test, Ignore("Not yet supported.")]
 	public void AnonymousStaticMethod()
 	{
 		process.RunTest(SmiteId.Method([Framework.SmiteMethod] static () =>

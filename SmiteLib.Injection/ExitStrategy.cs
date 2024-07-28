@@ -26,7 +26,7 @@ public static class ExitStrategies
 		throw new InvalidOperationException();
 	}
 
-#if !NETSTANDARD
+#if NET5_0_OR_GREATER || NETCOREAPP3_0_OR_GREATER
 	[DoesNotReturn]
 	public static void ProcessKillEntireProcessTree(int exitCode)
 	{

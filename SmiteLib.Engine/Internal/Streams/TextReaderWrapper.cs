@@ -32,39 +32,18 @@ namespace SmiteLib.Internal.Streams
 			return WrappedTextReader.Read(buffer, index, count);
 		}
 
-		public override int Read(Span<char> buffer)
-		{
-			return WrappedTextReader.Read(buffer);
-		}
-
 		public override Task<int> ReadAsync(char[] buffer, int index, int count)
 		{
 			return WrappedTextReader.ReadAsync(buffer, index, count);
-		}
-
-		public override ValueTask<int> ReadAsync(Memory<char> buffer, CancellationToken cancellationToken = default)
-		{
-			return WrappedTextReader.ReadAsync(buffer, cancellationToken);
 		}
 
 		public override int ReadBlock(char[] buffer, int index, int count)
 		{
 			return WrappedTextReader.ReadBlock(buffer, index, count);
 		}
-
-		public override int ReadBlock(Span<char> buffer)
-		{
-			return WrappedTextReader.ReadBlock(buffer);
-		}
-
 		public override Task<int> ReadBlockAsync(char[] buffer, int index, int count)
 		{
 			return WrappedTextReader.ReadBlockAsync(buffer, index, count);
-		}
-
-		public override ValueTask<int> ReadBlockAsync(Memory<char> buffer, CancellationToken cancellationToken = default)
-		{
-			return WrappedTextReader.ReadBlockAsync(buffer, cancellationToken);
 		}
 
 		public override string? ReadLine()
@@ -88,5 +67,27 @@ namespace SmiteLib.Internal.Streams
 		}
 
 		protected abstract override void Dispose(bool disposing);
+
+#if IMPLEMENTS_NETSTANDARD2_1_OR_GREATER
+		public override int Read(Span<char> buffer)
+		{
+			return WrappedTextReader.Read(buffer);
+		}
+
+		public override ValueTask<int> ReadAsync(Memory<char> buffer, CancellationToken cancellationToken = default)
+		{
+			return WrappedTextReader.ReadAsync(buffer, cancellationToken);
+		}
+
+		public override int ReadBlock(Span<char> buffer)
+		{
+			return WrappedTextReader.ReadBlock(buffer);
+		}
+
+		public override ValueTask<int> ReadBlockAsync(Memory<char> buffer, CancellationToken cancellationToken = default)
+		{
+			return WrappedTextReader.ReadBlockAsync(buffer, cancellationToken);
+		}
+#endif
 	}
 }

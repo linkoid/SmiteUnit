@@ -15,9 +15,4 @@ public interface ISmiteDeserializer<out T> : ISmiteDeserializer
 	where T : ISmiteId
 {
 	public new IEnumerable<T> GetTestIds(ISmiteIdFilter? filter);
-
-	IEnumerable<ISmiteId> ISmiteDeserializer.GetTestIds(ISmiteIdFilter? filter)
-	{
-		return GetTestIds(filter).Cast<ISmiteId>();
-	}
 }

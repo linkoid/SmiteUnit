@@ -77,7 +77,11 @@ namespace SmiteLib
 
 			if (!Process.HasExited)
 			{
+#if NET5_0_OR_GREATER || NETCOREAPP3_0_OR_GREATER
 				Process.Kill(true);
+#else
+				Process.Kill();
+#endif
 			}
 
 			if (disposing)

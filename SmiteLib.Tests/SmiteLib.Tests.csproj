@@ -1,12 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <Import Project="../Build/Common.props" />
+  <Import Project="../Build/TargetRuntimes.props" />
   
   <PropertyGroup>
-    <!--<TargetFrameworks>net6.0;net462</TargetFrameworks>-->
     <EnableSmiteLibFramework>true</EnableSmiteLibFramework>
     <EnableSmiteLibEngine>true</EnableSmiteLibEngine>
     <EnableSmiteLibTestAdapter>true</EnableSmiteLibTestAdapter>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <RunSettingsFilePath>$(MSBuildProjectDirectory)/.runsettings</RunSettingsFilePath>
   </PropertyGroup>
   
   <ItemGroup>
@@ -14,29 +16,34 @@
     <Compile Remove="packageTests/**" />
   </ItemGroup>
 
+  <PropertyGroup>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
     <PackageReference Include="coverlet.collector" Version="3.1.0" GeneratePathProperty="true" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.0.0" />
-    <PackageReference Include="NUnit" Version="3.13.2" ExcludeAssets="Compile" GeneratePathProperty="true" />
-    <Reference Include="NUnit.Framework" HintPath="$(PkgNUnit)/lib/netstandard2.0/nunit.framework.dll" />
-    <Reference Include="NUnit.Framework" HintPath="$(PkgNUnit3TestAdapter)/build/netstandard2.0/nunit.framework.dll" />
+    <PackageReference Include="NUnit" Version="3.14.*" />
+    <PackageReference Include="RandomSkunk.RuntimePolyfill" Version="1.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../SmiteLib.Tests.TestProgram/SmiteLib.Tests.TestProgram.csproj" SetTargetFramework="" />
+    <ProjectReference Include="../SmiteLib.VisualStudio.TestAdapter/SmiteLib.VisualStudio.TestAdapter.csproj" IncludeAssets="Runtime" />
   </ItemGroup>
   
-
   <ItemGroup Condition="'$(DesignTimeBuild)' == 'true'">
     <ProjectReference Include="../SmiteLib/SmiteLib.csproj" />
     <ProjectReference Include="../SmiteLib.Engine/SmiteLib.Engine.csproj" />
     <ProjectReference Include="../SmiteLib.Framework/SmiteLib.Framework.csproj" />
-    <ProjectReference Include="../SmiteLib.Tests.TestProgram/SmiteLib.Tests.TestProgram.csproj" />
-    <ProjectReference Include="../SmiteLib.VisualStudio.TestAdapter/SmiteLib.VisualStudio.TestAdapter.csproj" IncludeAssets="Runtime" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(DesignTimeBuild)' != 'true'">
     <ProjectReference Include="../SmiteLib/SmiteLib.csproj" />
     <ProjectReference Include="../SmiteLib.Framework/SmiteLib.Framework.csproj" />
-    <ProjectReference Include="../SmiteLib.Tests.TestProgram/SmiteLib.Tests.TestProgram.csproj" />
-    <ProjectReference Include="../SmiteLib.VisualStudio.TestAdapter/SmiteLib.VisualStudio.TestAdapter.csproj" IncludeAssets="Runtime" />
   </ItemGroup>
 
 </Project>

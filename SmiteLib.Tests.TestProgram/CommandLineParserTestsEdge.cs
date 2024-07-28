@@ -12,6 +12,6 @@ internal class CommandLineParserTestsEdge
 	[SmiteMethod]
 	public static void PrintArguments()
 	{
-		Console.Write(string.Join(',', Environment.GetCommandLineArgs()));
+		Console.Write(string.Join(",", Environment.GetCommandLineArgs()));
 	}
 }

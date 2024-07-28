@@ -1,11 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <Import Project="../../Build/Common.props" />
+  <Import Project="../../Build/TargetRuntimes.props" />
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <ImplicitUsings>enable</ImplicitUsings>
     <AssemblyName>SmiteLib.Tests.TestProgram</AssemblyName>
+    <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,11 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <Import Project="../Build/Common.props" />
+  <Import Project="../Build/TargetRuntimes.props" />
   
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,17 +21,16 @@
 
   <ItemGroup>
     <ProjectReference Include="../SmiteLib/SmiteLib.csproj" />
+    <ProjectReference Include="../SmiteLib.Framework/SmiteLib.Framework.csproj" />
     <ProjectReference Include="../SmiteLib.Injection/SmiteLib.Injection.csproj" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(DesignTimeBuild)' == 'true'">
-    <ProjectReference Include="../SmiteLib/SmiteLib.csproj" />
     <ProjectReference Include="../SmiteLib.Core/SmiteLib.Core.csproj" />
     <ProjectReference Include="../SmiteLib.Injection/SmiteLib.Injection.csproj" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(DesignTimeBuild)' != 'true'">
-    <ProjectReference Include="../SmiteLib/SmiteLib.csproj" />
     <ProjectReference Include="../SmiteLib.Injection/SmiteLib.Injection.csproj" />
   </ItemGroup>
 

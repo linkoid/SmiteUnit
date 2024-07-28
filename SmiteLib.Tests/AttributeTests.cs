@@ -17,9 +17,10 @@ public class AttributeTests
 	[SetUp]
 	public void SetUp()
 	{
+		TestContext.WriteLine(Environment.CurrentDirectory);
 		process = new SmiteProcess("SmiteLib.Tests.TestProgram.exe")
 		{
-			UseSubprocess = true
+			UseSubprocess = true,
 		};
 	}
 
@@ -28,6 +29,7 @@ public class AttributeTests
 	{
 		Console.WriteLine(TestContext.CurrentContext.Test.FullName);
 		process.RunTest(SmiteId.Method(AttributeTestsEdge.Test));
+		process.Process.Start();
 		Assert.That(process.Output.ReadToEnd().StartsWith("SetUp"));
 
 	}

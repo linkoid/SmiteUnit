@@ -32,8 +32,12 @@ namespace SmiteLib.Internal
 			switch (standardStream)
 			{
 				case StandardStream.Input:
+#if IMPLEMENTS_NETSTANDARD2_1_OR_GREATER
 					processStartInfo.StandardInputEncoding = encoding;
 					break;
+#else
+					
+#endif
 				case StandardStream.Output:
 					processStartInfo.StandardOutputEncoding = encoding;
 					break;
@@ -49,7 +53,11 @@ namespace SmiteLib.Internal
 		{
 			return standardStream switch
 			{
+#if IMPLEMENTS_NETSTANDARD2_1_OR_GREATER
 				StandardStream.Input  => processStartInfo.StandardInputEncoding,
+#else
+				StandardStream.Input  => throw new NotSupportedException("Current runtime does not support StandardInputEncoding"),
+#endif
 				StandardStream.Output => processStartInfo.StandardOutputEncoding,
 				StandardStream.Error  => processStartInfo.StandardErrorEncoding,
 				_ => throw new ArgumentOutOfRangeException(nameof(standardStream)),
