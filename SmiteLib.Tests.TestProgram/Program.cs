@@ -8,24 +8,24 @@ public static class Program
 	internal static event EventHandler PostTestsEvent;
 	internal static event EventHandler PostLoopEvent;
 
-	private static SmiteRunner _internalRunner;
-	private static SmiteRunner _externalRunner;
+	private static SmiteInjection _internalInjection;
+	private static SmiteInjection _externalInjection;
 
 	public static void Main()
 	{
-		_internalRunner = new SmiteRunner();
-		_internalRunner.EntryPoint();
+		_internalInjection = new SmiteInjection();
+		_internalInjection.EntryPoint();
 
-		_externalRunner = new SmiteRunner(Assembly.LoadFrom("SmiteLib.Tests.dll"));
-		_externalRunner.EntryPoint();
+		_externalInjection = new SmiteInjection(Assembly.LoadFrom("SmiteLib.Tests.dll"));
+		_externalInjection.EntryPoint();
 
 		PostTestsEvent?.Invoke(null, EventArgs.Empty);
 
 		var args = Environment.GetCommandLineArgs();
 		do
 		{
-			_internalRunner.ExitPoint();
-			_externalRunner.ExitPoint();
+			_internalInjection.UpdatePoint();
+			_externalInjection.UpdatePoint();
 
 			Thread.Sleep(1000);
 		}
@@ -33,7 +33,7 @@ public static class Program
 
 		PostLoopEvent?.Invoke(null, EventArgs.Empty);
 
-		_internalRunner.FinalExitPoint();
-		_externalRunner.FinalExitPoint();
+		_internalInjection.ExitPoint();
+		_externalInjection.ExitPoint();
 	}
 }

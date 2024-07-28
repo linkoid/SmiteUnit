@@ -11,7 +11,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace SmiteLib.Injection;
 
-public sealed class SmiteRunner : IUsesLogger
+public sealed class SmiteInjection : IUsesLogger
 {
 	public ILogger Logger { get; set; } = SmiteLogger.Current;
 
@@ -26,21 +26,21 @@ public sealed class SmiteRunner : IUsesLogger
 	private readonly AssemblyName _assemblyName;
 	private readonly List<SmiteTest> _tests = new();
 
-	public SmiteRunner(Assembly assembly)
+	public SmiteInjection(Assembly assembly)
 	{
 		_assembly = assembly;
 		_assemblyName = _assembly.GetName();
 	}
 
-	public SmiteRunner()
+	public SmiteInjection()
 		: this(Assembly.GetCallingAssembly())
 	{ }
 
-	public SmiteRunner(AssemblyName assemblyName)
+	public SmiteInjection(AssemblyName assemblyName)
 		: this(Assembly.Load(assemblyName))
 	{ }
 
-	public SmiteRunner(string assemblyName)
+	public SmiteInjection(string assemblyName)
 		: this(Assembly.Load(assemblyName))
 	{ }
 
@@ -89,7 +89,7 @@ public sealed class SmiteRunner : IUsesLogger
 		return ranTests;
 	}
 
-	public void ExitPoint()
+	public void UpdatePoint()
 	{
 		if (_tests.Count == 0)
 			return;
@@ -100,7 +100,7 @@ public sealed class SmiteRunner : IUsesLogger
 		}
 	}
 
-	public void FinalExitPoint()
+	public void ExitPoint()
 	{
 		if (_tests.Count == 0)
 			return;
@@ -146,3 +146,5 @@ public sealed class SmiteRunner : IUsesLogger
 		return errorCode;
 	}
 }
+
+
