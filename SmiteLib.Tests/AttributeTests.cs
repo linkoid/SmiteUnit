@@ -1,12 +1,7 @@
 ﻿using NUnit.Framework;
+using SmiteLib.Engine;
 using SmiteLib.Tests.TestProgram;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmiteLib.Tests;
 
@@ -29,7 +24,6 @@ public class AttributeTests
 	{
 		Console.WriteLine(TestContext.CurrentContext.Test.FullName);
 		process.RunTest(SmiteId.Method(AttributeTestsEdge.Test));
-		process.Process.Start();
 		Assert.That(process.Output.ReadToEnd().StartsWith("SetUp"));
 
 	}

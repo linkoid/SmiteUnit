@@ -1,11 +1,8 @@
 ﻿using NUnit.Framework;
+using SmiteLib.Engine;
 using SmiteLib.Internal;
 using SmiteLib.Tests.TestProgram;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 namespace SmiteLib.Tests;
 
@@ -57,7 +54,7 @@ public class SmiteProcessTests
 		};
 		process.Run();
 
-		var childProcess = System.Diagnostics.Process.GetProcessById(process.Process.Id);
+		var childProcess = System.Diagnostics.Process.GetProcessById(process.InternalProcess.Id);
 
 		process.Dispose();
 

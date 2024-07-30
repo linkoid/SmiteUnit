@@ -1,10 +1,8 @@
 ﻿using NUnit.Framework;
+using SmiteLib.Engine;
 using SmiteLib.Internal;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using SmiteLib.Tests.TestProgram;
+using System;
 
 namespace SmiteLib.Tests;
 

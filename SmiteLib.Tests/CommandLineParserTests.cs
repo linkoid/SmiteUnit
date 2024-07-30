@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using SmiteLib.Engine;
 using SmiteLib.Internal;
 using System;
 using System.Collections;

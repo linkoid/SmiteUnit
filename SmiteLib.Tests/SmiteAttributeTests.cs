@@ -1,4 +1,5 @@
-﻿using SmiteLib.Framework;
+﻿using SmiteLib.Engine;
+using SmiteLib.Framework;
 using System;
 using System.Text;
 
