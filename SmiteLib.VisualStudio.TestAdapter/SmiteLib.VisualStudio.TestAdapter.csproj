@@ -8,19 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../SmiteLib.Framework/SmiteLib.Framework.csproj" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(DesignTimeBuild)' == 'true'">
     <ProjectReference Include="../SmiteLib/SmiteLib.csproj" PrivateAssets="All" />
-    <ProjectReference Include="../SmiteLib.Core/SmiteLib.Core.csproj" PrivateAssets="All" />
+    <ProjectReference Include="../SmiteLib.Core/SmiteLib.Core.csproj" PrivateAssets="All" IsILRepacked="true" />
     <ProjectReference Include="../SmiteLib.Framework/SmiteLib.Framework.csproj" />
-    <ProjectReference Include="../SmiteLib.Engine/SmiteLib.Engine.csproj" PrivateAssets="All" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(DesignTimeBuild)' != 'true'">
-    <ProjectReference Include="../SmiteLib/SmiteLib.csproj" PrivateAssets="All" />
-    <ProjectReference Include="../SmiteLib.Framework/SmiteLib.Framework.csproj" />
+    <ProjectReference Include="../SmiteLib.Engine/SmiteLib.Engine.csproj" PrivateAssets="All" IsILRepacked="true" />
   </ItemGroup>
 
   <Import Project="VisualStudio.TestAdapter.Packages.targets"/>

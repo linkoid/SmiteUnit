@@ -8,4 +8,13 @@
   <ItemGroup>
     <PackageReference Include="IDisposableAnalyzers" Version="4.0.7" PrivateAssets="all" />
   </ItemGroup>
+  
+  <PropertyGroup>
+    <ResolveAssemblyReferencesDependsOn>$(ResolveAssemblyReferencesDependsOn);FilterProjectReferences</ResolveAssemblyReferencesDependsOn>
+  </PropertyGroup>
+  <Target Name="RemoveILRepackedReferences" BeforeTargets="ResolveAssemblyReferences" Condition="'$(DesignTimeBuild)' != 'true'">
+    <ItemGroup>
+      <_ResolvedProjectReferencePaths Remove="@(_ResolvedProjectReferencePaths->WithMetadataValue('IsILRepacked', 'true'))" />
+    </ItemGroup>
+  </Target>
 </Project>

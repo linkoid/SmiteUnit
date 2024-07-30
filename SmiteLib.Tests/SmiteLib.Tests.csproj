@@ -31,19 +31,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="../SmiteLib/SmiteLib.csproj" />
+    <ProjectReference Include="../SmiteLib.Core/SmiteLib.Core.csproj" IsILRepacked="true" />
+    <ProjectReference Include="../SmiteLib.Framework/SmiteLib.Framework.csproj" />
+    <ProjectReference Include="../SmiteLib.Engine/SmiteLib.Engine.csproj" IsILRepacked="true" />
     <ProjectReference Include="../SmiteLib.Tests.TestProgram/SmiteLib.Tests.TestProgram.csproj" SetTargetFramework="" />
     <ProjectReference Include="../SmiteLib.VisualStudio.TestAdapter/SmiteLib.VisualStudio.TestAdapter.csproj" IncludeAssets="Runtime" />
   </ItemGroup>
   
-  <ItemGroup Condition="'$(DesignTimeBuild)' == 'true'">
-    <ProjectReference Include="../SmiteLib/SmiteLib.csproj" />
-    <ProjectReference Include="../SmiteLib.Engine/SmiteLib.Engine.csproj" />
-    <ProjectReference Include="../SmiteLib.Framework/SmiteLib.Framework.csproj" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(DesignTimeBuild)' != 'true'">
-    <ProjectReference Include="../SmiteLib/SmiteLib.csproj" />
-    <ProjectReference Include="../SmiteLib.Framework/SmiteLib.Framework.csproj" />
-  </ItemGroup>
+  <Import Project="../Build/Common.targets" />
 
 </Project>

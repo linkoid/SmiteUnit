@@ -16,9 +16,7 @@
     <ProjectReference Include="../SmiteLib/SmiteLib.csproj" >
       <ReferenceOutputAssembly Condition="'$(DesignTimeBuild)' == 'true'">false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="../SmiteLib.Core/SmiteLib.Core.csproj">
-      <ReferenceOutputAssembly Condition="'$(DesignTimeBuild)' != 'true'">false</ReferenceOutputAssembly>
-    </ProjectReference>
+    <ProjectReference Include="../SmiteLib.Core/SmiteLib.Core.csproj" IsILRepacked="true" />
   </ItemGroup>
 
   <ItemGroup>

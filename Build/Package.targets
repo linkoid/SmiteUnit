@@ -67,16 +67,17 @@
     </ItemGroup>
   </Target>
 
-  <Target Name="PublishLocal" DependsOnTargets="Pack" AfterTargets="Pack"
+  <Target Name="PublishToTestSource" DependsOnTargets="Pack" AfterTargets="Pack"
           Inputs="@(NuGetPackOutput)"
-          Outputs="%USERPROFILE%/.nuget/packages/$(PackageId)/**/*"
+          Outputs="$(MSBuildProjectDirectory)/../packages/$(PackageId)/**/*"
           Returns="@(_TargetPackage)">
     <PropertyGroup>
       <PackagePath>@(NuGetPackOutput->WithMetadataValue('Extension', '.nupkg'))</PackagePath>
-      <PackageSource>%USERPROFILE%/.nuget/packages</PackageSource>
+      <PackageSource>$([System.IO.Path]::GetFullPath($(MSBuildProjectDirectory)/../packages))</PackageSource>
     </PropertyGroup>
-    <Exec Command="NuGet delete $(PackageId) $(PackageVersion) -Source $(PackageSource) -NonInteractive" ContinueOnError="true" />
-    <Exec Command="NuGet add $(PackagePath) -Source $(PackageSource) -Expand -NonInteractive" />
+    <MakeDir Directories="$(PackageSource)" Condition="Exists($(PackageSource))" />
+    <Exec Command="nuget delete $(PackageId) $(PackageVersion) -Source $(PackageSource) -NonInteractive" ContinueOnError="true" />
+    <Exec Command="nuget add $(PackagePath) -Source $(PackageSource) -Expand -NonInteractive" />
     <ItemGroup>
       <_TargetPackage Include="$(PackageId)" Version="$(PackageVersion)" />
     </ItemGroup>

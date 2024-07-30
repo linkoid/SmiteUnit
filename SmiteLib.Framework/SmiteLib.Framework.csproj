@@ -6,18 +6,15 @@
   <PropertyGroup>
     <RootNamespace>SmiteLib.Framework</RootNamespace>
   </PropertyGroup>
-  
-  <ItemGroup Condition="'$(DesignTimeBuild)' == 'true'">
-    <ProjectReference Include="../SmiteLib/SmiteLib.csproj" PrivateAssets="All" />
-    <ProjectReference Include="../SmiteLib.Core/SmiteLib.Core.csproj" PrivateAssets="All" />
-  </ItemGroup>
 
-  <ItemGroup Condition="'$(DesignTimeBuild)' != 'true'">
-    <ProjectReference Include="../SmiteLib/SmiteLib.csproj" Private="true" PrivateAssets="All" />
-    <ProjectReference Include="../SmiteLib.Engine/SmiteLib.Engine.csproj" Private="false">
+  <ItemGroup>
+    <ProjectReference Include="../SmiteLib/SmiteLib.csproj" PrivateAssets="All" />
+    <ProjectReference Include="../SmiteLib.Core/SmiteLib.Core.csproj" PrivateAssets="All" IsILRepacked="true" />
+    <ProjectReference Include="../SmiteLib.Engine/SmiteLib.Engine.csproj">
+      <PrivateAssets>All</PrivateAssets>
       <ExcludeAssets>Runtime</ExcludeAssets>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <OutputItemType>ILRepackReference</OutputItemType>
+      <IsILRepacked>true</IsILRepacked>
     </ProjectReference>
   </ItemGroup>
 

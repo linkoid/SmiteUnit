@@ -5,16 +5,12 @@
   <PropertyGroup>
     <RootNamespace>SmiteLib.Injection</RootNamespace>
   </PropertyGroup>
-
-  <ItemGroup Condition="'$(DesignTimeBuild)' == 'true'">
+  
+  <ItemGroup>
     <ProjectReference Include="../SmiteLib/SmiteLib.csproj" Private="true" PrivateAssets="All" />
-    <ProjectReference Include="../SmiteLib.Core/SmiteLib.Core.csproj" Private="true" PrivateAssets="All" />
+    <ProjectReference Include="../SmiteLib.Core/SmiteLib.Core.csproj" Private="true" PrivateAssets="All" IsILRepacked="true" />
   </ItemGroup>
-
-  <ItemGroup Condition="'$(DesignTimeBuild)' != 'true'">
-    <ProjectReference Include="../SmiteLib/SmiteLib.csproj" Private="true" PrivateAssets="All" />
-  </ItemGroup>
-
+  
   <ItemGroup>
     <PackageReference Include="RandomSkunk.RuntimePolyfill" Version="1.0.0">
       <PrivateAssets>all</PrivateAssets>
