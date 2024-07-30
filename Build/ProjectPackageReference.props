@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <ProjectPackageSource Condition="'$(ProjectPackageSource)' == ''">./obj/$(Configuration)/packages</ProjectPackageSource>
+  </PropertyGroup>
+</Project>

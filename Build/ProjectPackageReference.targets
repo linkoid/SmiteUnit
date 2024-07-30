@@ -1,0 +1,68 @@
+<Project>
+
+  <PropertyGroup>
+    <RestoreSources Condition="'$(RestoreSources)' == ''">https://api.nuget.org/v3/index.json</RestoreSources>
+    <RestoreSources>$(ProjectPackageSource);$(RestoreSources)</RestoreSources>
+  </PropertyGroup>
+  
+  <Target Name="_CollectRestoreInputs"
+          DependsOnTargets="CollectProjectPackageReferences;CollectPackageReferences;CollectPackageDownloads;CollectFrameworkReferences;CollectCentralPackageVersions;CollectNuGetAuditSuppressions">
+  </Target>
+
+  <Target Name="CollectProjectPackageReferences"
+          Outputs="@(_NupkgReference)"
+          BeforeTargets="CollectPackageReferences">
+    
+    <MSBuild Projects="@(ProjectPackageReference)" Targets="GetPackage" >
+      <Output TaskParameter="TargetOutputs" ItemName="_GetPackageResult" />
+    </MSBuild>
+    
+    <ItemGroup>
+      <_NupkgReference Include="@(_GetPackageResult->WithMetadataValue('Extension', '.nupkg'))">
+        <RelativeSourcePath>%(PackageId)/%(PackageVersion)/</RelativeSourcePath>
+      </_NupkgReference>
+    </ItemGroup>
+  </Target>
+
+
+  <Target Name="_CopyNupkgReferencesToProjectPackageSource"
+          Inputs="@(_NupkgReference)"
+          Outputs="$(ProjectPackageSource)/%(_NupkgReference.RelativeSourcePath)/%(_NupkgReference.Filename)%(_NupkgReference.Extension)"
+          DependsOnTargets="CollectProjectPackageReferences"
+          BeforeTargets="CollectPackageReferences">
+          
+    <PropertyGroup>
+      <_FullProjectPackageSource>$([System.IO.Path]::GetFullPath($(ProjectPackageSource)))</_FullProjectPackageSource>
+    </PropertyGroup>
+    
+    <MakeDir Directories="$(_FullProjectPackageSource)" Condition="!Exists($(_FullProjectPackageSource))" />
+
+    <Exec Command="nuget delete %(_NupkgReference.PackageId) %(_NupkgReference.PackageVersion) -Source $(_FullProjectPackageSource) -NonInteractive" ContinueOnError="true" />
+    <Exec Command="nuget add %(_NupkgReference.FullPath) -Source $(_FullProjectPackageSource) -Expand -NonInteractive" />
+    
+    <!--<RemoveDir Directories="$(_PackageDestinationFolder)" ContinueOnError="true" />
+    <MakeDir Directories="$(_FullProjectPackageSource)/%(_NupkgReference.RelativeSourcePath)" />
+    <Unzip SourceFiles="%(_NupkgReference)" DestinationFolder="$(_FullProjectPackageSource)/%(_NupkgReference.RelativeSourcePath)" />-->
+    
+    <ItemGroup>
+      <_NuGetAddOutput Include="$(ProjectPackageSource)/%(_NupkgReference.RelativeSourcePath)/**" />
+      <FileWrites Include="@(_NuGetAddOutput)" />
+    </ItemGroup>
+  
+    <Message Text="_CopyNupkgReferencesToProjectPackageSource ----------------------------------------------------- " />
+    <Message Text="_NuGetAddOutput: @(_NuGetAddOutput)" />
+  </Target>
+  
+  <Target Name="_AddProjectPackageReferencesAsPackageReference"
+          Outputs="@(PackageReference)"
+          DependsOnTargets="CollectProjectPackageReferences"
+          BeforeTargets="CollectPackageReferences">
+    
+    <ItemGroup>
+      <PackageReference Include="@(_NupkgReference->'%(PackageId)')" Version="%(_NupkgReference.PackageVersion)" IncludeAssets="All" KeepMetadata="false" />
+    </ItemGroup>
+  
+    <Message Text="_ProjectReferencePackageOutput ----------------------------------------------------- " />
+    <Message Text="@(PackageReference->'%(Identity) %(Version)')" />
+  </Target>
+</Project>

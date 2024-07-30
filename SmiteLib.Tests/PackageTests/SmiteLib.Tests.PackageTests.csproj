@@ -2,6 +2,7 @@
 
   <Import Project="../../Build/Common.props" />
   <Import Project="../../Build/TargetRuntimes.props" />
+  <Import Project="../../Build/ProjectPackageReference.props" />
 
   <PropertyGroup>
     <AssemblyName>SmiteLib.Tests</AssemblyName>
@@ -18,31 +19,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" SetTargetFramework="$(SetReferenceTargetFramework)"/>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
     <PackageReference Include="NUnit" Version="3.13.2" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.0.0" />
     <PackageReference Include="coverlet.collector" Version="3.1.0" />
-    <PackageReference Include="$(PackageIdPrefix)SmiteLib" Version="$(Version)" CustomMetadata="FooBar"/>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../../SmiteLib.Tests.TestProgram/PackageTests/SmiteLib.Tests.TestProgram.PackageTests.csproj" />
+    <ProjectPackageReference Include="../../SmiteLib-Package/SmiteLib-Package.csproj" />
+    <ProjectReference Include="../../SmiteLib.Tests.TestProgram/PackageTests/SmiteLib.Tests.TestProgram.PackageTests.csproj" SetTargetFramework=""/>
   </ItemGroup>
 
-  <!--<ItemGroup>
-    <ProjectReference Include="../../SmiteLib-Package/SmiteLib-Package.csproj">
-      <Targets>Pack;PublishLocal</Targets>
-      <Target></Target>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-  </ItemGroup>-->
-
-  <Import Project="../../Build/Debug.targets" />
-  <Target Name="DebugLogPackageStuffs" DependsOnTargets="ResolveLockFileCopyLocalFiles" AfterTargets="ResolveReferences">
-    <GetAllMetadata Items="@(ReferenceCopyLocalPaths->WithMetadataValue('NuGetPackageId', '$(PackageIdPrefix)SmiteLib.Framework'))">
-      <Output TaskParameter="MetadataString" PropertyName="_MetadataString" />
-    </GetAllMetadata>
-    <Message Text="$(_MetadataString)" Importance="High" />
-  </Target>
+  <Import Project="../../Build/ProjectPackageReference.targets" />
 
 </Project>

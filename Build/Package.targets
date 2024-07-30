@@ -67,17 +67,46 @@
     </ItemGroup>
   </Target>
 
+  <Target Name="GetPackage" 
+          DependsOnTargets="$(PackDependsOn)"
+          Returns="@(_GetPackageOutput)">
+    <ItemGroup>
+      <_GetPackageOutput Include="@(NuGetPackOutput)">
+        <PackageId>$(PackageId)</PackageId>
+        <PackageVersion>$(PackageVersion)</PackageVersion>
+      </_GetPackageOutput>
+    </ItemGroup>
+  </Target>
+
   <Target Name="PublishToTestSource" DependsOnTargets="Pack" AfterTargets="Pack"
           Inputs="@(NuGetPackOutput)"
           Outputs="$(MSBuildProjectDirectory)/../packages/$(PackageId)/**/*"
           Returns="@(_TargetPackage)">
     <PropertyGroup>
-      <PackagePath>@(NuGetPackOutput->WithMetadataValue('Extension', '.nupkg'))</PackagePath>
-      <PackageSource>$([System.IO.Path]::GetFullPath($(MSBuildProjectDirectory)/../packages))</PackageSource>
+      <_PackagePath>@(NuGetPackOutput->WithMetadataValue('Extension', '.nupkg'))</_PackagePath>
+      <_PackageSource>$([System.IO.Path]::GetFullPath($(MSBuildProjectDirectory)/../packages))</_PackageSource>
+      <_PackageDestinationFolder>$(_PackageSource)/$(PackageId)/$(PackageVersion)/</_PackageDestinationFolder>
     </PropertyGroup>
-    <MakeDir Directories="$(PackageSource)" Condition="Exists($(PackageSource))" />
-    <Exec Command="nuget delete $(PackageId) $(PackageVersion) -Source $(PackageSource) -NonInteractive" ContinueOnError="true" />
-    <Exec Command="nuget add $(PackagePath) -Source $(PackageSource) -Expand -NonInteractive" />
+    <MakeDir Directories="$(PackageSource)" Condition="!Exists($(PackageSource))" />
+    <!--<Exec Command="nuget delete $(PackageId) $(PackageVersion) -Source $(_PackageSource) -NonInteractive" ContinueOnError="true" />-->
+    <!--<Exec Command="nuget add $(_PackagePath) -Source $(_PackageSource) -Expand -NonInteractive" />-->
+    <RemoveDir Directories="$(_PackageDestinationFolder)" ContinueOnError="true" />
+    <Unzip SourceFiles="$(_PackagePath)" DestinationFolder="$(_PackageDestinationFolder)" />
+    <ItemGroup>
+      <_TargetPackage Include="$(PackageId)" Version="$(PackageVersion)" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="PublishLocal" DependsOnTargets="Pack"
+          Inputs="@(NuGetPackOutput)"
+          Outputs="%USERPROFILE%/.nuget/packages/$(PackageId)/**/*"
+          Returns="@(_TargetPackage)">
+    <PropertyGroup>
+      <PackagePath>@(NuGetPackOutput->WithMetadataValue('Extension', '.nupkg'))</PackagePath>
+      <PackageSource>%USERPROFILE%/.nuget/packages</PackageSource>
+    </PropertyGroup>
+    <Exec Command="NuGet delete $(PackageId) $(PackageVersion) -Source $(PackageSource) -NonInteractive" ContinueOnError="true" />
+    <Exec Command="NuGet add $(PackagePath) -Source $(PackageSource) -Expand -NonInteractive" />
     <ItemGroup>
       <_TargetPackage Include="$(PackageId)" Version="$(PackageVersion)" />
     </ItemGroup>

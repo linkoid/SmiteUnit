@@ -2,6 +2,7 @@
 
   <Import Project="../../Build/Common.props" />
   <Import Project="../../Build/TargetRuntimes.props" />
+  <Import Project="../../Build/ProjectPackageReference.props" />
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -20,14 +21,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="$(PackageIdPrefix)SmiteLib.Injection" Version="$(Version)" />
+    <ProjectPackageReference Include="../../SmiteLib.Injection/SmiteLib.Injection.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="../../SmiteLib.Injection/SmiteLib.Injection.csproj" Private="true" PrivateAssets="All">
-      <Targets>PublishLocal</Targets>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-  </ItemGroup>
+  <Import Project="../../Build/ProjectPackageReference.targets" />
 
 </Project>
