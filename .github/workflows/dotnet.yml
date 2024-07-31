@@ -53,7 +53,7 @@ jobs:
 
   publish:
     name: Publish
-    if: github.ref_type == 'tag' && startsWith(github.ref_name, 'v')
+    if: ${{github.ref_type}} == 'tag' && startsWith(${{github.ref_name}}, 'v')
     runs-on: ubuntu-latest
     container: mcr.microsoft.com/dotnet/sdk:8.0
     steps:
