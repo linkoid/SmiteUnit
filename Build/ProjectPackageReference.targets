@@ -18,7 +18,7 @@
     </MSBuild>
     
     <ItemGroup>
-      <_NupkgReference Include="@(_GetPackageResult->WithMetadataValue('Extension', '.nupkg'))">
+      <_NupkgReference Include="@(_GetPackageResult)">
         <RelativeSourcePath>%(PackageId)/%(PackageVersion)/</RelativeSourcePath>
       </_NupkgReference>
     </ItemGroup>

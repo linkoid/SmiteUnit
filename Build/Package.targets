@@ -71,7 +71,7 @@
           DependsOnTargets="$(PackDependsOn)"
           Returns="@(_GetPackageOutput)">
     <ItemGroup>
-      <_GetPackageOutput Include="@(NuGetPackOutput)">
+      <_GetPackageOutput Include="@(NuGetPackOutput->WithMetadataValue('Extension', '.nupkg'))">
         <PackageId>$(PackageId)</PackageId>
         <PackageVersion>$(PackageVersion)</PackageVersion>
       </_GetPackageOutput>
