@@ -3,12 +3,16 @@
     <TargetFrameworks>net6.0;netstandard2.1;netstandard2.0</TargetFrameworks>
     <LangVersion>11</LangVersion>
     <Nullable>enable</Nullable>
-    <Authors>linkoid</Authors>
-    <VersionPrefix>0.1.0</VersionPrefix>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <PropertyGroup>
     <PackageIdPrefix>Linkoid.</PackageIdPrefix>
+    <VersionPrefix>0.1.1</VersionPrefix>
     <Version>$(VersionPrefix)-alpha</Version>
+    <Authors>linkoid</Authors>
+    <Description>SmiteLib is a flexible library and simple framework for testing assemblies that run in external programs.</Description>
+    <Copyright>Copyright (c) linkoid 2024</Copyright>
+    <RepositoryUrl>https://github.com/linkoid/SmiteLib</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 </Project>

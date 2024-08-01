@@ -7,14 +7,21 @@
     <PackageId>$(PackageIdPrefix)$(ProjectName)</PackageId>
     <Title>$(ProjectName)</Title>
     <Product>$(ProjectName)</Product>
+    <PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
+    <PackageIcon></PackageIcon>
+    <PackageReadmeFile></PackageReadmeFile>
+    <PackageTags>SmiteLib Test Testing TDD Plugin Mod</PackageTags>
+    <PackageReleaseNotes></PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <IncludeBuildOutput>true</IncludeBuildOutput>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IsPackable>true</IsPackable>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-  </PropertyGroup>
   <ItemGroup>
     <None Include="../LICENSE.txt">
       <Pack>True</Pack>
