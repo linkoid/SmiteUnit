@@ -2,7 +2,7 @@
 
   <Import Project="../Build/Common.props" />
   <Import Project="../Build/TargetRuntimes.props" />
-  
+
   <PropertyGroup>
     <EnableSmiteLibFramework>true</EnableSmiteLibFramework>
     <EnableSmiteLibEngine>true</EnableSmiteLibEngine>
@@ -10,13 +10,9 @@
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <RunSettingsFilePath>$(MSBuildProjectDirectory)/.runsettings</RunSettingsFilePath>
   </PropertyGroup>
-  
-  <ItemGroup>
-    <None Remove="packageTests/**" />
-    <Compile Remove="packageTests/**" />
-  </ItemGroup>
 
   <PropertyGroup>
+    <DefaultExcludesInProjectFolder>$(DefaultExcludesInProjectFolder);PackageTests/**</DefaultExcludesInProjectFolder>
   </PropertyGroup>
 
   <ItemGroup>

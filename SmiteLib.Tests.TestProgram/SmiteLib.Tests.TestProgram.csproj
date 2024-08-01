@@ -14,10 +14,9 @@
     <InternalsVisibleTo Include="SmiteLib.Tests" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="packageTests/**" />
-    <Compile Remove="packageTests/**" />
-  </ItemGroup>
+  <PropertyGroup>
+    <DefaultExcludesInProjectFolder>$(DefaultExcludesInProjectFolder);PackageTests/**</DefaultExcludesInProjectFolder>
+  </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="../SmiteLib/SmiteLib.csproj" />
