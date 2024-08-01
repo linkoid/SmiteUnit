@@ -32,17 +32,17 @@
           BeforeTargets="CollectPackageReferences">
           
     <PropertyGroup>
-      <_FullProjectPackageSource>$([System.IO.Path]::GetFullPath($(ProjectPackageSource)))</_FullProjectPackageSource>
+      <_ProjectPackageSourceFullPath>$([System.IO.Path]::GetFullPath($(ProjectPackageSource)))</_ProjectPackageSourceFullPath>
     </PropertyGroup>
     
-    <MakeDir Directories="$(_FullProjectPackageSource)" Condition="!Exists($(_FullProjectPackageSource))" />
+    <MakeDir Directories="$(_ProjectPackageSourceFullPath)" Condition="!Exists($(_ProjectPackageSourceFullPath))" />
 
-    <Exec Command="nuget delete %(_NupkgReference.PackageId) %(_NupkgReference.PackageVersion) -Source $(_FullProjectPackageSource) -NonInteractive" ContinueOnError="true" />
-    <Exec Command="nuget add %(_NupkgReference.FullPath) -Source $(_FullProjectPackageSource) -Expand -NonInteractive" />
+    <Exec Command="nuget delete %(_NupkgReference.PackageId) %(_NupkgReference.PackageVersion) -Source $(_ProjectPackageSourceFullPath) -NonInteractive" ContinueOnError="true" />
+    <Exec Command="nuget add %(_NupkgReference.FullPath) -Source $(_ProjectPackageSourceFullPath) -Expand -NonInteractive" />
     
     <!--<RemoveDir Directories="$(_PackageDestinationFolder)" ContinueOnError="true" />
-    <MakeDir Directories="$(_FullProjectPackageSource)/%(_NupkgReference.RelativeSourcePath)" />
-    <Unzip SourceFiles="%(_NupkgReference)" DestinationFolder="$(_FullProjectPackageSource)/%(_NupkgReference.RelativeSourcePath)" />-->
+    <MakeDir Directories="$(_ProjectPackageSourceFullPath)/%(_NupkgReference.RelativeSourcePath)" />
+    <Unzip SourceFiles="%(_NupkgReference)" DestinationFolder="$(_ProjectPackageSourceFullPath)/%(_NupkgReference.RelativeSourcePath)" />-->
     
     <ItemGroup>
       <_NuGetAddOutput Include="$(ProjectPackageSource)/%(_NupkgReference.RelativeSourcePath)/**" />
