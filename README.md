@@ -2,7 +2,7 @@
 ***S***ubprocess ***M***ethod ***I***nvocation ***Te***st Library
 
 ## What is SmiteLib?
-SmiteLib is a testing library for use in enviornments where a traditional unit testing framework cannot be used.
+SmiteLib is a testing library for use in environments where a traditional unit testing framework cannot be used.
 
 Common examples of using SmiteLib include:
 * Testing a plugin for an application
