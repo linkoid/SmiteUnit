@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 
 namespace SmiteLib.Internal;
 
+internal delegate Task AsyncAction();
+
 internal class SmiteTest : ITestInfo
 {
-	public event Action? SetUp;
+	public event AsyncAction? SetUp;
 	public SmiteMethod Method { get; }
 	public bool Failed { get => _failed; set => _failed |= value; }
 	private bool _failed;
@@ -20,6 +22,7 @@ internal class SmiteTest : ITestInfo
 	public bool Ended => _context.IsFinished || Failed;
 
 	private readonly TestContext _context;
+	private Task _task;
 
 	public static SmiteTest NotFound(SmiteIdentifier identifier, Assembly? assembly = null)
 	{
@@ -40,14 +43,25 @@ internal class SmiteTest : ITestInfo
 		HookSetUpMethods(null);
 	}
 
-	public void Run()
+	public Task Run()
+	{
+		_task = RunAsync();
+		return _task;
+	}
+
+	private async Task RunAsync()
 	{
 		using var _ = _context.Activate();
 		try
 		{
 			_started = true;
-			SetUp?.Invoke();
-			Method.Invoke();
+			if (SetUp != null) await SetUp.Invoke();
+
+			var result = Method.Invoke();
+			if (result is Task task) await task;
+#if IMPLEMENTS_NETSTANDARD2_1_OR_GREATER
+			else if (result is ValueTask valueTask) await valueTask;
+#endif
 		}
 		catch (TargetInvocationException ex)
 		{
@@ -65,15 +79,34 @@ internal class SmiteTest : ITestInfo
 		var bindingFlags = BindingFlags.Static | BindingFlags.Instance 
 			| BindingFlags.Public | BindingFlags.NonPublic;
 
-		var setUpDelegates =
+
+		var setUpMethods =
 			from method in Method.Type.GetMethods(bindingFlags)
 			where !Method.Info.IsStatic || method.IsStatic
 			where method.GetCustomAttribute<SmiteSetUpAttribute>() != null
-			select method.CreateDelegate<Action>(target);
+			select method;
 
-		foreach (var action in setUpDelegates)
+		foreach (var method in setUpMethods)
 		{
-			SetUp += action;
+			AsyncAction asyncAction;
+			if (typeof(Task).IsAssignableFrom(method.ReturnType))
+			{
+				asyncAction = method.CreateDelegate<AsyncAction>();
+			}
+#if IMPLEMENTS_NETSTANDARD2_1_OR_GREATER 
+			else if (typeof(ValueTask).IsAssignableFrom(method.ReturnType))
+			{
+				var valueAsyncAction = method.CreateDelegate<Func<ValueTask>>();
+				asyncAction = () => valueAsyncAction.Invoke().AsTask();
+			}
+#endif
+			else
+			{
+				var action = method.CreateDelegate<Action>();
+				asyncAction = () => { action.Invoke(); return Task.CompletedTask; };
+			}
+
+			SetUp += asyncAction;
 		}
 	}
 }

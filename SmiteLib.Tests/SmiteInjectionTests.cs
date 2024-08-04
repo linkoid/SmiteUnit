@@ -4,7 +4,7 @@ using SmiteLib.Tests.TestProgram;
 
 namespace SmiteLib.Tests;
 
-public class SmiteRunnerTests
+public class SmiteInjectionTests
 {
 	private SmiteProcess process;
 
@@ -28,7 +28,7 @@ public class SmiteRunnerTests
 	[Test]
 	public void MissingMethodError()
 	{
-		process.RunTest(SmiteId.Method(typeof(SmiteRunnerTestsEdge), "NonExistentMethod"));
+		process.RunTest(SmiteId.Method(typeof(SmiteInjectionTestsEdge), "NonExistentMethod"));
 		Assert.IsNotEmpty(process.Error.ReadToEnd());
 	}
 
@@ -36,7 +36,7 @@ public class SmiteRunnerTests
 	public void LoggerOk()
 	{
 		process.RunTest(
-			SmiteId.Method(SmiteRunnerTestsEdge.LoggerOk)
+			SmiteId.Method(SmiteInjectionTestsEdge.LoggerOk)
 		);
 		Assert.IsNotEmpty(process.Output.ReadToEnd());
 	}
@@ -46,7 +46,7 @@ public class SmiteRunnerTests
 	public void ExitCodeOnException()
 	{
 		process.RunTest(
-			SmiteId.Method(SmiteRunnerTestsEdge.ThrowException)
+			SmiteId.Method(SmiteInjectionTestsEdge.ThrowException)
 		);
 		Assert.IsNotEmpty(process.Error.ReadToEnd());
 		Assert.That(process.ExitCode, Is.Not.EqualTo(0));

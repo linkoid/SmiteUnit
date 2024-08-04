@@ -8,6 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using SmiteLib.Framework;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
 
 namespace SmiteLib.Injection;
 
@@ -21,6 +22,8 @@ public sealed class SmiteInjection : IUsesLogger
 	};
 
 	public ExitStrategy ExitStrategy { get; set; } = ExitStrategies.EnvironmentExit;
+
+	internal Task RunTestsTask { get; private set; }
 
 	private readonly Assembly _assembly;
 	private readonly AssemblyName _assemblyName;
@@ -79,14 +82,19 @@ public sealed class SmiteInjection : IUsesLogger
 			where testMethod != null && ((SmiteMethod)testMethod).Info.IsStatic
 			select new SmiteTest((SmiteMethod)testMethod);
 
-		bool ranTests = false;
+		_tests.AddRange(tests);
+
+		RunTestsTask = RunTestsAsync(tests);
+
+		return tests.Any();
+	}
+
+	private async Task RunTestsAsync(IEnumerable<SmiteTest> tests)
+	{
 		foreach (var test in tests)
 		{
-			_tests.Add(test);
-			test.Run();
-			ranTests = true;
+			await test.Run();
 		}
-		return ranTests;
 	}
 
 	public void UpdatePoint()

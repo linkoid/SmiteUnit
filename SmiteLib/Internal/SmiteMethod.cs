@@ -77,8 +77,8 @@ internal readonly struct SmiteMethod
 			throw new MethodAccessException($"Target method '{Info.Name}' does not have the required {nameof(SmiteMethodAttribute)}");
 	}
 
-	public void Invoke()
+	public object Invoke()
 	{
-		Info.Invoke(null, null);
+		return Info.Invoke(null, null);
 	}
 }

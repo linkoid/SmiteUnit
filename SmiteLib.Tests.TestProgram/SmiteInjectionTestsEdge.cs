@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SmiteLib.Tests.TestProgram;
 
-internal static class SmiteRunnerTestsEdge
+internal static class SmiteInjectionTestsEdge
 {
 	[SmiteMethod]
 	public static void HelloWorld()
