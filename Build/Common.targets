@@ -17,4 +17,6 @@
       <_ResolvedProjectReferencePaths Remove="@(_ResolvedProjectReferencePaths->WithMetadataValue('IsILRepacked', 'true'))" />
     </ItemGroup>
   </Target>
+
+  <Target Name="PublishLocal" />
 </Project>
