@@ -4,15 +4,23 @@
     <LangVersion>11</LangVersion>
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
+    <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
   </PropertyGroup>
   <PropertyGroup>
     <PackageIdPrefix>Linkoid.</PackageIdPrefix>
-    <VersionPrefix>0.2.0</VersionPrefix>
-    <Version>$(VersionPrefix)-alpha</Version>
+    <VersionPrefix>0.2.1</VersionPrefix>
+    <VersionSuffix>alpha</VersionSuffix>
     <Authors>linkoid</Authors>
     <Description>SmiteLib is a flexible library and simple framework for testing assemblies that run in external programs.</Description>
     <Copyright>Copyright (c) linkoid 2024</Copyright>
     <RepositoryUrl>https://github.com/linkoid/SmiteLib</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>
+  <PropertyGroup>
+    <Version Condition="'$(VersionSuffix)' == ''">$(VersionPrefix)</Version>
+    <Version Condition="'$(VersionSuffix)' != ''">$(VersionPrefix)-$(VersionSuffix)</Version>
+  </PropertyGroup>
+
+  <Target Name="PublishLocal" />
+  
 </Project>

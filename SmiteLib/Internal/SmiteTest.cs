@@ -52,9 +52,9 @@ internal class SmiteTest : ITestInfo
 	private async Task RunAsync()
 	{
 		using var _ = _context.Activate();
+		_started = true;
 		try
 		{
-			_started = true;
 			if (SetUp != null) await SetUp.Invoke();
 
 			var result = Method.Invoke();

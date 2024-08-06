@@ -14,9 +14,9 @@
     <ProjectReference Include="../SmiteLib.Engine/SmiteLib.Engine.csproj" PrivateAssets="All" IsILRepacked="true" />
   </ItemGroup>
 
-  <Import Project="VisualStudio.TestAdapter.Packages.targets"/>
-
   <ItemGroup>
+    <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="15.0.0" />
+    <PackageReference Include="System.Reflection.MetadataLoadContext" Version="8.0.0" />
     <PackageReference Include="RandomSkunk.RuntimePolyfill" Version="1.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

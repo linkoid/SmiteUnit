@@ -15,11 +15,6 @@ public class AsyncTests
 {
 	private SmiteProcess process;
 
-	private AsyncTests()
-	{
-
-	}
-
 	[SetUp]
 	public void SetUp()
 	{

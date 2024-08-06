@@ -21,6 +21,8 @@ public sealed class SmiteTestExecutor : ITestExecutor
 
 	public static readonly Uri ExecutorUri = new Uri(ExecutorUriString);
 
+	private readonly List<SmiteProcess> processes = new();
+
 	public void RunTests(IEnumerable<TestCase> tests, IRunContext runContext, IFrameworkHandle frameworkHandle)
 	{
 		foreach (var testCase in tests)
@@ -62,6 +64,7 @@ public sealed class SmiteTestExecutor : ITestExecutor
 			processPath = Environment.ExpandEnvironmentVariables(processPath);
 			frameworkHandle.SendMessage(TestMessageLevel.Informational, $"Process Path: {processPath}");
 			var process = new SmiteProcess(processPath);
+			processes.Add(process);
 			if (processAttribute.WorkingDirectory is not null)
 				process.WorkingDirectory = processAttribute.WorkingDirectory;
 			TrySetEncoding(process.Output, processAttribute.OutputEncoding, nameof(processAttribute.OutputEncoding));
@@ -82,6 +85,7 @@ public sealed class SmiteTestExecutor : ITestExecutor
 			result ??= new TestResult(testCase)
 			{
 				Outcome = process.ExitCode == testMethod.ExpectedExitCode ? TestOutcome.Passed : TestOutcome.Failed,
+				ErrorMessage = process.ExitCode == testMethod.ExpectedExitCode ? string.Empty : $"Process exited with code {process.ExitCode}; expected {testMethod.ExpectedExitCode}.",
 			};
 
 			result.Messages.Add(new(TestResultMessage.StandardOutCategory, process.Output.ReadToEnd()));
@@ -104,7 +108,10 @@ public sealed class SmiteTestExecutor : ITestExecutor
 
 	public void Cancel() 
 	{
-		//throw new NotImplementedException();
+		foreach (var process in processes)
+		{
+			try { process.Dispose(); } catch { }
+		}
 	}
 
 	private static void TrySetEncoding(Internal.RedirectionStreamReader redirectionStreamReader, string? encodingName,

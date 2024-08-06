@@ -4,11 +4,14 @@
     <DisableFastUpToDateCheck Condition="'$(DisableFastUpToDateCheck)' == ''">true</DisableFastUpToDateCheck>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="ILRepack.Lib.MSBuild.Task" Version="2.0.34">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    <PackageReference Include="ILRepack.Lib.MSBuild.Task" Version="2.0.34.1">
+      <ExcludeAssets>All</ExcludeAssets>
+      <GeneratePathProperty>true</GeneratePathProperty>
     </PackageReference>
   </ItemGroup>
+
+  <UsingTask AssemblyFile="$(PkgILRepack_Lib_MSBuild_Task)/build/ILRepack.Lib.MSBuild.Task.dll" TaskName="ILRepack"/>
+  
   <ItemDefinitionGroup>
     <ILRepackReference>
       <ReferenceAssembly />

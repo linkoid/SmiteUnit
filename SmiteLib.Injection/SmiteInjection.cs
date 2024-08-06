@@ -22,12 +22,12 @@ public sealed class SmiteInjection : IUsesLogger
 	};
 
 	public ExitStrategy ExitStrategy { get; set; } = ExitStrategies.EnvironmentExit;
-
-	internal Task RunTestsTask { get; private set; }
+	public bool UsingDelayedExitStrategy { get; set; } = false;
 
 	private readonly Assembly _assembly;
 	private readonly AssemblyName _assemblyName;
 	private readonly List<SmiteTest> _tests = new();
+	private bool _isExiting = false;
 
 	public SmiteInjection(Assembly assembly)
 	{
@@ -74,17 +74,18 @@ public sealed class SmiteInjection : IUsesLogger
 		this.ForceChildrenUseOwnLogger(Deserializers);
 
 		var testFilter = new SmiteIdentifier(_assemblyName, "", "");
-		var tests =
-			from deserializer in Deserializers
-			from identifier in deserializer.GetTestIds(testFilter)
-			where identifier is SmiteIdentifier
-			let testMethod = GetTestMethod((SmiteIdentifier)identifier)
-			where testMethod != null && ((SmiteMethod)testMethod).Info.IsStatic
-			select new SmiteTest((SmiteMethod)testMethod);
+		SmiteTest[] tests =
+			(from deserializer in Deserializers
+			 from identifier in deserializer.GetTestIds(testFilter)
+			 where identifier is SmiteIdentifier
+			 let testMethod = GetTestMethod((SmiteIdentifier)identifier)
+			 where testMethod != null && ((SmiteMethod)testMethod).Info.IsStatic
+			 select new SmiteTest((SmiteMethod)testMethod)
+			).ToArray();
 
 		_tests.AddRange(tests);
 
-		RunTestsTask = RunTestsAsync(tests);
+		_ = RunTestsAsync(tests);
 
 		return tests.Any();
 	}
@@ -105,6 +106,7 @@ public sealed class SmiteInjection : IUsesLogger
 		if (_tests.All(t => t.Ended))
 		{
 			ExitNow();
+			return;
 		}
 	}
 
@@ -119,16 +121,21 @@ public sealed class SmiteInjection : IUsesLogger
 		if (_tests.Any(t => !t.Ended))
 		{
 			ExitNow();
+			return;
 		}
 	}
 
-	[DoesNotReturn]
 	private void ExitNow()
 	{
 		try
 		{
 			ExitStrategy.Invoke(GetExitCode());
-			throw new InvalidOperationException($"The exit strategy '{ExitStrategy}' returned instead of exiting the application");
+
+			if (UsingDelayedExitStrategy)
+				_isExiting = true;
+			else
+				throw new InvalidOperationException($"The exit strategy '{ExitStrategy.Method.DeclaringType?.Name}.{ExitStrategy.Method.Name}' returned instead of exiting immediately. " +
+					$"Set 'UsingDelayedExitStrategy = true' to suppress this error.");
 		}
 		catch (Exception ex)
 		{
