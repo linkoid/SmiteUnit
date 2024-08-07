@@ -111,4 +111,11 @@
       <_TargetPackage Include="$(PackageId)" Version="$(PackageVersion)" />
     </ItemGroup>
   </Target>
+
+  <Target Name="UnpublishLocal">
+    <PropertyGroup>
+      <PackageSource>%USERPROFILE%/.nuget/packages</PackageSource>
+    </PropertyGroup>
+    <Exec Command="NuGet delete $(PackageId) $(PackageVersion) -Source $(PackageSource) -NonInteractive" ContinueOnError="true" />
+  </Target>
 </Project>

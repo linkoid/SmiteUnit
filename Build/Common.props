@@ -22,5 +22,6 @@
   </PropertyGroup>
 
   <Target Name="PublishLocal" />
+  <Target Name="UnpublishLocal" />
   
 </Project>
