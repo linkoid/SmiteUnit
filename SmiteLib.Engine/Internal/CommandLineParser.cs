@@ -10,7 +10,7 @@ namespace SmiteLib.Internal
 	{
 		public static IEnumerable<string> Split(string commandline)
 		{
-			return System.CommandLine.Parsing.CommandLineStringSplitter.Instance.Split(commandline);
+			throw new NotImplementedException();
 		}
 
 		public static string Join(IEnumerable<string> parts)
