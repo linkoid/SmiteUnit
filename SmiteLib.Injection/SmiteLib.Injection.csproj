@@ -7,8 +7,8 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <ProjectReference Include="../SmiteLib/SmiteLib.csproj" Private="true" PrivateAssets="All" />
-    <ProjectReference Include="../SmiteLib.Core/SmiteLib.Core.csproj" Private="true" PrivateAssets="All" IsILRepacked="true" />
+    <ProjectReference Include="../SmiteLib/SmiteLib.csproj" PrivateAssets="All" />
+    <ProjectReference Include="../SmiteLib.Core/SmiteLib.Core.csproj" PrivateAssets="All" IsILRepacked="true" />
   </ItemGroup>
   
   <ItemGroup>
