@@ -8,7 +8,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <PackageIdPrefix>Linkoid.</PackageIdPrefix>
-    <VersionPrefix>0.2.1</VersionPrefix>
+    <VersionPrefix>0.2.2</VersionPrefix>
     <VersionSuffix>alpha</VersionSuffix>
     <Authors>linkoid</Authors>
     <Description>SmiteLib is a flexible library and simple framework for testing assemblies that run in external programs.</Description>

@@ -8,12 +8,7 @@
   <Import Project="../Build/Common.targets" />
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
-    <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="../SmiteLib/SmiteLib.csproj" >
+    <ProjectReference Include="../SmiteLib/SmiteLib.csproj">
       <ReferenceOutputAssembly Condition="'$(DesignTimeBuild)' == 'true'">false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="../SmiteLib.Core/SmiteLib.Core.csproj" IsILRepacked="true" />
@@ -21,6 +16,13 @@
 
   <ItemGroup>
     <InternalsVisibleTo Include="SmiteLib.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="RandomSkunk.RuntimePolyfill" Version="1.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
   
 </Project>

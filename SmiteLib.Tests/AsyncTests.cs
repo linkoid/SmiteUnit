@@ -55,6 +55,7 @@ public class AsyncTests
 		Assert.IsTrue(process.Output.ReadToEnd().Contains("Test Complete"));
 	}
 
+#if NETCOREAPP3_1_OR_GREATER || NET6_0_OR_GREATER
 	[Test]
 	public void AsyncValueTask()
 	{
@@ -68,4 +69,5 @@ public class AsyncTests
 		process.RunTest(SmiteId.Method(LocalMethod));
 		Assert.IsTrue(process.Output.ReadToEnd().Contains("Test Complete"));
 	}
+#endif
 }
