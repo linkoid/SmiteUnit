@@ -40,9 +40,9 @@ jobs:
     - name: Build
       run: dotnet build -c Release --nologo
     - name: Test .NET 6.0
-      run: dotnet test -f net6.0 --no-build --verbosity normal
+      run: dotnet test -c Release -f net6.0 --no-build --verbosity normal
     - name: Test .NETCoreApp 3.1
-      run: dotnet test -f netcoreapp3.1 --no-build --verbosity normal
+      run: dotnet test -c Release -f netcoreapp3.1 --no-build --verbosity normal
     - name: Setup Mono
       run: |
         sudo apt install ca-certificates gnupg -y
@@ -51,7 +51,7 @@ jobs:
         sudo apt update -y
         sudo apt install mono-devel -y
     - name: Test .NET Framework 4.7.2 with Mono 5.4
-      run: dotnet test -f net472 --no-build --verbosity normal
+      run: dotnet test -c Release -f net472 --no-build --verbosity normal
 
   publish:
     name: Publish
