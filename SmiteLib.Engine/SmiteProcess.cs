@@ -6,11 +6,7 @@ namespace SmiteLib.Engine
 {
 	public class SmiteProcess : System.IDisposable
 	{
-		public IEnumerable<string> Arguments
-		{
-			get => CommandLineParser.Split(_process.StartInfo.Arguments);
-			set => _process.StartInfo.Arguments = CommandLineParser.Join(value);
-		}
+		public ArgumentList Arguments { get; }
 
 		public bool UseSubprocess 
 		{ 
@@ -29,22 +25,21 @@ namespace SmiteLib.Engine
 
 		public string WorkingDirectory { get => _process.StartInfo.WorkingDirectory; set => _process.StartInfo.WorkingDirectory = value; }
 
-		public int RunTimeout = -1;
+		public int RunTimeout { get; set; } = -1;
 
 		[System.Obsolete]
 		public Process InternalProcess => _process;
 
 
 		internal readonly Process _process = new();
-		private readonly string _baseArguments;
 
 		public readonly RedirectionStreamReader Output;
 		public readonly RedirectionStreamReader Error;
 
 		public SmiteProcess(string filePath, string arguments = "")
 		{
-			_baseArguments = arguments;
 			_process.StartInfo = new ProcessStartInfo(filePath);
+			Arguments = new(arguments);
 
 			WorkingDirectory = System.IO.Path.GetDirectoryName(filePath) ?? "";
 			UseSubprocess = true;
@@ -54,6 +49,18 @@ namespace SmiteLib.Engine
 		}
 
 		public bool Run()
+		{
+			_process.StartInfo.Arguments = Arguments.ToString();
+			return RunInternal();
+		}
+
+		public bool RunTest(ISmiteId testId)
+		{
+			_process.StartInfo.Arguments = $"{Arguments} --smitelib.test:{testId}";
+			return RunInternal();
+		}
+
+		private bool RunInternal()
 		{
 			if (!_process.Start())
 				return false;
@@ -67,12 +74,6 @@ namespace SmiteLib.Engine
 			Error.StopListening();
 
 			return exited;
-		}
-
-		public bool RunTest(ISmiteId testId)
-		{
-			_process.StartInfo.Arguments = $"{_baseArguments} --smitelib.test:{testId}";
-			return Run();
 		}
 
 		private bool _isDisposed;
