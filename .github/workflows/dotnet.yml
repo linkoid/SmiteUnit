@@ -95,12 +95,15 @@ jobs:
             ${{ fromJson(steps.smiteunit-package.outputs.json).TargetResults.GetPackage.Items[0].FullPath }}
             ${{ fromJson(steps.smiteunit-visualstudio-testadapter-package.outputs.json).TargetResults.GetPackage.Items[0].FullPath }}
         run: dotnet nuget push $nupkgs -s nuget.org -k ${{secrets.NUGET_APIKEY}} --skip-duplicate
+    outputs:
+      version: ${{ fromJson(steps.smiteunit-package.outputs.json).Properties.Version }}
 
   tag:
     name: Tag
     runs-on: ubuntu-latest
-    container: mcr.microsoft.com/dotnet/sdk:8.0
     needs: publish
+    permissions:
+      contents: write
     steps:
     - uses: actions/checkout@v4
       with: 
@@ -112,7 +115,7 @@ jobs:
         echo version=$VERSION >> $GITHUB_OUTPUT
     - name: Push Git Tag
       env:
-        TAG: v${{steps.get-version.outputs.version}}
+        TAG: v${{needs.publish.outputs.version}}
         GIT_TERMINAL_PROMPT: 0
       run: |
         git config user.name "github-actions[bot]"
