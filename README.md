@@ -1,5 +1,5 @@
 # SmiteUnit
-***S***ubprocess ***M***ethod ***I***nvocation ***Te***st Library
+***S***ubprocess ***M***ethod ***I***nvocation ***Te***st Unit
 
 ## What is SmiteUnit?
 SmiteUnit is a testing library for use in environments where a traditional unit testing framework cannot be used.
