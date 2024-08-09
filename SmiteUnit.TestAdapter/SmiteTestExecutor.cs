@@ -9,7 +9,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace SmiteUnit.VisualStudio.TestAdapter;
+namespace SmiteUnit.TestAdapter;
 
 [ExtensionUri(ExecutorUriString)]
 public sealed class SmiteTestExecutor : ITestExecutor

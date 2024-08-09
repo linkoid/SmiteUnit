@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmiteUnit.VisualStudio.TestAdapter;
+namespace SmiteUnit.TestAdapter;
 
 internal readonly struct TestType
 {

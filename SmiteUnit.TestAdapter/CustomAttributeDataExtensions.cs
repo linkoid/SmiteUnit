@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
 
-namespace SmiteUnit.VisualStudio.TestAdapter;
+namespace SmiteUnit.TestAdapter;
 
 internal static class CustomAttributeDataExtensions
 {

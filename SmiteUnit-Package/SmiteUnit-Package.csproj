@@ -23,18 +23,18 @@
 
   <ItemGroup>
     <ProjectReference Include="../SmiteUnit.Framework/SmiteUnit.Framework.csproj" />
-    <ProjectReference Include="../SmiteUnit.VisualStudio.TestAdapter/SmiteUnit.VisualStudio.TestAdapter.csproj">
+    <ProjectReference Include="../SmiteUnit.TestAdapter/SmiteUnit.TestAdapter.csproj">
       <IncludeAssets>Runtime</IncludeAssets>
     </ProjectReference>
   </ItemGroup>
 
   <!--<ItemGroup>
-    <ProjectReference Include="../SmiteUnit.VisualStudio.TestAdapter/SmiteUnit.VisualStudio.TestAdapter.csproj">
+    <ProjectReference Include="../SmiteUnit.TestAdapter/SmiteUnit.TestAdapter.csproj">
       <PrivateAssets>All</PrivateAssets>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <OutputItemType>Build</OutputItemType>
     </ProjectReference>
-    <Build Include="../SmiteUnit.VisualStudio.TestAdapter/VisualStudio.TestAdapter.Packages.targets" />
+    <Build Include="../SmiteUnit.TestAdapter/VisualStudio.TestAdapter.Packages.targets" />
   </ItemGroup>-->
 
   <Import Project="../Build/Package.targets" />

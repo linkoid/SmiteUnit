@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmiteUnit.VisualStudio.TestAdapter;
+namespace SmiteUnit.TestAdapter;
 
 internal class SmiteTestEnumerator
 {

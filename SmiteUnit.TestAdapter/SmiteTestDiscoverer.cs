@@ -8,7 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
-namespace SmiteUnit.VisualStudio.TestAdapter;
+namespace SmiteUnit.TestAdapter;
 
 [FileExtension(".dll")]
 [FileExtension(".exe")]

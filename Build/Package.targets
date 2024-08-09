@@ -48,7 +48,7 @@
       </_ProjectReferenceCopyLocalPaths>
     </ItemGroup>
     
-    <!--<GetAllMetadata Items="@(_ProjectReferenceCopyLocalPaths->WithMetadataValue('Filename', 'SmiteUnit.VisualStudio.TestAdapter')->WithMetadataValue('Extension', '.dll'))">
+    <!--<GetAllMetadata Items="@(_ProjectReferenceCopyLocalPaths->WithMetadataValue('Filename', 'SmiteUnit.TestAdapter')->WithMetadataValue('Extension', '.dll'))">
       <Output TaskParameter="MetadataString" PropertyName="_MetadataString" />
     </GetAllMetadata>
     <Message Text="$(_MetadataString)" Importance="High" />-->

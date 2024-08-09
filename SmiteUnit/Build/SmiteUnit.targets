@@ -25,7 +25,7 @@
     </ItemGroup>
     
     <ItemGroup>
-      <_SmiteUnitTestAdapter Include="@(_SmiteUnitCompileTimeReference->WithMetadataValue('Filename', 'SmiteUnit.VisualStudio.TestAdapter'))" />
+      <_SmiteUnitTestAdapter Include="@(_SmiteUnitCompileTimeReference->WithMetadataValue('Filename', 'SmiteUnit.TestAdapter'))" />
       
       <_SmiteUnitRemoveReference Include="@(_SmiteUnitTestAdapter)" />
       <CopyLocalPaths Include="@(_SmiteUnitTestAdapter)"
@@ -42,7 +42,7 @@
   
   
   <ItemGroup>
-    <Reference Remove="$(MSBuildThisFileDirectory)../lib/SmiteUnit.VisualStudio.TestAdapter.dll" Condition=" '$(EnableSmiteUnitTestAdapter)' != 'false' " />
+    <Reference Remove="$(MSBuildThisFileDirectory)../lib/SmiteUnit.TestAdapter.dll" Condition=" '$(EnableSmiteUnitTestAdapter)' != 'false' " />
     <TestAdapterContent Include="$(MSBuildThisFileDirectory)Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll">
       <Link>Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll</Link>
       <!--<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>-->
