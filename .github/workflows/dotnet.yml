@@ -58,7 +58,7 @@ jobs:
     #if: ${{github.ref_type}} == 'tag' && startsWith(${{github.ref_name}}, 'v')
     runs-on: ubuntu-latest
     container: mcr.microsoft.com/dotnet/sdk:8.0
-    environment: manual
+    environment: NuGet
     steps:
       - uses: actions/checkout@v4
       #- name: Setup .NET
@@ -68,32 +68,56 @@ jobs:
       - name: Build
         run: dotnet build -c Release --nologo
       - name: Get SmiteUnit.Framework Package
-        id: SmiteUnit-framework-package
+        id: smiteunit-framework-package
         run: |
           json=`dotnet build SmiteUnit.Framework/SmiteUnit.Framework.csproj -getProperty:Version,PackageId -getTargetResult:GetPackage -c Release`
           echo json=$json >> $GITHUB_OUTPUT
       - name: Get SmiteUnit.Injection Package
-        id: SmiteUnit-injection-package
+        id: smiteunit-injection-package
         run: |
           json=`dotnet build SmiteUnit.Injection/SmiteUnit.Injection.csproj -getProperty:Version,PackageId -getTargetResult:GetPackage -c Release`
           echo json=$json >> $GITHUB_OUTPUT
       - name: Get SmiteUnit Package
-        id: SmiteUnit-package
+        id: smiteunit-package
         run: |
           json=`dotnet build SmiteUnit-Package/SmiteUnit-Package.csproj -getProperty:Version,PackageId -getTargetResult:GetPackage -c Release`
           echo json=$json >> $GITHUB_OUTPUT
       - name: Get SmiteUnit.TestAdapter Package
-        id: SmiteUnit-visualstudio-testadapter-package
+        id: smiteunit-visualstudio-testadapter-package
         run: |
           json=`dotnet build SmiteUnit.TestAdapter/SmiteUnit.TestAdapter.csproj -getProperty:Version,PackageId -getTargetResult:GetPackage -c Release`
           echo json=$json >> $GITHUB_OUTPUT
       - name: Push All Packages
-        run: dotnet nuget push $nupkgs -s nuget.org -k ${{secrets.NUGET_APIKEY}} --skip-duplicate
         env:
           nupkgs:
-            ${{ fromJson(steps.SmiteUnit-framework-package.outputs.json).TargetResults.GetPackage.Items[0].FullPath }}
-            ${{ fromJson(steps.SmiteUnit-injection-package.outputs.json).TargetResults.GetPackage.Items[0].FullPath }}
-            ${{ fromJson(steps.SmiteUnit-package.outputs.json).TargetResults.GetPackage.Items[0].FullPath }}
-            ${{ fromJson(steps.SmiteUnit-visualstudio-testadapter-package.outputs.json).TargetResults.GetPackage.Items[0].FullPath }}
+            ${{ fromJson(steps.smiteunit-framework-package.outputs.json).TargetResults.GetPackage.Items[0].FullPath }}
+            ${{ fromJson(steps.smiteunit-injection-package.outputs.json).TargetResults.GetPackage.Items[0].FullPath }}
+            ${{ fromJson(steps.smiteunit-package.outputs.json).TargetResults.GetPackage.Items[0].FullPath }}
+            ${{ fromJson(steps.smiteunit-visualstudio-testadapter-package.outputs.json).TargetResults.GetPackage.Items[0].FullPath }}
+        run: dotnet nuget push $nupkgs -s nuget.org -k ${{secrets.NUGET_APIKEY}} --skip-duplicate
+
+  tag:
+    name: Tag
+    runs-on: ubuntu-latest
+    container: mcr.microsoft.com/dotnet/sdk:8.0
+    needs: publish
+    steps:
+    - uses: actions/checkout@v4
+      with: 
+        fetch-depth: 0
+    - name: Get Version
+      id: get-version
+      run: |
+        VERSION=`dotnet build SmiteUnit-Package/SmiteUnit-Package.csproj -getProperty:Version -c Release`
+        echo version=$VERSION >> $GITHUB_OUTPUT
+    - name: Push Git Tag
+      env:
+        TAG: v${{steps.get-version.outputs.version}}
+        GIT_TERMINAL_PROMPT: 0
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git tag $TAG
+        git push origin $TAG
 
       
