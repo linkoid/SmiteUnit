@@ -1,0 +1,70 @@
+﻿<Project>
+  <Target Name="_SmiteUnitFilterPackageAssets" AfterTargets="ResolvePackageAssets">
+    <PropertyGroup>
+      <_SmiteUnitPackageDirectory>$([System.IO.Directory]::GetParent( $(MSBuildThisFileFullPath)   ))</_SmiteUnitPackageDirectory>
+      <_SmiteUnitPackageDirectory>$([System.IO.Directory]::GetParent( $(_SmiteUnitPackageDirectory) ))</_SmiteUnitPackageDirectory>
+    </PropertyGroup>
+
+    <Message Text="_SmiteUnitPackageDirectory: $(_SmiteUnitPackageDirectory)" Importance="high" />
+
+    <ItemGroup>
+      <_SmiteUnitCompileTimeReference Include="@(ResolvedCompileFileDefinitions)"
+                                     Condition="$([System.String]::Copy(%(FullPath)).StartsWith(
+                                       $(_SmiteUnitPackageDirectory)
+                                     ))"/>
+    </ItemGroup>
+    
+    <!--<Message Text="_SmiteUnitCompileTimeReference:&#xA;&#009;@(_SmiteUnitCompileTimeReference->'%(FullPath)', '&#xA;&#009;')" Importance="high" />-->
+    
+    <ItemGroup>
+      <_SmiteUnitRemoveReference Include="@(_SmiteUnitCompileTimeReference->WithMetadataValue('Filename', 'SmiteUnit.Framework'))"
+                                  Condition="'$(EnableSmiteUnitFramework)' != 'true'" />
+
+      <_SmiteUnitRemoveReference Include="@(_SmiteUnitCompileTimeReference->WithMetadataValue('Filename', 'SmiteUnit.Engine'))"
+                                  Condition="'$(EnableSmiteUnitEngine)' != 'true'" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <_SmiteUnitTestAdapter Include="@(_SmiteUnitCompileTimeReference->WithMetadataValue('Filename', 'SmiteUnit.VisualStudio.TestAdapter'))" />
+      
+      <_SmiteUnitRemoveReference Include="@(_SmiteUnitTestAdapter)" />
+      <CopyLocalPaths Include="@(_SmiteUnitTestAdapter)"
+                               Condition="'$(EnableSmiteUnitTestAdapter)' == 'true'"/>
+    </ItemGroup>
+
+    <Message Text="_SmiteUnitRemoveReference:&#xA;&#009;@(_SmiteUnitRemoveReference, '&#xA;&#009;')" Importance="high" />
+
+    <ItemGroup>
+      <ResolvedCompileFileDefinitions Remove="@(_SmiteUnitRemoveReference)" />
+      <ReferenceCopyLocalPaths  Include="@(CopyLocalPaths)"></ReferenceCopyLocalPaths >
+    </ItemGroup>
+  </Target> 
+  
+  
+  <ItemGroup>
+    <Reference Remove="$(MSBuildThisFileDirectory)../lib/SmiteUnit.VisualStudio.TestAdapter.dll" Condition=" '$(EnableSmiteUnitTestAdapter)' != 'false' " />
+    <TestAdapterContent Include="$(MSBuildThisFileDirectory)Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll">
+      <Link>Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll</Link>
+      <!--<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>-->
+      <Visible>False</Visible>
+    </TestAdapterContent>
+    <TestAdapterContent Include="$(MSBuildThisFileDirectory)\Microsoft.TestPlatform.AdapterUtilities.dll">
+      <Link>Microsoft.TestPlatform.AdapterUtilities.dll</Link>
+      <!--<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>-->
+      <Visible>False</Visible>
+    </TestAdapterContent>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--
+      Including `@(TestAdapterContent)` in the `None` ItemGroup to get the `CopyToOutputDirectory` behavior be default,
+      package consumers can opt-out of this behavior by removing `@(TestAdapterContent)` from the `None` ItemGroup
+      (i.e. `<None Remove="@(TestAdapterContent)" />`)
+      -->
+    <None Include="@(TestAdapterContent)" />
+  </ItemGroup>
+
+  <Target Name="DebugLogStuff" BeforeTargets="Build">
+    <Message Text="TestAdapterContent: @(TestAdapterContent)" Importance="high" />
+  </Target>
+</Project>

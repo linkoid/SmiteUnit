@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="../Build/Common.props" />
+
+  <PropertyGroup>
+    <EnableSmiteUnitFramework>true</EnableSmiteUnitFramework>
+    <EnableSmiteUnitEngine>true</EnableSmiteUnitEngine>
+    <EnableSmiteUnitTestAdapter>true</EnableSmiteUnitTestAdapter>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <AssemblyName>SmiteUnit.Tests</AssemblyName>
+    
+    <BaseOutputPath>packageTests/bin/</BaseOutputPath>
+    <BaseIntermediateOutputPath>packageTests/obj/</BaseIntermediateOutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="bin/**;obj/**" />
+    <None Remove="bin/**;obj/**" />
+    <Compile Remove="CommandLineParserTests.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
+    <PackageReference Include="NUnit" Version="3.13.2" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.0.0" />
+    <PackageReference Include="coverlet.collector" Version="3.1.0" />
+    <PackageReference Include="$(PackageIdPrefix)SmiteUnit" Version="$(Version)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../SmiteUnit.Tests.TestProgram/SmiteUnit.Tests.TestProgram.PackageTests.csproj" />
+  </ItemGroup>
+
+  <!--<ItemGroup>
+    <ProjectReference Include="../SmiteUnit-Package/SmiteUnit-Package.csproj">
+      <Targets>Pack;PublishLocal</Targets>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>-->
+
+</Project>

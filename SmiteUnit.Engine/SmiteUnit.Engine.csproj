@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="../Build/Common.props" />
+
+  <PropertyGroup>
+  </PropertyGroup>
+
+  <Import Project="../Build/Common.targets" />
+
+  <ItemGroup>
+    <ProjectReference Include="../SmiteUnit/SmiteUnit.csproj">
+      <ReferenceOutputAssembly Condition="'$(DesignTimeBuild)' == 'true'">false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="../SmiteUnit.Core/SmiteUnit.Core.csproj" IsILRepacked="true" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="SmiteUnit.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="RandomSkunk.RuntimePolyfill" Version="1.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  
+</Project>

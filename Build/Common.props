@@ -11,9 +11,9 @@
     <VersionPrefix>0.3.0</VersionPrefix>
     <VersionSuffix>alpha</VersionSuffix>
     <Authors>linkoid</Authors>
-    <Description>SmiteLib is a flexible library and simple framework for testing assemblies that run in external programs.</Description>
+    <Description>SmiteUnit is a flexible library and simple framework for testing assemblies that run in external programs.</Description>
     <Copyright>Copyright (c) linkoid 2024</Copyright>
-    <RepositoryUrl>https://github.com/linkoid/SmiteLib</RepositoryUrl>
+    <RepositoryUrl>https://github.com/linkoid/SmiteUnit</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>
   <PropertyGroup>

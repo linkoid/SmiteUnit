@@ -10,7 +10,7 @@
     <PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
     <PackageIcon></PackageIcon>
     <PackageReadmeFile></PackageReadmeFile>
-    <PackageTags>SmiteLib Test Testing TDD Plugin Mod</PackageTags>
+    <PackageTags>SmiteUnit Test Testing TDD Plugin Mod</PackageTags>
     <PackageReleaseNotes></PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>

@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="../Build/Common.props" />
+  <Import Project="../Build/ILRepack.props" />
+
+  <PropertyGroup>
+    <RootNamespace>SmiteUnit</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(DesignTimeBuild)' == 'true'">
+    <ProjectReference Include="../SmiteUnit.Core/SmiteUnit.Core.csproj" Private="true">
+      <PrivateAssets>All</PrivateAssets>
+      <ExcludeAssets>Runtime</ExcludeAssets>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(DesignTimeBuild)' != 'true'">
+    <ProjectReference Include="../SmiteUnit.Core/SmiteUnit.Core.csproj" Private="false">
+      <ExcludeAssets>Runtime</ExcludeAssets>
+      <OutputItemType>ILRepackReference</OutputItemType>
+    </ProjectReference>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <InternalsVisibleTo Include="SmiteUnit.Framework" />
+    <InternalsVisibleTo Include="SmiteUnit.Injection" />
+  </ItemGroup>
+
+  <Import Project="../Build/Common.targets" />
+  <Import Project="../Build/ILRepack.targets" />
+
+</Project>
+ 

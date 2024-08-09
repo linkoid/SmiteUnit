@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="../Build/Common.props" />
+
+  <PropertyGroup>
+    <RootNamespace>SmiteUnit.Framework</RootNamespace>
+    <TargetName>SmiteUnit.Core</TargetName>
+  </PropertyGroup>
+
+  <Import Project="../Build/Common.targets" />
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="SmiteUnit.Framework" />
+    <InternalsVisibleTo Include="SmiteUnit.Injection" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../SmiteUnit.Core/SmiteUnit.Core.csproj" Private="false" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ILRepack.Lib.MSBuild.Task" Version="2.0.34">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  
+</Project>

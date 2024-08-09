@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="../Build/Common.props" />
+  <Import Project="../Build/TargetRuntimes.props" />
+  
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="SmiteUnit.Tests" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <DefaultExcludesInProjectFolder>$(DefaultExcludesInProjectFolder);PackageTests/**</DefaultExcludesInProjectFolder>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../SmiteUnit/SmiteUnit.csproj" />
+    <ProjectReference Include="../SmiteUnit.Core/SmiteUnit.Core.csproj" IsILRepacked="true" />
+    <ProjectReference Include="../SmiteUnit.Framework/SmiteUnit.Framework.csproj" />
+    <ProjectReference Include="../SmiteUnit.Injection/SmiteUnit.Injection.csproj" />
+  </ItemGroup>
+
+  <Import Project="../Build/Common.targets" />
+
+</Project>

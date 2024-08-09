@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="../../Build/Common.props" />
+  <Import Project="../../Build/TargetRuntimes.props" />
+  <Import Project="../../Build/ProjectPackageReference.props" />
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>SmiteUnit.Tests.TestProgram</AssemblyName>
+    <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="../**/*.cs" />
+    <Compile Remove="../bin/**;../**/obj/**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="SmiteUnit.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectPackageReference Include="../../SmiteUnit.Injection/SmiteUnit.Injection.csproj" />
+  </ItemGroup>
+
+  <Import Project="../../Build/ProjectPackageReference.targets" />
+
+</Project>

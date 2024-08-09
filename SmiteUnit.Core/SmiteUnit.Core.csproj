@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="../Build/Common.props" />
+
+  <PropertyGroup>
+    <RootNamespace>SmiteUnit</RootNamespace>
+  </PropertyGroup>
+
+  <Import Project="../Build/Common.targets" />
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="SmiteUnit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="RandomSkunk.RuntimePolyfill" Version="1.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>

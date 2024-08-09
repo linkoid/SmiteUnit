@@ -67,33 +67,33 @@ jobs:
       #    dotnet-version: 8.0.x
       - name: Build
         run: dotnet build -c Release --nologo
-      - name: Get SmiteLib.Framework Package
-        id: smitelib-framework-package
+      - name: Get SmiteUnit.Framework Package
+        id: SmiteUnit-framework-package
         run: |
-          json=`dotnet build SmiteLib.Framework/SmiteLib.Framework.csproj -getProperty:Version,PackageId -getTargetResult:GetPackage -c Release`
+          json=`dotnet build SmiteUnit.Framework/SmiteUnit.Framework.csproj -getProperty:Version,PackageId -getTargetResult:GetPackage -c Release`
           echo json=$json >> $GITHUB_OUTPUT
-      - name: Get SmiteLib.Injection Package
-        id: smitelib-injection-package
+      - name: Get SmiteUnit.Injection Package
+        id: SmiteUnit-injection-package
         run: |
-          json=`dotnet build SmiteLib.Injection/SmiteLib.Injection.csproj -getProperty:Version,PackageId -getTargetResult:GetPackage -c Release`
+          json=`dotnet build SmiteUnit.Injection/SmiteUnit.Injection.csproj -getProperty:Version,PackageId -getTargetResult:GetPackage -c Release`
           echo json=$json >> $GITHUB_OUTPUT
-      - name: Get SmiteLib Package
-        id: smitelib-package
+      - name: Get SmiteUnit Package
+        id: SmiteUnit-package
         run: |
-          json=`dotnet build SmiteLib-Package/SmiteLib-Package.csproj -getProperty:Version,PackageId -getTargetResult:GetPackage -c Release`
+          json=`dotnet build SmiteUnit-Package/SmiteUnit-Package.csproj -getProperty:Version,PackageId -getTargetResult:GetPackage -c Release`
           echo json=$json >> $GITHUB_OUTPUT
-      - name: Get SmiteLib.VisualStudio.TestAdapter Package
-        id: smitelib-visualstudio-testadapter-package
+      - name: Get SmiteUnit.VisualStudio.TestAdapter Package
+        id: SmiteUnit-visualstudio-testadapter-package
         run: |
-          json=`dotnet build SmiteLib.VisualStudio.TestAdapter/SmiteLib.VisualStudio.TestAdapter.csproj -getProperty:Version,PackageId -getTargetResult:GetPackage -c Release`
+          json=`dotnet build SmiteUnit.VisualStudio.TestAdapter/SmiteUnit.VisualStudio.TestAdapter.csproj -getProperty:Version,PackageId -getTargetResult:GetPackage -c Release`
           echo json=$json >> $GITHUB_OUTPUT
       - name: Push All Packages
         run: dotnet nuget push $nupkgs -s nuget.org -k ${{secrets.NUGET_APIKEY}} --skip-duplicate
         env:
           nupkgs:
-            ${{ fromJson(steps.smitelib-framework-package.outputs.json).TargetResults.GetPackage.Items[0].FullPath }}
-            ${{ fromJson(steps.smitelib-injection-package.outputs.json).TargetResults.GetPackage.Items[0].FullPath }}
-            ${{ fromJson(steps.smitelib-package.outputs.json).TargetResults.GetPackage.Items[0].FullPath }}
-            ${{ fromJson(steps.smitelib-visualstudio-testadapter-package.outputs.json).TargetResults.GetPackage.Items[0].FullPath }}
+            ${{ fromJson(steps.SmiteUnit-framework-package.outputs.json).TargetResults.GetPackage.Items[0].FullPath }}
+            ${{ fromJson(steps.SmiteUnit-injection-package.outputs.json).TargetResults.GetPackage.Items[0].FullPath }}
+            ${{ fromJson(steps.SmiteUnit-package.outputs.json).TargetResults.GetPackage.Items[0].FullPath }}
+            ${{ fromJson(steps.SmiteUnit-visualstudio-testadapter-package.outputs.json).TargetResults.GetPackage.Items[0].FullPath }}
 
       
