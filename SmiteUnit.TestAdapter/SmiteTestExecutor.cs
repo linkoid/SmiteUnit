@@ -114,7 +114,7 @@ public sealed class SmiteTestExecutor : ITestExecutor
 		}
 	}
 
-	private static void TrySetEncoding(Internal.RedirectionStreamReader redirectionStreamReader, string? encodingName,
+	private static void TrySetEncoding(Engine.Internal.RedirectionStreamReader redirectionStreamReader, string? encodingName,
 		[CallerArgumentExpression(nameof(encodingName))] string argumentName = "Encoding")
 	{
 		if (string.IsNullOrEmpty(encodingName))
