@@ -1,10 +1,10 @@
-﻿using SmiteUnit.Internal.Streams;
+﻿using SmiteUnit.Engine.Internal.Streams;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
 
-namespace SmiteUnit.Internal;
+namespace SmiteUnit.Engine.Internal;
 
 public class RedirectionStreamReader : StreamReaderWrapper
 {
@@ -12,9 +12,9 @@ public class RedirectionStreamReader : StreamReaderWrapper
 	//public bool Record { get; set; } = true;
 
 	public Encoding Encoding
-	{ 
-		get => CurrentEncoding; 
-		set => SetEncoding(value); 
+	{
+		get => CurrentEncoding;
+		set => SetEncoding(value);
 	}
 
 	protected override StreamReader WrappedStreamReader => _recordingReader;
@@ -139,7 +139,7 @@ public class RedirectionStreamReader : StreamReaderWrapper
 		}
 	}
 
-	[System.Diagnostics.CodeAnalysis.SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP003", 
+	[System.Diagnostics.CodeAnalysis.SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP003",
 		Justification = "Disposing a reader / writer disposes underlying stream which is undesired in this case.")]
 	private void SetEncoding(Encoding encoding)
 	{

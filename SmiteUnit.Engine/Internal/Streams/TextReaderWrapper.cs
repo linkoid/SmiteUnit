@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SmiteUnit.Internal.Streams
+namespace SmiteUnit.Engine.Internal.Streams
 {
 	public abstract class TextReaderWrapper : TextReader
 	{

@@ -10,6 +10,8 @@
 
   <ItemGroup>
     <InternalsVisibleTo Include="SmiteUnit" />
+    <InternalsVisibleTo Include="SmiteUnit.Framework" />
+    <InternalsVisibleTo Include="SmiteUnit.Injection" />
   </ItemGroup>
 
   <ItemGroup>

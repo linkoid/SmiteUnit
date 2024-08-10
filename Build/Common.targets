@@ -12,7 +12,8 @@
   <PropertyGroup>
     <ResolveAssemblyReferencesDependsOn>$(ResolveAssemblyReferencesDependsOn);FilterProjectReferences</ResolveAssemblyReferencesDependsOn>
   </PropertyGroup>
-  <Target Name="RemoveILRepackedReferences" BeforeTargets="ResolveAssemblyReferences" Condition="'$(DesignTimeBuild)' != 'true'">
+  <Target Name="RemoveILRepackedReferences" BeforeTargets="ResolveAssemblyReferences"
+          Condition="'$(DesignTimeBuild)' != 'true' and '$(Configuration)' == 'Release'">
     <ItemGroup>
       <_ResolvedProjectReferencePaths Remove="@(_ResolvedProjectReferencePaths->WithMetadataValue('IsILRepacked', 'true'))" />
     </ItemGroup>

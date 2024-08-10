@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SmiteUnit.Engine;
-using SmiteUnit.Internal;
+using SmiteUnit.Engine.Internal;
 using System;
 using System.Collections;
 using System.Collections.Generic;

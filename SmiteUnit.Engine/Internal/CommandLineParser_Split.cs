@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 
-namespace SmiteUnit.Internal;
+namespace SmiteUnit.Engine.Internal;
 
 internal static partial class CommandLineParser
 {

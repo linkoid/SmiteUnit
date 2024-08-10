@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using ValueStringBuilder = System.Text.StringBuilder;
 #endif
 
-namespace SmiteUnit.Internal;
+namespace SmiteUnit.Engine.Internal;
 
 internal static partial class CommandLineParser
 {

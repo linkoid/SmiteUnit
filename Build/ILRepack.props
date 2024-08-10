@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup>
     <ILRepackTargetsFile>$(MSBuildThisFileDirectory)ILRepack.targets</ILRepackTargetsFile>
-    <DisableFastUpToDateCheck Condition="'$(DisableFastUpToDateCheck)' == ''">true</DisableFastUpToDateCheck>
+    <DisableFastUpToDateCheck Condition="'$(DisableFastUpToDateCheck)' == '' and '$(Configuration)' != 'Release'">true</DisableFastUpToDateCheck>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="ILRepack.Lib.MSBuild.Task" Version="2.0.34.1">

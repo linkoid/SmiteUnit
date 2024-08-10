@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmiteUnit.Internal.Streams;
+namespace SmiteUnit.Engine.Internal.Streams;
 
 internal class ReadOnlyMemoryStream : StreamWrapper
 {

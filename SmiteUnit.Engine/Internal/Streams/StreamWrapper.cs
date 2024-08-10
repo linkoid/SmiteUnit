@@ -3,34 +3,34 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SmiteUnit.Internal.Streams;
+namespace SmiteUnit.Engine.Internal.Streams;
 
 internal abstract class StreamWrapper : Stream
 {
-    protected abstract Stream WrappedStream { get; }
+	protected abstract Stream WrappedStream { get; }
 
 	protected virtual bool WrapperCanRead => true;
 	protected virtual bool WrapperCanSeek => true;
 	protected virtual bool WrapperCanWrite => true;
 	protected virtual bool WrapperCanTimeout => true;
-	
+
 
 	#region Abstract Overrides
 	public override bool CanRead => WrapperCanRead && WrappedStream.CanRead;
-    public override bool CanSeek => WrapperCanSeek && WrappedStream.CanSeek;
-    public override bool CanWrite => WrapperCanWrite && WrappedStream.CanWrite;
-    public override long Length => WrappedStream.Length;
-    public override long Position
+	public override bool CanSeek => WrapperCanSeek && WrappedStream.CanSeek;
+	public override bool CanWrite => WrapperCanWrite && WrappedStream.CanWrite;
+	public override long Length => WrappedStream.Length;
+	public override long Position
 	{
 		get => WrappedStream.Position;
 		set => WrappedStream.Position = WrapperCanSeek ? value : throw new NotSupportedException();
 	}
-    public override int Read(byte[] buffer, int offset, int count)
-        => WrapperCanRead ? WrappedStream.Read(buffer, offset, count) : throw new NotSupportedException();
-    public override long Seek(long offset, SeekOrigin origin)
-        => WrapperCanSeek ? WrappedStream.Seek(offset, origin) : throw new NotSupportedException();
-    public override void SetLength(long value)
-        => WrappedStream.SetLength(CanRead ? value : throw new NotSupportedException());
+	public override int Read(byte[] buffer, int offset, int count)
+		=> WrapperCanRead ? WrappedStream.Read(buffer, offset, count) : throw new NotSupportedException();
+	public override long Seek(long offset, SeekOrigin origin)
+		=> WrapperCanSeek ? WrappedStream.Seek(offset, origin) : throw new NotSupportedException();
+	public override void SetLength(long value)
+		=> WrappedStream.SetLength(CanRead ? value : throw new NotSupportedException());
 	public override void Write(byte[] buffer, int offset, int count)
 		=> WrappedStream.Write(buffer, offset, WrapperCanWrite ? count : throw new NotSupportedException());
 	public override void Flush()

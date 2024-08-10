@@ -32,7 +32,7 @@
           Outputs="@(ILRepackOutputAssembly)"
           AfterTargets="CoreCompile"
           DependsOnTargets="_ILRepackResolveAssemblies"
-          Condition="'@(ILRepackReference)' != ''">
+          Condition="'@(ILRepackReference)' != '' and '$(Configuration)' == 'Release'">
 
     <ItemGroup>
       <ILRepackReference Update="@(ILRepackReference)" Condition="'%(ReferenceAssembly)' == ''">
@@ -64,7 +64,7 @@
           Outputs="@(ILRepackOutputRefAssembly)"
           AfterTargets="CoreCompile"
           DependsOnTargets="_ILRepackResolveAssemblies"
-          Condition="'@(ILRepackReference)' != ''">
+          Condition="'@(ILRepackReference)' != '' and '$(Configuration)' == 'Release'">
 
     <ItemGroup>
       <ILRepackReference Update="@(ILRepackReference)" Condition="'%(ReferenceAssembly)' == ''">

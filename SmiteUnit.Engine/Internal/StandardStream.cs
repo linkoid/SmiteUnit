@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmiteUnit.Internal;
+namespace SmiteUnit.Engine.Internal;
 
 
 internal enum StandardStream
@@ -21,7 +21,7 @@ internal static class StandardStreamExtensions
 		=> standardStream switch
 		{
 			StandardStream.Output => Console.Out,
-			StandardStream.Error  => Console.Error,
+			StandardStream.Error => Console.Error,
 			_ => throw new NotSupportedException(),
 		};
 }
