@@ -32,7 +32,7 @@ internal class SmiteTestEnumerator
 				{
 					try
 					{
-						return attributeData.AttributeType.FullName == TestReflection.SmiteTestAttribute.FullName;
+						return TestReflection.SmiteTestAttribute.IsAssignableFromMetadata(attributeData.AttributeType);
 					}
 					catch (Exception ex)
 					{

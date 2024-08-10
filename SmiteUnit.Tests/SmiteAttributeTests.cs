@@ -34,4 +34,10 @@ public class SmiteAttributeTests
 	{
 		Environment.Exit(1);
 	}
+
+	[CustomSmiteTest]
+	public static void CustomSmiteTestMethod()
+	{
+		Console.WriteLine("Ok");
+	}
 }

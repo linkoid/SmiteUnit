@@ -42,4 +42,14 @@ internal static class TestReflection
 		testAssembly = new TestAssembly(assembly);
 		return loadContext;
 	}
+
+	public static bool IsAssignableFromMetadata(this Type type, Type metadata)
+	{
+		for (Type metadataBase = metadata; metadataBase.BaseType != null; metadataBase = metadataBase.BaseType)
+		{
+			if (metadataBase.FullName == type.FullName)
+				return true;
+		}
+		return false;
+	}
 }
