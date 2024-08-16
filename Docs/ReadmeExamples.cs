@@ -2,6 +2,8 @@
 
 namespace SmiteUnit.Docs.Snippets;
 
+
+
 #region FrameworkExample
 // The SmiteProcessAttribute tells the test adapter which program to start
 [SmiteProcess("MyExecutable.exe", "arguments")]

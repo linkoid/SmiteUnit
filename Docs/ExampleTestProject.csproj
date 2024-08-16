@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!-- This could be any supported framework -->
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- These package references can stay -->
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
+    <PackageReference Include="coverlet.collector" Version="3.1.0" GeneratePathProperty="true" />
+
+    <!-- These package references should be removed -->
+    <!-- <PackageReference Include="NUnit3TestAdapter" Version="4.0.0" /> -->
+    <!-- <PackageReference Include="NUnit" Version="3.14.*" /> -->
+
+    <!-- This package reference should be added -->
+    <PackageReference Include="Linkoid.SmiteUnit" Version="0.3.0-alpha" />
+    
+  </ItemGroup>
+</Project>
