@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="../Build/Common.props" />
+
+  <PropertyGroup>
+    <AssemblyName>SmiteUnit.Docs.Snippets</AssemblyName>
+    <RootNamespace>$(AssemblyName)</RootNamespace>
+    <TargetFrameworks></TargetFrameworks>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MSBuild.StructuredLogger" Version="2.1.507" />
+    <ProjectReference Include="../SmiteUnit/SmiteUnit.csproj" />
+    <ProjectReference Include="../SmiteUnit.Core/SmiteUnit.Core.csproj" IsILRepacked="true" />
+    <ProjectReference Include="../SmiteUnit.Framework/SmiteUnit.Framework.csproj" />
+    <ProjectReference Include="../SmiteUnit.Engine/SmiteUnit.Engine.csproj" IsILRepacked="true" />
+    <!--<ProjectReference Include="../SmiteUnit.Tests.TestProgram/SmiteUnit.Tests.TestProgram.csproj" SetTargetFramework="" />-->
+    <!--<ProjectReference Include="../SmiteUnit.TestAdapter/SmiteUnit.TestAdapter.csproj" IncludeAssets="Runtime" />-->
+  </ItemGroup>
+  
+  <Import Project="../Build/Common.targets" />
+
+</Project>

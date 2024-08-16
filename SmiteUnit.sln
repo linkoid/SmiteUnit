@@ -53,6 +53,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snippets", "Docs\Snippets.csproj", "{DC75A932-DAA0-4419-AD36-CD8E85FB703F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +101,10 @@ Global
 		{3E043F2E-308A-4D7C-A13E-907BBCB702C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA36C545-3304-45F8-8418-0DC9F7A04827}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CA36C545-3304-45F8-8418-0DC9F7A04827}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC75A932-DAA0-4419-AD36-CD8E85FB703F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC75A932-DAA0-4419-AD36-CD8E85FB703F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC75A932-DAA0-4419-AD36-CD8E85FB703F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC75A932-DAA0-4419-AD36-CD8E85FB703F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

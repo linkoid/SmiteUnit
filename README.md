@@ -27,3 +27,8 @@ needs to be tested for instantce standard input and standard output.
 * The program in which the test is executed must be viewed as a black box.
 
 
+# Examples
+
+```cs --region FrameworkExample --source-file ./Docs/ReadmeExamples.cs --project ./Docs/Snippets.csproj
+```
+
