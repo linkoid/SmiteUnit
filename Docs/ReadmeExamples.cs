@@ -1,10 +1,11 @@
-﻿using SmiteUnit.Framework;
+﻿using System;
 
 namespace SmiteUnit.Docs.Snippets;
 
 
-
 #region FrameworkExample
+using SmiteUnit.Framework;
+
 // The SmiteProcessAttribute tells the test adapter which program to start
 [SmiteProcess("MyExecutable.exe", "arguments")]
 public static class MySmiteTests
