@@ -151,6 +151,9 @@ coverage*.info
 *.coverage
 *.coveragexml
 
+# Report Generator code coverage report
+[Cc]overage[Rr]eport*/
+
 # NCrunch
 _NCrunch_*
 .*crunch*.local.xml

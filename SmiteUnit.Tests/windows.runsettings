@@ -1,8 +1,42 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <RunSettings>
   <RunConfiguration>
+    <ResultsDirectory>../testresults</ResultsDirectory>
     <EnvironmentVariables>
       <SMITEUNIT_TESTS_TESTPROGRAM_EXE>SmiteUnit.Tests.TestProgram.exe</SMITEUNIT_TESTS_TESTPROGRAM_EXE>
     </EnvironmentVariables>
   </RunConfiguration>
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector friendlyName="Code Coverage" uri="datacollector://Microsoft/CodeCoverage/2.0"
+                     assemblyQualifiedName="Microsoft.VisualStudio.Coverage.DynamicCoverageDataCollector, Microsoft.VisualStudio.TraceCollector, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+        <Configuration>
+          <CodeCoverage>
+            <ModulePaths>
+              <Include>
+                <ModulePath>.*SmiteUnit[^\\/]*.dll</ModulePath>
+                <ModulePath>.*SmiteUnit[^\\/]*.exe</ModulePath>
+              </Include>
+              <Exclude>
+                <ModulePath>.*SmiteUnit.Tests.dll</ModulePath>
+                <ModulePath>.*SmiteUnit.Tests.TestProgram.dll</ModulePath>
+                <ModulePath>.*SmiteUnit.Tests.TestProgram.exe</ModulePath>
+              </Exclude>
+            </ModulePaths>
+            
+            <Sources>
+              <Exclude>
+                <Source>.*RandomSkunk.RuntimePolyfill.PolyfillSourceGenerator.*</Source>
+              </Exclude>
+            </Sources>
+
+            <UseVerifiableInstrumentation>True</UseVerifiableInstrumentation>
+            <AllowLowIntegrityProcesses>True</AllowLowIntegrityProcesses>
+            <CollectFromChildProcesses>True</CollectFromChildProcesses>
+            <CollectAspDotNet>False</CollectAspDotNet>
+          </CodeCoverage>
+        </Configuration>
+      </DataCollector>
+    </DataCollectors>
+  </DataCollectionRunSettings>
 </RunSettings>
