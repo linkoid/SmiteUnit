@@ -23,6 +23,13 @@ public sealed class SmiteTestExecutor : ITestExecutor
 
 	private readonly List<SmiteProcess> processes = new();
 
+	public void RunTests(IEnumerable<string> sources, IRunContext runContext, IFrameworkHandle frameworkHandle)
+	{
+		var discoverer = new SmiteTestDiscoverer();
+		var tests = discoverer.DiscoverTests(sources, runContext, frameworkHandle);
+		RunTests(tests, runContext, frameworkHandle);
+	}
+
 	public void RunTests(IEnumerable<TestCase> tests, IRunContext runContext, IFrameworkHandle frameworkHandle)
 	{
 		foreach (var testCase in tests)
@@ -34,11 +41,6 @@ public sealed class SmiteTestExecutor : ITestExecutor
 			var testMethod = testAssembly.TestMethods.FirstOrDefault(x => { frameworkHandle.SendMessage(TestMessageLevel.Informational, $"{x} == {testCase.FullyQualifiedName} is {x == testCase.FullyQualifiedName}"); return x == testCase.FullyQualifiedName; } );
 			RunTest(testMethod, testCase, runContext, frameworkHandle);
 		}
-	}
-
-	public void RunTests(IEnumerable<string> sources, IRunContext runContext, IFrameworkHandle frameworkHandle)
-	{
-		throw new NotImplementedException();
 	}
 
 	private void RunTest(TestMethod testMethod, TestCase testCase, IRunContext runContext, IFrameworkHandle frameworkHandle)

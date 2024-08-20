@@ -26,7 +26,10 @@ public sealed class SmiteTestDiscoverer : ITestDiscoverer
 
 		try
 		{
-			DiscoverTestsInternal(sources, discoveryContext, discoverySink);
+			foreach (var testCase in DiscoverTestsInternal(sources, discoveryContext))
+			{
+				discoverySink.SendTestCase(testCase);
+			}
 		}
 		catch (Exception ex)
 		{
@@ -36,7 +39,14 @@ public sealed class SmiteTestDiscoverer : ITestDiscoverer
 		InternalLogger.LogInfo("finished discovering tests");
 	}
 
-	private void DiscoverTestsInternal(IEnumerable<string> sources, IDiscoveryContext discoveryContext, ITestCaseDiscoverySink discoverySink)
+	internal IEnumerable<TestCase> DiscoverTests(IEnumerable<string> sources, IDiscoveryContext discoveryContext, IMessageLogger logger)
+	{
+		InternalLogger.Handle = logger;
+		Logger = logger ?? throw new ArgumentNullException(nameof(logger));
+		return DiscoverTestsInternal(sources, discoveryContext);
+	}
+
+	private IEnumerable<TestCase> DiscoverTestsInternal(IEnumerable<string> sources, IDiscoveryContext discoveryContext)
 	{
 		//InternalLogger.LogDebug($"run settings:\n{discoveryContext.RunSettings.SettingsXml}");
 
@@ -48,11 +58,8 @@ public sealed class SmiteTestDiscoverer : ITestDiscoverer
 			foreach (var testMethod in sourceAssembly.TestMethods)
 			{
 				InternalLogger.LogDebug($"Found TestMethod {testMethod}");
-				var testCase = new TestCase(testMethod.FullName, SmiteTestExecutor.ExecutorUri, source);
-				discoverySink.SendTestCase(testCase);
+				yield return new TestCase(testMethod.FullName, SmiteTestExecutor.ExecutorUri, source);
 			}
 		}
 	}
-
-
 }
