@@ -81,14 +81,7 @@ public class SmiteProcess : System.IDisposable
 	{
 		if (_isDisposed) return;
 
-		if (!_process.HasExited)
-		{
-#if NET5_0_OR_GREATER || NETCOREAPP3_0_OR_GREATER
-			_process.Kill(true);
-#else
-			_process.Kill();
-#endif
-		}
+		_process.TryKill();
 
 		if (disposing)
 		{

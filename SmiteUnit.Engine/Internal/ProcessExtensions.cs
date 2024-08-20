@@ -64,5 +64,23 @@ internal static class ProcessExtensions
 		};
 	}
 
-
+	public static bool TryKill(this Process process, bool entireProcessTree = false)
+	{
+		try
+		{
+			if (!process.HasExited)
+			{
+#if NET5_0_OR_GREATER || NETCOREAPP3_0_OR_GREATER
+				process.Kill(entireProcessTree);
+#else
+				process.Kill();
+#endif
+			}
+			return true;
+		}
+		catch (InvalidOperationException)
+		{
+			return false;
+		}
+	}
 }
