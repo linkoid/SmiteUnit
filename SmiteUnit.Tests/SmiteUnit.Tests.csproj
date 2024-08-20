@@ -8,7 +8,8 @@
     <EnableSmiteUnitEngine>true</EnableSmiteUnitEngine>
     <EnableSmiteUnitTestAdapter>true</EnableSmiteUnitTestAdapter>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
-    <RunSettingsFilePath>$(MSBuildProjectDirectory)/.runsettings</RunSettingsFilePath>
+    <RunSettingsFilePath Condition="'$(OS)' == 'Windows_NT'">$(MSBuildProjectDirectory)/windows.runsettings</RunSettingsFilePath>
+    <RunSettingsFilePath Condition="'$(OS)' == 'Unix'">$(MSBuildProjectDirectory)/unix.runsettings</RunSettingsFilePath>
   </PropertyGroup>
 
   <PropertyGroup>

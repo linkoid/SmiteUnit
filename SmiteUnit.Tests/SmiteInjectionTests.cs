@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using SmiteUnit.Engine;
 using SmiteUnit.Tests.TestProgram;
+using System;
 
 namespace SmiteUnit.Tests;
 
@@ -12,7 +13,7 @@ public class SmiteInjectionTests
 	public void SetUp()
 	{
 		TestContext.WriteLine("SetUp");
-		process = new SmiteProcess("SmiteUnit.Tests.TestProgram.exe")
+		process = new SmiteProcess(Variables.TestProgram)
 		{
 			UseSubprocess = true
 		};

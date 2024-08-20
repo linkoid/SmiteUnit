@@ -13,7 +13,7 @@ public class CommandLineParserTests
 	[TestCaseSource(typeof(CommandLineTestsData), nameof(CommandLineTestsData.SplitExampleTestData))]
 	public IEnumerable<string> SplitExample(string commandline)
 	{
-		var process = new SmiteProcess("SmiteUnit.Tests.TestProgram.exe", commandline);
+		using var process = new SmiteProcess(Variables.TestProgram, commandline);
 		process.RunTest(SmiteId.Method(TestProgram.CommandLineParserTestsEdge.PrintArguments));
 		Console.WriteLine($"Ran with arguments: {process.InternalProcess.StartInfo.Arguments}");
 		Assert.That(process.ExitCode, Is.Zero);
@@ -46,7 +46,7 @@ public class CommandLineParserTests
 	public void UnclosedQuoteInArguments()
 	{
 		var unclosedQuote = "\"This quoted argument is never closed!   ";
-		var process = new SmiteProcess("SmiteUnit.Tests.TestProgram.exe", unclosedQuote);
+		using var process = new SmiteProcess(Variables.TestProgram, unclosedQuote);
 		process.RunTest(SmiteId.Method(TestProgram.CommandLineParserTestsEdge.PrintArguments));
 		Assert.That(process.ExitCode, Is.Zero);
 		Console.WriteLine($"Output position={process.Output.BaseStream.Position} length={process.Output.BaseStream.Length}");

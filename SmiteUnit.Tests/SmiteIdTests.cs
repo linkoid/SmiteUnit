@@ -11,14 +11,14 @@ public class SmiteIdTests
 	[Test]
 	public void ValidSmiteMethod()
 	{
-		var process = new SmiteProcess("SmiteUnit.Tests.TestProgram.exe");
+		using var process = new SmiteProcess(Variables.TestProgram);
 		process.RunTest(SmiteId.Method(SmiteIdTestsEdge.ValidSmiteMethod));
 	}
 
 	[Test]
 	public void InvalidSmiteMethodThrows()
 	{
-		var process = new SmiteProcess("SmiteUnit.Tests.TestProgram.exe");
+		using var process = new SmiteProcess(Variables.TestProgram);
 		try
 		{
 			var targetId = SmiteId.Method(SmiteIdTestsEdge.InvalidSmiteMethod);

@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <RunConfiguration>
+      <EnvironmentVariables>
+        <SMITEUNIT_TESTS_TESTPROGRAM_EXE>SmiteUnit.Tests.TestProgram</SMITEUNIT_TESTS_TESTPROGRAM_EXE>
+      </EnvironmentVariables>
+  </RunConfiguration>
+</RunSettings>

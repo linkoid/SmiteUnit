@@ -2,6 +2,7 @@
 using SmiteUnit.Engine;
 using SmiteUnit.Internal;
 using SmiteUnit.Tests.TestProgram;
+using System;
 using System.IO;
 
 namespace SmiteUnit.Tests;
@@ -18,7 +19,8 @@ public class SmiteProcessTests
 			stream.Position = 0;
 			expected = new StreamReader(stream).ReadToEnd();
 		}
-		var process = new SmiteProcess("SmiteUnit.Tests.TestProgram.exe")
+		var testProgram = Environment.ExpandEnvironmentVariables("%SMITEUNIT_TESTS_TESTPROGRAM_EXE%");
+		var process = new SmiteProcess(testProgram)
 		{
 			RunTimeout = 10000,
 			UseSubprocess = true,
@@ -35,7 +37,8 @@ public class SmiteProcessTests
 	[Test]
 	public void ExitOnCompletion()
 	{
-		var process = new SmiteProcess("SmiteUnit.Tests.TestProgram.exe", "loop")
+		var testProgram = Environment.ExpandEnvironmentVariables("%SMITEUNIT_TESTS_TESTPROGRAM_EXE%");
+		var process = new SmiteProcess(testProgram, "loop")
 		{
 			RunTimeout = 10000,
 			UseSubprocess = true,
@@ -45,9 +48,11 @@ public class SmiteProcessTests
 	}
 
 	[Test]
+	[System.Diagnostics.CodeAnalysis.SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP017:Prefer using", 
+		Justification = "Simplicity")]
 	public void DisposeEndsChildProcess()
 	{
-		var process = new SmiteProcess("SmiteUnit.Tests.TestProgram.exe", "loop")
+		var process = new SmiteProcess(Variables.TestProgram, "loop")
 		{
 			RunTimeout = 1,
 			UseSubprocess = true,

@@ -13,7 +13,7 @@ public class AttributeTests
 	public void SetUp()
 	{
 		TestContext.WriteLine(Environment.CurrentDirectory);
-		process = new SmiteProcess("SmiteUnit.Tests.TestProgram.exe")
+		process = new SmiteProcess(Variables.TestProgram)
 		{
 			UseSubprocess = true,
 		};

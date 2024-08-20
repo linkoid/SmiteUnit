@@ -29,7 +29,7 @@ Common use cases include:
 | Linkoid.SmiteUnit | A bundle that includes all important packages for using SmiteUnit *except `SmiteUnit.Injection`*. | [![NuGet Version](https://img.shields.io/nuget/v/Linkoid.SmiteUnit)](https://www.nuget.org/packages/Linkoid.SmiteUnit/) | 
 | Linkoid.SmiteUnit.Framework | Includes the framework for writing tests using SmiteUnit. Tests using the framework cannot be run by IDEs or other tools without the `SmiteUnit.TestAdapter`. | [![NuGet Version](https://img.shields.io/nuget/v/Linkoid.SmiteUnit.Framework)](http://www.nuget.org/packages/Linkoid.SmiteUnit.Framework/) |
 | Linkoid.SmiteUnit.TestAdapter | An adapter for `SmiteUnit.Framework` that allows running tests from an IDE or from the commandline with `dotnet test`. | [![NuGet Version](https://img.shields.io/nuget/v/Linkoid.SmiteUnit.TestAdapter)](http://www.nuget.org/packages/Linkoid.SmiteUnit.TestAdapter/) |
-| Linkoid.SmiteUnit.Injection | Includes the assembly required for injecting SmiteUnit tests into application. | [![NuGet Version](https://img.shields.io/nuget/v/Linkoid.SmiteUnit.Injection)](http://www.nuget.org/packages/Linkoid.SmiteUnit.Injection/) |
+| Linkoid.SmiteUnit.Injection | Includes the assembly required for injecting SmiteUnit tests into an application. | [![NuGet Version](https://img.shields.io/nuget/v/Linkoid.SmiteUnit.Injection)](http://www.nuget.org/packages/Linkoid.SmiteUnit.Injection/) |
 
 
 

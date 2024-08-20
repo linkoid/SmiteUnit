@@ -13,7 +13,7 @@ public class TestContextTests
 	[SetUp]
 	public void SetUp()
 	{
-		process = new SmiteProcess("SmiteUnit.Tests.TestProgram.exe")
+		process = new SmiteProcess(Variables.TestProgram)
 		{
 			UseSubprocess = true
 		};

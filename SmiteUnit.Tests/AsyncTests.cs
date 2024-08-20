@@ -18,7 +18,7 @@ public class AsyncTests
 	[SetUp]
 	public void SetUp()
 	{
-		process = new SmiteProcess("SmiteUnit.Tests.TestProgram.exe");
+		process = new SmiteProcess(Variables.TestProgram);
 	}
 
 	[SmiteSetUp]

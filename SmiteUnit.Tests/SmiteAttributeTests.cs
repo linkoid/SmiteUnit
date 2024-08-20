@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SmiteUnit.Tests;
 
-[SmiteProcess("SmiteUnit.Tests.TestProgram.exe")]
+[SmiteProcess(Variables.TEST_PROGRAM_VARIABLE)]
 public class SmiteAttributeTests
 {
 	[SmiteSetUp]
