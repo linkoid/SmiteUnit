@@ -3,13 +3,25 @@
 The ***S***ubprocess ***M***ethod ***I***njection ***Te***st Framework 
 
 
-## What is SmiteUnit?
-SmiteUnit is a testing framework for use in environments where a traditional unit testing framework cannot be used.
-
-Common examples of using SmiteUnit include:
-* Testing a plugin for an application
-* Testing a mod for a video game
+# What is SmiteUnit?
+SmiteUnit is a unit-testing framework for use in environments where a traditional unit-testing framework cannot be used.
+Common use cases include:
+* Testing plugins for applications
+* Testing mods for video games
 * Running automated integration tests
+
+## Unique Features of SmiteUnit
+### 1. Test Injection
+* Traditional unit-tests run portions of a program in a seperate test program. SmiteUnit differs by injecting tests into a program instead.
+* Defined injection points dictate when tests start and stop, providing a high level of control over when and where tests run within a program.
+* SmiteUnit executes the program and the injected tests in a subprocess, capturing the standard error and standard output.
+### 2. Flexibility
+* SmiteUnit treats the target program as a black box. The original program does not need to be modified extensively to inject SmiteUnit tests.
+* Test writers have complete control over where injection points are placed, along with many other specifics about how tests are injected into the program.
+### 3. Compatibility with Other Frameworks
+* SmiteUnit is designed to work well alongside other testing frameworks. 
+* Attribute names are prefixed with "Smite" to avoid ambiguity with other attrubutes.
+* A SmiteProcess can be created to run specific tests inside a unit test written with a different framework. This is useful when validating I/O.
 
 ## Packages
 | Name | Description | Latest Version | 
@@ -82,7 +94,7 @@ The package references in the .csproj will probably end up looking like this:
     <!-- <PackageReference Include="NUnit" Version="3.14.*" /> -->
 
     <!-- This package reference should be added -->
-    <PackageReference Include="Linkoid.SmiteUnit" Version="0.3.0-alpha" />
+    <PackageReference Include="Linkoid.SmiteUnit" Version="0.3.1-alpha.0" />
     
   </ItemGroup>
 </Project>
