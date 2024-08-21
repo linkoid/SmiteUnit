@@ -63,6 +63,9 @@ public class SmiteProcessTests
 
 		process.Dispose();
 
+		// This sleep is required to give linux OS time to kill the process
+		System.Threading.Thread.Sleep(1);
+
 		Assert.IsTrue(childProcess.HasExited);
 	}
 }
