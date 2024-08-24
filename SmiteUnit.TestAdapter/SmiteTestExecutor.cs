@@ -62,10 +62,16 @@ public sealed class SmiteTestExecutor : ITestExecutor
 		try
 		{
 			var processAttribute = testMethod.ProcessAttribute;
+
 			var processPath = processAttribute.FilePath ?? testCase.Source;
 			processPath = Environment.ExpandEnvironmentVariables(processPath);
-			frameworkHandle.SendMessage(TestMessageLevel.Informational, $"Process Path: {processPath}");
-			var process = new SmiteProcess(processPath);
+
+			var processArguments = processAttribute.Arguments ?? "";
+			processArguments = Environment.ExpandEnvironmentVariables(processArguments);
+
+			frameworkHandle.SendMessage(TestMessageLevel.Informational, $"Process: {processPath} {processArguments}");
+
+			var process = new SmiteProcess(processPath, processArguments);
 			processes.Add(process);
 			if (processAttribute.WorkingDirectory is not null)
 				process.WorkingDirectory = processAttribute.WorkingDirectory;

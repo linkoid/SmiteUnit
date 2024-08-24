@@ -1,12 +1,13 @@
 ﻿using SmiteUnit.Engine;
 using SmiteUnit.Framework;
 using System;
+using System.Linq;
 using System.Text;
 
 namespace SmiteUnit.Tests;
 
 [SmiteProcess(Variables.TEST_PROGRAM_VARIABLE)]
-public class SmiteAttributeTests
+public class FrameworkAttributeTests
 {
 	[SmiteSetUp]
 	public static void SetUp()
@@ -39,5 +40,15 @@ public class SmiteAttributeTests
 	public static void CustomSmiteTestMethod()
 	{
 		Console.WriteLine("Ok");
+	}
+
+	const string k_importantArgument = "important-argument";
+	[SmiteTest, SmiteProcess(Arguments = k_importantArgument)]
+	public static void ProcessAttributeArguments()
+	{
+		if (!Environment.GetCommandLineArgs().Contains(k_importantArgument))
+		{
+			TestContext.Fail($"The string '{k_importantArgument}' was not passed as an argument");
+		}
 	}
 }

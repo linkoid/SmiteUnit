@@ -17,6 +17,7 @@
 
       <ILRepackOutputAssembly Include="@(IntermediateAssembly->'%(RelativeDir)/ilrepack/%(Filename)%(Extension)')"
                               Condition="'@(ILRepackOutputAssembly)' == ''"/>
+      <ILRepackOutputSymbols Include="@(ILRepackOutputAssembly->'%(RelativeDir)%(Filename).pdb')" />
       <ILRepackOutputRefAssembly Include="@(IntermediateRefAssembly->'%(RelativeDir)/ilrepack/%(Filename)%(Extension)')"
                                  Condition="'@(ILRepackOutputRefAssembly)' == ''"/>
     </ItemGroup>
@@ -28,8 +29,8 @@
 
   <!--Repack Implementation Assembly-->
   <Target Name="ILRepackAssembly"
-          Inputs="@(ILRepackPrimaryAssembly);@(ILRepackReference)"
-          Outputs="@(ILRepackOutputAssembly)"
+          Inputs="@(ILRepackPrimaryAssembly);@(ILRepackReference);@(_DebugSymbolsIntermediatePath)"
+          Outputs="@(ILRepackOutputAssembly);@(ILRepackOutputSymbols)"
           AfterTargets="CoreCompile"
           DependsOnTargets="_ILRepackResolveAssemblies"
           Condition="'@(ILRepackReference)' != '' and '$(Configuration)' == 'Release'">
@@ -40,6 +41,7 @@
       </ILRepackReference>
     </ItemGroup>
 
+    <Message Text="ILMerge Implementation Assembly:" Importance="high" />
     <Message Text="ILMerge Implementation Assembly:" Importance="high" />
     <ILRepack OutputFile="@(ILRepackOutputAssembly)"
               InputAssemblies="@(ILRepackPrimaryAssembly);@(ILRepackReference)"
@@ -53,8 +55,9 @@
       <FileWrites Include="@(ILRepackOutputAssembly)" />
       <IntermediateAssembly Remove="@(IntermediateAssembly)" />
       <IntermediateAssembly Include="@(ILRepackOutputAssembly)" />
+      <_DebugSymbolsIntermediatePath Remove="@(_DebugSymbolsIntermediatePath)" />
+      <_DebugSymbolsIntermediatePath Include="@(ILRepackOutputSymbols)" />
     </ItemGroup>
-
   </Target>
 
 
