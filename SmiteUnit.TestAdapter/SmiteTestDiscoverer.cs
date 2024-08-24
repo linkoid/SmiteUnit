@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -10,6 +11,7 @@ using System.Reflection;
 
 namespace SmiteUnit.TestAdapter;
 
+[Category("managed")]
 [FileExtension(".dll")]
 [FileExtension(".exe")]
 [DefaultExecutorUri(SmiteTestExecutor.ExecutorUriString)]
@@ -58,7 +60,8 @@ public sealed class SmiteTestDiscoverer : ITestDiscoverer
 			foreach (var testMethod in sourceAssembly.TestMethods)
 			{
 				InternalLogger.LogDebug($"Found TestMethod {testMethod}");
-				yield return new TestCase(testMethod.FullName, SmiteTestExecutor.ExecutorUri, source);
+				var testCase = new TestCase(testMethod.FullName, SmiteTestExecutor.ExecutorUri, source);
+				yield return testCase;
 			}
 		}
 	}
