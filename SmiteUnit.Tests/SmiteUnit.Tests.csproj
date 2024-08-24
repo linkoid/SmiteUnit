@@ -10,6 +10,7 @@
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <RunSettingsFilePath Condition="'$(OS)' == 'Windows_NT'">$(MSBuildProjectDirectory)/windows.runsettings</RunSettingsFilePath>
     <RunSettingsFilePath Condition="'$(OS)' == 'Unix'">$(MSBuildProjectDirectory)/unix.runsettings</RunSettingsFilePath>
+    <RunSettingsFilePath Condition="'$(OS)' == 'Unix' and '$(TargetFrameworkIdentifier)' == '.NETFramework'">$(MSBuildProjectDirectory)/mono.runsettings</RunSettingsFilePath>
   </PropertyGroup>
 
   <PropertyGroup>

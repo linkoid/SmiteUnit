@@ -20,6 +20,10 @@
     <Version Condition="'$(VersionSuffix)' == ''">$(VersionPrefix)</Version>
     <Version Condition="'$(VersionSuffix)' != ''">$(VersionPrefix)-$(VersionSuffix)</Version>
   </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworkIdentifier>$([MSBuild]::GetTargetFrameworkIdentifier($(TargetFramework)))</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>$([MSBuild]::GetTargetFrameworkVersion($(TargetFramework)))</TargetFrameworkVersion>
+  </PropertyGroup>
 
   <Target Name="PublishLocal" />
   <Target Name="UnpublishLocal" />
