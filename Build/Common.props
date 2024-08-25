@@ -21,8 +21,8 @@
     <Version Condition="'$(VersionSuffix)' != ''">$(VersionPrefix)-$(VersionSuffix)</Version>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)' != ''">
-    <TargetFrameworkIdentifier>$([MSBuild]::GetTargetFrameworkIdentifier($(TargetFramework)))</TargetFrameworkIdentifier>
-    <TargetFrameworkVersion>$([MSBuild]::GetTargetFrameworkVersion($(TargetFramework)))</TargetFrameworkVersion>
+    <TfmIdentifier>$([MSBuild]::GetTargetFrameworkIdentifier($(TargetFramework)))</TfmIdentifier>
+    <TfmVersion>$([MSBuild]::GetTargetFrameworkVersion($(TargetFramework)))</TfmVersion>
   </PropertyGroup>
 
   <Target Name="PublishLocal" />
