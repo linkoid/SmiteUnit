@@ -50,6 +50,8 @@ jobs:
         echo "deb [signed-by=/usr/share/keyrings/mono-official-archive-keyring.gpg] https://download.mono-project.com/repo/ubuntu stable-focal main" | sudo tee /etc/apt/sources.list.d/mono-official-stable.list
         sudo apt update -y
         sudo apt install mono-devel -y
+    - name: Create Alias for Test Program
+      run: alias SmiteUnit.Tests.TestProgram.exe="mono SmiteUnit.Tests.TestProgram.exe"
     - name: Test .NET Framework 4.7.2 with Mono 5.4
       run: dotnet test -c Release -f net472 --no-build --verbosity normal
 
