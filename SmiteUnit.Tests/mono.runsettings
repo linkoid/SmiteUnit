@@ -3,7 +3,7 @@
   <RunConfiguration>
     <ResultsDirectory>../testresults</ResultsDirectory>
     <EnvironmentVariables>
-      <SMITEUNIT_TESTS_TESTPROGRAM_EXE>SmiteUnit.Tests.TestProgram.exe</SMITEUNIT_TESTS_TESTPROGRAM_EXE>
+      <SMITEUNIT_TESTS_TESTPROGRAM_EXE>SmiteUnit.Tests.TestProgram.sh</SMITEUNIT_TESTS_TESTPROGRAM_EXE>
     </EnvironmentVariables>
   </RunConfiguration>
   <DataCollectionRunSettings>

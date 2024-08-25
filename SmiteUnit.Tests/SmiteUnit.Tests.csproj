@@ -4,13 +4,18 @@
   <Import Project="../Build/TargetRuntimes.props" />
 
   <PropertyGroup>
+    <UsingMono Condition="'$(OS)' == 'Unix' and '$(TfmIdentifier)' == '.NETFramework'">true</UsingMono>
+    <UsingMono Condition="'$(UsingMono)' == ''">false</UsingMono>
+  </PropertyGroup>
+  
+  <PropertyGroup>
     <EnableSmiteUnitFramework>true</EnableSmiteUnitFramework>
     <EnableSmiteUnitEngine>true</EnableSmiteUnitEngine>
     <EnableSmiteUnitTestAdapter>true</EnableSmiteUnitTestAdapter>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <RunSettingsFilePath Condition="'$(OS)' == 'Windows_NT'">$(MSBuildProjectDirectory)/windows.runsettings</RunSettingsFilePath>
     <RunSettingsFilePath Condition="'$(OS)' == 'Unix'">$(MSBuildProjectDirectory)/unix.runsettings</RunSettingsFilePath>
-    <RunSettingsFilePath Condition="'$(OS)' == 'Unix' and '$(TfmIdentifier)' == '.NETFramework'">$(MSBuildProjectDirectory)/mono.runsettings</RunSettingsFilePath>
+    <RunSettingsFilePath Condition="$(UsingMono)">$(MSBuildProjectDirectory)/mono.runsettings</RunSettingsFilePath>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -35,6 +40,10 @@
     <ProjectReference Include="../SmiteUnit.Engine/SmiteUnit.Engine.csproj" IsILRepacked="true" />
     <ProjectReference Include="../SmiteUnit.Tests.TestProgram/SmiteUnit.Tests.TestProgram.csproj" SetTargetFramework="" />
     <ProjectReference Include="../SmiteUnit.TestAdapter/SmiteUnit.TestAdapter.csproj" IncludeAssets="Runtime" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(UsingMono)">
+    <None Update="SmiteUnit.Tests.TestProgram.sh" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
   
   <Import Project="../Build/Common.targets" />
