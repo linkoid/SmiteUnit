@@ -19,13 +19,13 @@ internal readonly struct TestMethod : IEquatable<TestMethod>, IEquatable<string>
 		Info = info;
 	}
 
-	public string FullName => $"{Type.FullName}.{Info.Name}";
+	public string FullyQualifiedName => $"{Type.FullName}.{Info.Name}";
 	public SmiteProcessAttribute ProcessAttribute => GetProcessAttribute();
 	public int ExpectedExitCode => Info.GetCustomAttributeFromData<ExpectExitCodeAttribute>()?.ExitCode ?? 0;
 
 	public override string ToString()
 	{
-		return this != null ? FullName : "null";
+		return this != null ? FullyQualifiedName : "null";
 	}
 
 	public ISmiteId GetSmiteId()
@@ -60,7 +60,7 @@ internal readonly struct TestMethod : IEquatable<TestMethod>, IEquatable<string>
 		if (Type is null || Info is null)
 			return other.Type is null || other.Info is null;
 
-		return FullName.Equals(other.FullName);
+		return FullyQualifiedName.Equals(other.FullyQualifiedName);
 	}
 
 	public bool Equals(string? other)
@@ -68,7 +68,7 @@ internal readonly struct TestMethod : IEquatable<TestMethod>, IEquatable<string>
 		if (other is null)
 			return Type is null || Info is null;
 
-		return FullName.Equals(other);
+		return FullyQualifiedName.Equals(other);
 	}
 
 	public override bool Equals(object? obj)
@@ -87,7 +87,7 @@ internal readonly struct TestMethod : IEquatable<TestMethod>, IEquatable<string>
 
 	public override int GetHashCode()
 	{
-		return Type != null && Info != null ? FullName.GetHashCode() : 0;
+		return Type != null && Info != null ? FullyQualifiedName.GetHashCode() : 0;
 	}
 
 	public static bool operator ==(TestMethod left, TestMethod right)

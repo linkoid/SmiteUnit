@@ -8,6 +8,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using SmiteUnit.TestAdapter.Extensions;
+using Microsoft.TestPlatform.AdapterUtilities.ManagedNameUtilities;
 
 namespace SmiteUnit.TestAdapter;
 
@@ -24,13 +26,13 @@ public sealed class SmiteTestDiscoverer : ITestDiscoverer
 		InternalLogger.Handle = logger;
 		Logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-		InternalLogger.LogInfo("discovering tests");
+		InternalLogger.LogInfo($"discovering tests");
 
 		try
 		{
 			foreach (var testCase in DiscoverTestsInternal(sources, discoveryContext))
-			{
-				discoverySink.SendTestCase(testCase);
+            {
+                discoverySink.SendTestCase(testCase);
 			}
 		}
 		catch (Exception ex)
@@ -41,14 +43,14 @@ public sealed class SmiteTestDiscoverer : ITestDiscoverer
 		InternalLogger.LogInfo("finished discovering tests");
 	}
 
-	internal IEnumerable<TestCase> DiscoverTests(IEnumerable<string> sources, IDiscoveryContext discoveryContext, IMessageLogger logger)
+	internal static IEnumerable<TestCase> DiscoverTests(IEnumerable<string> sources, IDiscoveryContext discoveryContext, IMessageLogger logger)
 	{
 		InternalLogger.Handle = logger;
 		Logger = logger ?? throw new ArgumentNullException(nameof(logger));
 		return DiscoverTestsInternal(sources, discoveryContext);
 	}
 
-	private IEnumerable<TestCase> DiscoverTestsInternal(IEnumerable<string> sources, IDiscoveryContext discoveryContext)
+	private static IEnumerable<TestCase> DiscoverTestsInternal(IEnumerable<string> sources, IDiscoveryContext discoveryContext)
 	{
 		//InternalLogger.LogDebug($"run settings:\n{discoveryContext.RunSettings.SettingsXml}");
 
@@ -60,7 +62,14 @@ public sealed class SmiteTestDiscoverer : ITestDiscoverer
 			foreach (var testMethod in sourceAssembly.TestMethods)
 			{
 				InternalLogger.LogDebug($"Found TestMethod {testMethod}");
-				var testCase = new TestCase(testMethod.FullName, SmiteTestExecutor.ExecutorUri, source);
+
+				var testCase = new TestCase(testMethod.FullyQualifiedName, SmiteTestExecutor.ExecutorUri, source);
+
+				ManagedNameHelper.GetManagedName(testMethod.Info, out string managedTypeName, out string managedMethodName);//, out string?[] hierarchyValues);
+				testCase.SetManagedType(managedTypeName);
+				testCase.SetManagedMethod(managedMethodName);
+				//testCase.SetHierarchy(hierarchyValues);
+
 				yield return testCase;
 			}
 		}

@@ -17,6 +17,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="15.0.0" />
     <PackageReference Include="System.Reflection.MetadataLoadContext" Version="8.0.0" PrivateAssets="contentfiles;analyzers;build;compile" />
+    <PackageReference Include="Microsoft.TestPlatform.AdapterUtilities" Version="17.11.0" />
     <PackageReference Include="RandomSkunk.RuntimePolyfill" Version="1.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

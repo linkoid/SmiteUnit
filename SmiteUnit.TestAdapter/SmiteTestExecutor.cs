@@ -25,8 +25,8 @@ public sealed class SmiteTestExecutor : ITestExecutor
 
 	public void RunTests(IEnumerable<string> sources, IRunContext runContext, IFrameworkHandle frameworkHandle)
 	{
-		var discoverer = new SmiteTestDiscoverer();
-		var tests = discoverer.DiscoverTests(sources, runContext, frameworkHandle);
+		//var discoverer = new SmiteTestDiscoverer();
+		var tests = SmiteTestDiscoverer.DiscoverTests(sources, runContext, frameworkHandle);
 		RunTests(tests, runContext, frameworkHandle);
 	}
 

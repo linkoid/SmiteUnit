@@ -8,8 +8,8 @@
   </PropertyGroup>
   <PropertyGroup>
     <PackageIdPrefix>Linkoid.</PackageIdPrefix>
-    <VersionPrefix>0.3.1</VersionPrefix>
-    <VersionSuffix>alpha.2</VersionSuffix>
+    <VersionPrefix>0.3.2</VersionPrefix>
+    <VersionSuffix>alpha.0</VersionSuffix>
     <Authors>linkoid</Authors>
     <Description>SmiteUnit is a flexible library and simple framework for testing assemblies that run in external programs.</Description>
     <Copyright>Copyright (c) linkoid 2024</Copyright>

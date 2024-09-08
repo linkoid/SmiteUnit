@@ -9,8 +9,8 @@ namespace SmiteUnit.TestAdapter;
 
 internal static class TestReflection
 {
-	public static readonly Type SmiteAttribute = typeof(SmiteAttribute);
-	public static readonly Type SmiteTestAttribute = typeof(Framework.SmiteTestAttribute);
+	public static readonly Type SmiteAttribute = Assembly.Load("SmiteUnit").GetType(typeof(SmiteAttribute).FullName!)!;
+	public static readonly Type SmiteTestAttribute = Assembly.Load("SmiteUnit.Framework").GetType(typeof(Framework.SmiteTestAttribute).FullName!)!;
 
 	public static IEnumerable<string> GetLoadedAssemblyPaths()
 	{
@@ -25,7 +25,7 @@ internal static class TestReflection
 	{
 		assemblyPath = System.IO.Path.GetFullPath(assemblyPath);
 		var paths = GetLoadedAssemblyPaths().Concat(new[] 
-		{ 
+		{
 			assemblyPath,
 			SmiteAttribute.Assembly.Location,
 			SmiteTestAttribute.Assembly.Location,
