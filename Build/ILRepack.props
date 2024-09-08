@@ -1,5 +1,6 @@
 <Project>
   <PropertyGroup>
+    <ILRepackInternalize>false</ILRepackInternalize>
     <ILRepackTargetsFile>$(MSBuildThisFileDirectory)ILRepack.targets</ILRepackTargetsFile>
     <DisableFastUpToDateCheck Condition="'$(DisableFastUpToDateCheck)' == '' and '$(Configuration)' != 'Release'">true</DisableFastUpToDateCheck>
   </PropertyGroup>

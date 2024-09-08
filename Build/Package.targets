@@ -1,6 +1,6 @@
 <Project>
   <ItemGroup>
-    <Content Include="@(Build)"/>
+    <None Include="@(Build)" Pack="false" />
   </ItemGroup>
 
   <Target Name="_GetPackageBuildFiles" AfterTargets="_GetPackageFiles">
@@ -18,7 +18,7 @@
   </PropertyGroup>
   <Target Name="CopyProjectReferencesToPackage" DependsOnTargets="BuildOnlySettings;ResolveReferences;_GetProjectReferenceVersions" >
     <ItemGroup>
-      <_ProjectReferenceCopyLocalPaths Include="@(ReferenceCopyLocalPaths->WithMetadataValue('ReferenceSourceTarget', 'ProjectReference')->WithMetadataValue('PrivateAssets', 'All'))" />
+      <_ProjectReferenceCopyLocalPaths Include="@(Reference->WithMetadataValue('ReferenceSourceTarget', 'ProjectReference')->WithMetadataValue('PrivateAssets', 'All'))" />
     </ItemGroup>
     
     <!-- Mark Included Assets -->
@@ -58,6 +58,11 @@
     
     <ItemGroup>
       <BuildOutputInPackage Include="@(_ProjectReferenceCopyLocalPaths)">
+        <FinalOutputPath>$([MSBuild]::NormalizePath(
+          $(OutputPath),
+          %(_ProjectReferenceCopyLocalPaths.DestinationSubDirectory),
+          %(Filename)%(Extension)
+        ))</FinalOutputPath>
         <TargetPath>%(_ProjectReferenceCopyLocalPaths.DestinationSubDirectory)</TargetPath>
         <!--<TargetPath Condition="'%(_IncludeRuntimeAssets)' == 'true'
                                and '%(_IncludeCompileAssets)' == 'false'

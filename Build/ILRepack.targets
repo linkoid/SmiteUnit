@@ -23,7 +23,15 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ILRepackLibraryPath Include="@(ReferencePathWithRefAssemblies->'%(RootDir)%(Directory)')" KeepDuplicates="false" KeepMetadata="false" />
+      <!--<ILRepackLibraryPath Include="@(References->'%(RootDir)%(Directory)')" KeepDuplicates="false" KeepMetadata="false" />-->
+    </ItemGroup>
+
+    <Message Text="ILRepackLibraryPath: @(ILRepackLibraryPath)" />
+
+    <ItemGroup>
       <Reference Remove="@(ILRepackReference)" />
+      <ReferenceCopyLocalPaths Remove="@(ILRepackReference)" />
     </ItemGroup>
   </Target>
 
@@ -42,7 +50,6 @@
     </ItemGroup>
 
     <Message Text="ILMerge Implementation Assembly:" Importance="high" />
-    <Message Text="ILMerge Implementation Assembly:" Importance="high" />
     <ILRepack OutputFile="@(ILRepackOutputAssembly)"
               InputAssemblies="@(ILRepackPrimaryAssembly);@(ILRepackReference)"
               Parallel="true"
@@ -50,6 +57,8 @@
               AllowDuplicateResources="false"
               TargetKind="SameAsPrimaryAssembly"
               KeyFile="$(KeyFile)"
+              LibraryPath="@(ILRepackLibraryPath)"
+              Internalize="$(ILRepackInternalize)"
               />
     <ItemGroup>
       <FileWrites Include="@(ILRepackOutputAssembly)" />
@@ -83,6 +92,8 @@
               AllowDuplicateResources="false"
               TargetKind="SameAsPrimaryAssembly"
               KeyFile="$(KeyFile)"
+              LibraryPath="@(ILRepackLibraryPath)"
+              Internalize="$(ILRepackInternalize)"
               />
     <ItemGroup>
       <FileWrites Include="@(ILRepackOutputRefAssembly)" />
