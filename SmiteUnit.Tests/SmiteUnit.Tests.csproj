@@ -39,7 +39,7 @@
     <ProjectReference Include="../SmiteUnit.Framework/SmiteUnit.Framework.csproj" />
     <ProjectReference Include="../SmiteUnit.Engine/SmiteUnit.Engine.csproj" IsILRepacked="true" />
     <ProjectReference Include="../SmiteUnit.Tests.TestProgram/SmiteUnit.Tests.TestProgram.csproj" SetTargetFramework="" />
-    <ProjectReference Include="../SmiteUnit.TestAdapter/SmiteUnit.TestAdapter.csproj" IncludeAssets="Runtime" />
+    <ProjectReference Include="../SmiteUnit.TestAdapter/SmiteUnit.TestAdapter.csproj" IncludeAssets="Runtime" SetTargetFramework="" />
   </ItemGroup>
 
   <ItemGroup Condition="$(UsingMono)">
