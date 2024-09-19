@@ -4,7 +4,7 @@
 
   <PropertyGroup>
     <AssemblyName>MyTestAssembly</AssemblyName>
-    <RootNamespace>$(AssemblyName)</RootNamespace>
+    <RootNamespace>SmiteUnit.Docs.Snippets</RootNamespace>
     <TargetFrameworks></TargetFrameworks>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Nullable>enable</Nullable>

@@ -18,7 +18,10 @@
   </PropertyGroup>
   <Target Name="CopyProjectReferencesToPackage" DependsOnTargets="BuildOnlySettings;ResolveReferences;_GetProjectReferenceVersions" >
     <ItemGroup>
-      <_ProjectReferenceCopyLocalPaths Include="@(Reference->WithMetadataValue('ReferenceSourceTarget', 'ProjectReference')->WithMetadataValue('PrivateAssets', 'All'))" />
+      <_ProjectReferenceCopyLocalPaths Include="@(ReferenceCopyLocalPaths->WithMetadataValue('ReferenceSourceTarget', 'ProjectReference')->WithMetadataValue('PrivateAssets', 'All'))"
+                                       Exclude="@(_ProjectReferenceCopyLocalPaths)" KeepDuplicates="false" />
+      <_ProjectReferenceCopyLocalPaths Include="@(Reference->WithMetadataValue('ReferenceSourceTarget', 'ProjectReference')->WithMetadataValue('PrivateAssets', 'All'))"
+                                       Exclude="@(_ProjectReferenceCopyLocalPaths)" KeepDuplicates="false" />
     </ItemGroup>
     
     <!-- Mark Included Assets -->
@@ -53,7 +56,7 @@
     </GetAllMetadata>
     <Message Text="$(_MetadataString)" Importance="High" />-->
 
-    <Message Text="@(_ProjectReferenceCopyLocalPaths->'%(Filename) _IncludeRuntimeAssets: %(_IncludeRuntimeAssets) _IncludeCompileAssets: %(_IncludeCompileAssets)', '&#xA;')"
+    <Message Text="_ProjectReferenceCopyLocalPaths:&#xA;@(_ProjectReferenceCopyLocalPaths->'%(Filename) _IncludeRuntimeAssets: %(_IncludeRuntimeAssets) _IncludeCompileAssets: %(_IncludeCompileAssets)', '&#xA;')"
              Importance="High" />
     
     <ItemGroup>

@@ -21,15 +21,22 @@ internal static class TestReflection
 			   select loadedPath;
 	}
 
-	public static MetadataLoadContext LoadContext(string assemblyPath)
+    public static IEnumerable<string> GetDefaultAssemblyPaths()
+    {
+		return System.IO.Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.dll")
+			.Concat(System.IO.Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.exe"));
+    }
+
+    public static MetadataLoadContext LoadContext(string assemblyPath)
 	{
 		assemblyPath = System.IO.Path.GetFullPath(assemblyPath);
-		var paths = GetLoadedAssemblyPaths().Concat(new[] 
+		IEnumerable<string> paths = new[] 
 		{
 			assemblyPath,
 			SmiteAttribute.Assembly.Location,
 			SmiteTestAttribute.Assembly.Location,
-		});
+		};
+		paths = paths.Concat(GetLoadedAssemblyPaths()).Concat(GetDefaultAssemblyPaths());
 		var resolver = new PathAssemblyResolver(paths);
 		return new MetadataLoadContext(resolver);
 	}

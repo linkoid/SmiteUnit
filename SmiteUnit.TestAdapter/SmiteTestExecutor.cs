@@ -75,8 +75,8 @@ public sealed class SmiteTestExecutor : ITestExecutor
 			processes.Add(process);
 			if (processAttribute.WorkingDirectory is not null)
 				process.WorkingDirectory = processAttribute.WorkingDirectory;
-			TrySetEncoding(process.Output, processAttribute.OutputEncoding, nameof(processAttribute.OutputEncoding));
-			TrySetEncoding(process.Error , processAttribute.ErrorEncoding , nameof(processAttribute.ErrorEncoding ));
+			TrySetEncoding(process.Output, processAttribute.OutputEncoding, nameof(Framework.SmiteProcessAttribute.OutputEncoding));
+			TrySetEncoding(process.Error , processAttribute.ErrorEncoding , nameof(Framework.SmiteProcessAttribute.ErrorEncoding ));
 
 			stopwatch = Stopwatch.StartNew();
 			try
@@ -122,27 +122,29 @@ public sealed class SmiteTestExecutor : ITestExecutor
 		}
 	}
 
-	private static void TrySetEncoding(Engine.Internal.RedirectionStreamReader redirectionStreamReader, string? encodingName,
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("IDisposableAnalyzers.Correctness", "SYSLIB0001",
+        Justification = "Disposing a reader / writer disposes underlying stream which is undesired in this case.")]
+    private static void TrySetEncoding(Engine.Internal.RedirectionStreamReader redirectionStreamReader, string? encodingName,
 		[CallerArgumentExpression(nameof(encodingName))] string argumentName = "Encoding")
 	{
 		if (string.IsNullOrEmpty(encodingName))
 			return;
 
-		Encoding encoding = encodingName switch
+        Encoding encoding = encodingName switch
 		{
 			nameof(Encoding.ASCII           ) => Encoding.ASCII           ,
 			nameof(Encoding.BigEndianUnicode) => Encoding.BigEndianUnicode,
 			nameof(Encoding.Default         ) => Encoding.Default         ,
-#if !NETSTANDARD
+#if NET5_0_OR_GREATER
 			nameof(Encoding.Latin1          ) => Encoding.Latin1          ,
 #endif
 			nameof(Encoding.Unicode         ) => Encoding.Unicode         ,
 			nameof(Encoding.UTF32           ) => Encoding.UTF32           ,
-			nameof(Encoding.UTF7            ) => Encoding.UTF7            ,
-			nameof(Encoding.UTF8            ) => Encoding.UTF8            ,
-			_ => throw new ArgumentException($"Invalid encoding '{encodingName}'", argumentName),
+			nameof(Encoding.UTF8            ) => Encoding.UTF8,
+            _ => Encoding.GetEncoding(encodingName),
 		};
 
-		redirectionStreamReader.Encoding = encoding;
+        redirectionStreamReader.Encoding = encoding 
+			?? throw new ArgumentException($"Unknown encoding '{encodingName}'", argumentName);
 	}
 }

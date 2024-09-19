@@ -2,12 +2,10 @@
 
   <PropertyGroup>
     <ProjectName>SmiteUnit</ProjectName>
+    <TargetFrameworks>net462;netcoreapp3.1;netstandard2.0;netstandard2.1;net6.0</TargetFrameworks>
   </PropertyGroup>
   
   <Import Project="../Build/Package.props" />
-  
-  <PropertyGroup>
-  </PropertyGroup>
 
   <PropertyGroup>
     <NoTargetsDoNotReferenceOutputAssemblies>false</NoTargetsDoNotReferenceOutputAssemblies>
@@ -15,8 +13,9 @@
 
   <ItemGroup>
     <ProjectReference Include="../SmiteUnit.Framework/SmiteUnit.Framework.csproj" />
-    <ProjectReference Include="../SmiteUnit.TestAdapter/SmiteUnit.TestAdapter.csproj">
-      <IncludeAssets>Runtime</IncludeAssets>
+    <ProjectReference Include="../SmiteUnit.TestAdapter/SmiteUnit.TestAdapter.csproj" 
+                      Condition="!$(TargetFramework.StartsWith('netstandard'))">
+      <IncludeAssets>runtime</IncludeAssets>
     </ProjectReference>
   </ItemGroup>
 

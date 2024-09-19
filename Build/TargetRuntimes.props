@@ -7,13 +7,13 @@
     <TargetFrameworks>$(TargetFrameworks);netcoreapp3.1</TargetFrameworks>
     
     <!--For netstandard2.0-->
-    <TargetFrameworks>$(TargetFrameworks);net472</TargetFrameworks>
+    <TargetFrameworks>$(TargetFrameworks);net462</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup>
     <ReferenceTargetFramework Condition="$(TargetFramework)=='net6.0'">net6.0</ReferenceTargetFramework>
     <ReferenceTargetFramework Condition="$(TargetFramework)=='netcoreapp3.1'">netstandard2.1</ReferenceTargetFramework>
-    <ReferenceTargetFramework Condition="$(TargetFramework)=='net472'">netstandard2.0</ReferenceTargetFramework>
+    <ReferenceTargetFramework Condition="$(TargetFramework)=='net462'">netstandard2.0</ReferenceTargetFramework>
     
     <SetReferenceTargetFramework>TargetFramework=$(ReferenceTargetFramework)</SetReferenceTargetFramework>
   </PropertyGroup>
