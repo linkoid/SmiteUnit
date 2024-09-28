@@ -12,12 +12,12 @@ Common use cases include:
 
 ## Unique Features of SmiteUnit
 ### 1. Test Injection
-* Traditional unit-tests run portions of a program in a seperate test program. SmiteUnit differs by injecting tests into a program instead.
-* Defined injection points dictate when tests start and stop, providing a high level of control over when and where tests run within a program.
-* SmiteUnit executes the program and the injected tests in a subprocess, capturing the standard error and standard output.
+* Traditional unit-tests run portions of a program in a seperate test application. SmiteUnit differs by injecting tests into a target application instead.
+* Defined injection points dictate when tests start and stop, providing a high level of control over when and where tests run within an application.
+* SmiteUnit executes the target application and the injected tests in a subprocess, capturing the standard error and standard output.
 ### 2. Flexibility
-* SmiteUnit treats the target program as a black box. The original program does not need to be modified extensively to inject SmiteUnit tests.
-* Test writers have complete control over where injection points are placed, along with many other specifics about how tests are injected into the program.
+* SmiteUnit treats the target application as a black box. The original application does not need to be modified extensively to inject SmiteUnit tests.
+* Test writers have complete control over where injection points are placed, along with many other specifics about how tests are injected into the application.
 ### 3. Compatibility with Other Frameworks
 * SmiteUnit is designed to work well alongside other testing frameworks. 
 * Attribute names are prefixed with "Smite" to avoid ambiguity with other attrubutes.
@@ -34,12 +34,12 @@ Common use cases include:
 
 
 ## Usage
-To start using SmiteUnit, injection points must be added to the target program, and a seperate test project should be made to hold the tests.
+To start using SmiteUnit, injection points must be added to the target application, and a seperate test project should be made to hold the tests.
 
 ### Adding Injection Points
-Injection points need to be added to the program in which the tests must be run. To do this, the `SmiteUnit.Injection` package will be used.
+Injection points need to be added to the application in which the tests must be run. To do this, the `SmiteUnit.Injection` package will be used.
 Injection points control when the tests are started and when the tests close the program.
-Where these injection points go will be different depending on the program, but will have a similar idea to this example:
+Where these injection points go will be different depending on the application, but will have a similar idea to this example:
 ```cs --region InjectionExample --source-file ./Docs/Program.cs --project ./Docs/Snippets.csproj
 using SmiteUnit.Injection;
 
@@ -54,7 +54,7 @@ public static class Program
         // Call the entry point methods. Tests will start running here. 
         smiteInjection.EntryPoint();
 
-        // If the program is interactive, there is likely some sort of update loop.
+        // If the application is interactive, there is likely some sort of update loop.
         bool updateLoop = true;
         while (updateLoop) 
         {
@@ -62,7 +62,7 @@ public static class Program
             smiteInjection.UpdatePoint();
         }
 
-        // Finally, before the program exits, ExitPoint() should be called.
+        // Finally, before the application exits, ExitPoint() should be called.
         smiteInjection.ExitPoint();
 
         System.Environment.Exit(0);
@@ -105,7 +105,7 @@ To start writing tests with SmiteUnit, create a new class and add a `[SmiteProce
 then mark test methods with the `[SmiteTest]` attribute.
 
 ```cs --region FrameworkExample --source-file ./Docs/ReadmeExamples.cs --project ./Docs/Snippets.csproj
-// The SmiteProcessAttribute tells the test adapter which program to start
+// The SmiteProcessAttribute tells the test adapter which application to start
 [SmiteProcess("MyExecutable.exe", "arguments")]
 public static class MySmiteTests
 {
@@ -144,6 +144,6 @@ This would even be the ideal use case in situations where specific input and out
 needs to be tested for instantce standard input and standard output.
 
 ## Key Design Requirements
-* SmiteUnit should be usable in any program where the SmiteUnit assembly can be loaded and executed.
-* The program in which the test is executed must be viewed as a black box.
+* SmiteUnit should be usable in any application where the SmiteUnit assembly can be loaded and executed.
+* The application in which the test is executed must be viewed as a black box.
 
